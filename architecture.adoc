@@ -1,0 +1,8 @@
+= Architecture
+Doc Writer <esthesis@eurodyn.com>
+
+:toc:
+:imagesdir: assets/images
+:homepage: https://esthesis.com
+
+esthesis is a modern, scalable, implementation-agnostic platform for the Internet of Things.

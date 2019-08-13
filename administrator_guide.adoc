@@ -1,0 +1,6 @@
+= Administrator guide
+Doc Writer <esthesis@eurodyn.com>
+
+:toc:
+:imagesdir: assets/images
+:homepage: https://esthesis.com
