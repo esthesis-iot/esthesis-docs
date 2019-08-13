@@ -7,9 +7,8 @@ Doc Writer <esthesis@eurodyn.com>
 :icons: font
 
 == Quick setup
-How many times have you installed a new product, finding yourself having to read a ton of documentation on how to set it up before you can even start using it? Well, _esthesis_ might also have a ton of documentation, however that does not prevent us from showing you how you can quickly set it up to have a working platform in under 10'. Ready?
+How many times have you installed a new product, finding yourself having to read a ton of documentation on how to set it up before you can even start testing it? Well, _esthesis_ might also have a ton of documentation, however that does not prevent us from showing you how you can quickly set it up to have a working platform in under 10'. Ready?
 
 TIP: Make sure you have a complete installation done first following your preferred method from the link:installation_guide.adoc[Installation guide].
 
-image::1.png[draw1]
-
+image::1.png[test]
