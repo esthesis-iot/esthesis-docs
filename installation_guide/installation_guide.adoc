@@ -233,7 +233,8 @@ TIP: Create a namespace, so that you can easily delete all resources when no lon
 
 .Post-installation
 * Setup the link:#esthesis-is-mqtt-cert-deployment[secure MQTT server].
-* _esthesis_ platform server is already specified with a JDBC URL pointing to the database running in Minikube (minikube:), so no reconfiguration is necessary.
+
+TIP: _esthesis_ platform server is already configured with a JDBC URL pointing to the database running in Minikube (minikube:32101), so no reconfiguration is necessary.
 
 
 == General configuration

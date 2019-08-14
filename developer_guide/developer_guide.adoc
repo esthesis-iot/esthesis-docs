@@ -11,3 +11,9 @@ Doc Writer <esthesis@eurodyn.com>
 
 [TBC] Talk about Skaffold:
 _esthesis_ Kubernetes configuration also support https://skaffold.dev/[Skaffold] to merge...
+
+== Platform UI
+
+== Platform server
+
+== Runtime client

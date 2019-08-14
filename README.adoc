@@ -19,4 +19,4 @@ link:administrator_guide/administrator_guide.adoc[Administrator guide]
 
 link:developer_guide/developer_guide.adoc[Developer guide]
 
-link:client_guide/client_guide.adoc[Client guide]
+link:runtime_client_guide/client_guide.adoc[Runtime client guide]

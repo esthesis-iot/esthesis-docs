@@ -1,0 +1,86 @@
+= Runtime client guide
+Doc Writer <esthesis@eurodyn.com>
+:toc:
+:imagesdir: assets/images
+:homepage: https://esthesis.com
+:icons: font
+:sectanchors:
+:sectlinks:
+
+_esthesis_ is a versatile platform allowing your IoT devices to submit data in a variety of ways. In the most simple form, your devices can submit data by just posting MQTT messages to an MQTT server which is registered with _esthesis_ platform. However, such a setup does not allow you to perform secure operations, ACLs, remote device management, etc. For all these additional services you need the _esthesis_ client runtime.
+
+The runtime client is an application embedded into your IoT device allowing it to communicate with the _esthesis_ platform.
+
+== Device registration
+(TBC)
+
+== Initial provisioning
+(TBC)
+
+== MQTT proxy
+(TBC)
+
+== Web proxy
+(TBC)
+
+== Hardware ID identification
+(TBC)
+
+== Configuration reference
+The runtime client can be configured to suit your project's needs using a plethora of options as presented next.
+
+.Runtime client configuration options
+[cols="<,^,^,^m,<m", options="header"]
+|===
+|Configuration |Type |Mandatory |Default |Example
+
+|*registrationUrl*
+|Alphanumeric (TBC)
+|Yes
+|default
+|\https://example.com/reg
+5+|The URL at which the device will try to contact the _esthesis_ device registration service.
+
+|*hardwareId*
+|Alphanumeric (TBC)
+|Yes
+|-
+|AB33432
+5+|The hardware ID this device will present to _esthesis_ platform. To understand how this ID is derived, see link:#hardware-ID-identification[Hardware ID identification] section. +
+Availability: Java, C++, Python
+
+|*tags*
+|Alphanumeric (TBC)
+|No
+|-
+|rpi,paris_north
+5+|A comma-separated list of tags for the device to present to _esthesis_ platform. Whether these tags
+are accepted or not is a configuration setting of the _esthesis_ platform, so device tags can optionally be
+ignored. +
+Availability: Java, C++, Python
+
+|===
+(TBC)
+
+=== Examples
+
+== Runtime client functionality matrix
+The following table presents the functionality available on the runtime client according to the underlying implementation language.
+
+.Runtime client functionality available for each platform
+[cols="<,^,^,^,^", options="header"]
+|===
+|Functionality|Java|C++|Python|ESP32
+
+|Initial registration
+|icon:circle[] ^1^
+|icon:circle[]
+|icon:circle-o[]
+|icon:circle[]
+|===
+^1^ Except where...
+
+(TBC)
+
+== Platform-specific notes
+The following section provides comments, hints and tips when using the different implementations of the runtime client.
