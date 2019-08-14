@@ -1,0 +1,13 @@
+= Developer guide
+Doc Writer <esthesis@eurodyn.com>
+:toc:
+:imagesdir: assets/images
+:homepage: https://esthesis.com
+:icons: font
+:sectanchors:
+:sectlinks:
+
+[TBC] Link to dev setup: Minikube for development
+
+[TBC] Talk about Skaffold:
+_esthesis_ Kubernetes configuration also support https://skaffold.dev/[Skaffold] to merge...

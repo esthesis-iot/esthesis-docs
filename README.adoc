@@ -1,26 +1,22 @@
 = esthesis IoT platform guide
 Doc Writer <esthesis@eurodyn.com>
-
 :toc:
-:imagesdir: assets/images
 :homepage: https://esthesis.com
 
-esthesis is a modern, scalable, implementation-agnostic platform for the Internet of Things.
+esthesis is a modern, scalable, implementation-agnostic platform for the Internet of Things. (TBC)
 
-...
+'''
 
 This reference guide is divided into the following sections:
 
-link:introduction.adoc[Introduction]
+link:introduction/introduction.adoc[Introduction]
 
-link:intended_audience.adoc[Intended audience]
+link:architecture/architecture.adoc[Architecture]
 
-link:architecture.adoc[Architecture]
+link:installation_guide/installation_guide.adoc[Installation guide]
 
-link:installation_guide.adoc[Installation guide]
+link:administrator_guide/administrator_guide.adoc[Administrator guide]
 
-link:administrator_guide.adoc[Administrator guide]
+link:developer_guide/developer_guide.adoc[Developer guide]
 
-link:developer_guide.adoc[Developer guide]
-
-link:client_guide.adoc[Client guide]
+link:client_guide/client_guide.adoc[Client guide]

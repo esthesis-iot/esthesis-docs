@@ -1,0 +1,17 @@
+= Administrator guide
+Doc Writer <esthesis@eurodyn.com>
+:toc:
+:imagesdir: assets/images/administrator_guide
+:homepage: https://esthesis.com
+:icons: font
+:sectanchors:
+:sectlinks:
+
+This is the _Administrator guide_ for _esthesis_ platform. It shows you in detail all the different options and configuration knobs of _esthesis_ while providing you valuable hints & tips on how you can use _esthesis_ in production.
+
+== Quick setup
+How many times have you installed a new product, finding yourself having to read a ton of documentation on how to set it up before you can even start testing it? Well, _esthesis_ might also have a ton of documentation, however that does not prevent us from showing you how you can quickly set it up to have a test working platform in under 10'. Ready?
+
+TIP: Make sure you have a complete installation done first following your preferred method from the link:installation_guide.adoc[Installation guide].
+
+WARNING: The quick setup instructions depicted here are not suggested for anything else than a test lab. If you consider using _esthesis_ in anything wider than your local network make sure you follow (TBC) first.
