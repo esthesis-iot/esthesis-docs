@@ -6,6 +6,7 @@ Doc Writer <esthesis@eurodyn.com>
 :icons: font
 :sectanchors:
 :sectlinks:
+:sectnums:
 
 [TBC] Link to dev setup: Minikube for development
 
@@ -17,3 +18,29 @@ _esthesis_ Kubernetes configuration also support https://skaffold.dev/[Skaffold]
 == Platform server
 
 == Runtime client
+
+=== Simulating multiple clients
+You can perform a simple stress test by simulating multiple clients connecting to your _esthesis_ platform
+using the following one-liner in your Linux shell:
+```
+for i in {1..1}; do\
+    hardwareId=device$i \
+    storageRoot="~/.esthesis/devices/device$i" \
+    registrationUrl="http://localhost:46000" \
+    incomingSigned=false \
+    incomingEncrypted=false \
+    provisioningSigned=false \
+    provisioningEncrypted=false \
+    outgoingSigned=false \
+    outgoingEncrypted=false \
+    tags=default \
+    proxyMqtt=true \
+    proxyMqttPort=$((4000 + $i)) \
+    proxyWeb=true \
+    proxyWebPort=$((14000 + $i)) \
+    java -jar target/esthesis-device-java-1.0.0-SNAPSHOT.jar & \
+done
+```
+
+TIP: Do not forget to replace \http://localhost:46000 with the actual URL of your _esthesis_ platform
+and use tags your support.

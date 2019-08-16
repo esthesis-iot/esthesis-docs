@@ -6,6 +6,7 @@ Doc Writer <esthesis@eurodyn.com>
 :icons: font
 :sectanchors:
 :sectlinks:
+:sectnums:
 
 _esthesis_ comprises of many different modules, some of them optional and some of them mandatory. You can install a barebones edition with only the main platform itself, using infrastructure you already have in place - such as a MySQL database, an InfluDB cluster, etc. You can also use one of _esthesis_ configurations to create Docker and/or Kubernetes environments including optional components or not. Finally, if containers are not your thing, you can go low-level and directly run the executable JAR files of _esthesis_.
 
@@ -15,15 +16,6 @@ TIP: We suggest you are a tid bit familiar with _esthesis_ link:architecture.ado
 (TBC)
 
 == Docker installation
-(TBC)
-
-== AWS installation
-(TBC)
-
-== Azure installation
-(TBC)
-
-== Google Cloud platform installation
 (TBC)
 
 == Virtualised installation
@@ -58,6 +50,9 @@ The all-in-one installation includes all mandatory and most of the optional comp
 
 .How to run it
 Drop to your CLI and switch to esthesis-setup/k8s/_setups/all.
+
+.Ingress integration
+To integrate... (TBC)
 
 === All-in-one for Minikube
     Location: esthesis-setup/k8s/_setups/all-minikube
@@ -185,8 +180,8 @@ The following resources are created:
 |Platform service
 
 |InfluxDB
-|N/A
-|N/A
+|minikube IP
+|32108
 |Data sink
 
 |InfluxDB admin UI

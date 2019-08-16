@@ -6,6 +6,7 @@ Doc Writer <esthesis@eurodyn.com>
 :icons: font
 :sectanchors:
 :sectlinks:
+:sectnums:
 
 _esthesis_ is a versatile platform allowing your IoT devices to submit data in a variety of ways. In the most simple form, your devices can submit data by just posting MQTT messages to an MQTT server which is registered with _esthesis_ platform. However, such a setup does not allow you to perform secure operations, ACLs, remote device management, etc. For all these additional services you need the _esthesis_ client runtime.
 
@@ -29,32 +30,34 @@ The runtime client is an application embedded into your IoT device allowing it t
 == Configuration reference
 The runtime client can be configured to suit your project's needs using a plethora of options as presented next.
 
-.Runtime client configuration options
-[cols="<,^,^,^m,<m", options="header"]
+.Runtime client mandatory configuration options
+[cols="<,^,^m,<m", options="header"]
 |===
-|Configuration |Type |Mandatory |Default |Example
+|Configuration |Type |Default |Example
 
 |*registrationUrl*
 |Alphanumeric (TBC)
-|Yes
-|default
+|-
 |\https://example.com/reg
-5+|The URL at which the device will try to contact the _esthesis_ device registration service.
+4+|The URL at which the device will try to contact the _esthesis_ device registration service.
 
 |*hardwareId*
 |Alphanumeric (TBC)
-|Yes
 |-
 |AB33432
-5+|The hardware ID this device will present to _esthesis_ platform. To understand how this ID is derived, see link:#hardware-ID-identification[Hardware ID identification] section. +
+4+|The hardware ID this device will present to _esthesis_ platform. To understand how this ID is derived, see link:#hardware-ID-identification[Hardware ID identification] section. +
 Availability: Java, C++, Python
+|===
 
+.Runtime client optional configuration options
+[cols="<,^,^m,<m", options="header"]
+|===
+|Configuration |Type |Default |Example
 |*tags*
 |Alphanumeric (TBC)
-|No
 |-
 |rpi,paris_north
-5+|A comma-separated list of tags for the device to present to _esthesis_ platform. Whether these tags
+4+|A comma-separated list of tags for the device to present to _esthesis_ platform. Whether these tags
 are accepted or not is a configuration setting of the _esthesis_ platform, so device tags can optionally be
 ignored. +
 Availability: Java, C++, Python
