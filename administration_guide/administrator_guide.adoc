@@ -15,56 +15,29 @@ How many times have you installed a new product, finding yourself having to read
 
 TIP: Make sure you have a complete installation done first following your preferred method from the link:installation_guide.adoc[Installation guide].
 
-WARNING: The quick setup instructions depicted here are not suggested for anything else than a test lab. If you consider using _esthesis_ in anything wider than your local network make sure you follow (TBC) first.
+WARNING: The quick setup instructions depicted here are not suggested for anything else than a test lab. If you consider using _esthesis_ in anything wider than your local lab-network make sure you follow (TBC) first.
 
 === Platform server configuration
 
 * Login to _esthesis_ management ui.
-* Create a Certificate Authority, name it `root-ca`.
-** Select `root-ca` and download its certificate in Base64 format (`root-ca.crt.base64`).
-* Create a Certificate, name it `platform`, signed by `root-ca`.
-** Select `platform` and download its certificate and private key in Base64 format (`platform.crt.base64`, `platform.key.base64`).
-* Create a tag to identify your devices with, name it `default`.
-* Go to Settings > Security and choose `platform` as Platform certificate.
-* Go to Settings > Device registration and choose `platform` as Root Certificate Authority.
+* If you have not already created a Certificate Authority as part of your installation procedure, create one now.
+* Similarly, make sure you have created a Certificate for the _esthesis_ platform signed by the above Certificate Authority.
+* Create a tag to identify your devices with.
+* Go to Settings > Security and choose the Platform certificate.
+* Go to Settings > Device registration and choose the Certificate Authority.
 * Go to Settings > Device registration and choose 'Open registration' (or any other mode you need).
-* Go to Settings > Networking and activate 'MQTT ACL Endpoint status'.
-* Go to Settings > Provisioning and enter the URL of your provisioning endpoint. This can be the URL
-of your platform instance or the URL of the provisioning proxy if you have deployed one. Do not forget
+* Go to Settings > Networking and activate 'MQTT ACL Endpoint status' (this is necessary only if you have opted for the secure _esthesis_ MQTT server).
+* Go to Settings > Provisioning and enter the URL of your provisioning endpoint. Do not forget
 to also use the port under which your provisioning endpoint resides.
 
-* Boot up a secure MQTT server, so your devices have a target to submit data to: +
-
-With Docker:
-
-    docker run --rm -p 8883:8883  \
-    -e CA_CERT="$(< root-ca.crt.base64)" \
-    -e MOSQUITTO_CERT="$(< platform.crt.base64)" \
-    -e MOSQUITTO_KEY="$(< platform.key.base64)" \
-    -e ESTHESIS_PLATFORM_IP=platform-ip \
-    -e ESTHESIS_PLATFORM_HOST_HEADER=localhost \
-    -e ESTHESIS_PLATFORM_PORT=platform-port \
-    -e ACL_CACHE_TIME=300 \
-    -e ACL_CACHE_JITTER=60 \
-    -e ACL_LOG=true \
-    esthesis/esthesis-docker-mosquitto
-
-With Kubernetes, using the `esthesis-is-mqtt-cert-deployment`:
-
-    (TBC)
-
-Using the
-
-TIP: Change platform-ip and platform-port to your own values.
-
 * Register the MQTT server under Infrastructure > MQTT with the following details: +
-    Name: `mqtt1` +
-    IP: `ssl://localhost:8883` +
+    Name: `mqtt-server` +
+    IP: `ssl://localhost:8883` (or `tcp://localhost:1883` if you are using a non-secure MQTT server) +
     State: `Active` +
-    Tags: `Default` +
-    CA certificate: `root-ca` +
-    Client certificate: `platform` +
-    Client private key: `platform`
+    Tags: Use the tag you created above +
+    CA certificate: The Certificate Authority you created (not necessary for non-secure MQTT server) +
+    Client certificate: The certificate for the platform (not necessary for non-secure MQTT server) +
+    Client private key: The private key for the platform (not necessary for non-secure MQTT server)
 
 You now have an _esthesis_ platform server ready to accept device registration and data.
 

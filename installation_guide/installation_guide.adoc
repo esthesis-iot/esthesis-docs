@@ -8,7 +8,7 @@ Doc Writer <esthesis@eurodyn.com>
 :sectlinks:
 :sectnums:
 
-_esthesis_ comprises of many different modules, some of them optional and some of them mandatory. You can install a barebones edition with only the main platform itself, using infrastructure you already have in place - such as a MySQL database, an InfluDB cluster, etc. You can also use one of _esthesis_ configurations to create Docker and/or Kubernetes environments including optional components or not. Finally, if containers are not your thing, you can go low-level and directly run the executable JAR files of _esthesis_.
+_esthesis_ comprises of many different modules, some of them optional and some of them mandatory. You can install a barebones edition with only the main platform itself, using infrastructure you already have in place - such as a MySQL database, an InfluDB cluster, etc. You can also use one of _esthesis_ configurations to create Docker and/or Kubernetes environments including optional components as you deem fit. Finally, if containers are not your thing, you can go low-level and run the executable JAR files of _esthesis_.
 
 TIP: We suggest you are a tid bit familiar with _esthesis_ link:architecture.adoc[Architecture] before you choose which installation option is suitable for your use case.
 
@@ -39,195 +39,172 @@ All Kubernetes resource configurations are complemented with https://kustomize.i
 
 There are, currently, three different types of installations targeting Kubernetes as presented next.
 
-=== All-in-one
+=== All-components
     Location: esthesis-setup/k8s/_setups/all
     Suitable for production use: Yes
 
-The all-in-one installation includes all mandatory and most of the optional components of _esthesis_, assuming you have no local infrastructure you intend to reuse. It is the quickest way to have a complete platform up and running with all necessary supporting resources automatically being created for you.
+The all-components installation includes all mandatory and most of the optional components of _esthesis_, assuming you have no local infrastructure you intend to reuse. It is the quickest way to have a complete platform up and running with all necessary supporting resources automatically being created for you.
 
 .What is included
 * (TBC)
 
 .How to run it
 Drop to your CLI and switch to esthesis-setup/k8s/_setups/all.
+(TBC)
 
 .Ingress integration
 To integrate... (TBC)
 
-=== All-in-one for Minikube
+=== All-components for Minikube
     Location: esthesis-setup/k8s/_setups/all-minikube
     Suitable for production use: No
 
-The All-in-one for Minikube is an instalation type similar to the  link:#all-in-one[All-in-one] with the main difference being that is targeting a local Minikube environment. It includes all mandatory and optional components, providing a complete platform with the full set of functionality readily available. All user-accessible containers in this installation type are exposing their ports using a Kubernetes `NodePort`, so they are easily accessible using `localhost`. This is the quickest way to have a full demo of _esthesis_ in your local machine without having to configure or install any additional components. Apparently, because of Minikube, this is not an installation type suitable for a production environment.
+The All-components for Minikube is an instalation type similar to the  link:#all-components[All-components] with the main difference being that is targeting a local Minikube environment. It includes all mandatory and optional components, providing a complete platform with the full set of functionality readily available. All user-accessible containers in this installation type are exposing their ports using a Kubernetes `NodePort`, so they are easily accessible using the IP address of your Minikube. This is the quickest way to have a full demo of _esthesis_ in your local machine without having to configure or install any additional components. Apparently, because of Minikube, this is not an installation type suitable for a production environment.
 
 .What is included
 The following resources are created:
 
 |===
-|Component |Host |Port |Type
+|Component |Host:Port |Type |Description
 
 |MySQL
 |N/A
-|N/A
 |Platform service
-
-|MySQL admin UI
-|minikube IP
-|32002
-|Platform service
+|The main database to be used by _esthesis_ platform server.
 
 |MySQL backup
 |N/A
-|N/A
 |Platform service
+|A backup service for the main MySQL database.
 
 |InfluxDB
 |N/A
-|N/A
 |Data sink
-
-|InfluxDB admin UI
-|minikube IP
-|32003
-|Data sink
+|An InfluxDB instance to be used as a telemetry data sink.
 
 |InfluxDB backup
 |N/A
-|N/A
 |Data sink
+|A backup service for telemetry InfluxDB.
 
 |MySQL
 |N/A
-|N/A
 |Data sink
-
-|MySQL admin UI
-|minikube IP
-|32007
-|Data sink
+|A MySQL instance to be used as a metadata data sink.
 
 |MySQL backup
 |N/A
-|N/A
 |Data sink
+|A backup service for the metadata MySQL.
 
-|Mosquitto
-|minikube IP
-|32004
+|Mosquitto (TLS)
+|minikube:32004
 |Ingestion service
+|A secure Mosquitto MQTT server.
 
 |Provisioning proxy
-|minikube IP
-|32005
+|minikube:32005
 |Platform proxy
+|A reverse proxy for the provisioning URL of the _esthesis_ platform server.
 
 |Registration proxy
-|minikube IP
-|32006
+|minikube:32006
 |Platform proxy
+|A reverse proxy for the registration URL of the _esthesis_ platform server.
+
+|Digital twin proxy
+|minikube:32007
+|Platform proxy
+|A reverse proxy for the digital-twin URL of the _esthesis_ platform server.
 
 |esthesis platform server
 |N/A
-|N/A
 |esthesis platform
+|The _esthesis_ platform (backend) server.
 
 |esthesis platform admin UI
-|minikube IP
-|32000
+|minikube:32000
 |esthesis platform
+|The administration frontend of _esthesis_ platform.
 |===
 
 TIP: You can create an entry in your `hosts` file with the IP address of your Minikube to conveniently access the above URLs, for example, \http://minikube:32000.
 
 .How to install
-
 * Drop to your CLI and switch to `esthesis-setup/k8s/_setups/all-minikube`.
-* Setup access to the docker registry from which _esthesis_ images are to be pulled: `kubectl create secret docker-registry esthesis-dockerhub --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>`
+* Create a namespace, so that you can easily delete all resources when no longer needed and switch to it: +
+`kubectl create namespace local-demo && kubens local-demo`
+* Set the `standard` storage class as your default one: +
+`kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'`
+* Setup access to the docker registry from which _esthesis_ images are to be pulled: +
+`kubectl create secret docker-registry esthesis-dockerhub --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>`
 * Execute `kustomize build . | kubectl apply -f -`
 
-TIP: Create a namespace, so that you can easily delete all resources when no longer needed.
-
 .Post-installation
-* Setup the link:#esthesis-is-mqtt-cert-deployment[secure MQTT server].
+* Setup the link:#configuring-esthesis-is-mqtt-cert-deployment[secure MQTT server].
 
 === Minikube for developers
     Location: esthesis-setup/k8s/_setups/all-minikube-dev
     Suitable for production use: No
 
-The Minikube for developers installation type is suitable to quickly setup a development environment in your local machine. It is similar to the link:#all-in-one-for-minikube[All-in-one for Minikube], however it does not include two of the main mandatory artifacts: The _esthesis_ platform server and the _esthesis_ platform UI. These are left out, so that you can run them in your preferred development environment.
+The Minikube for developers installation type is suitable to quickly setup a development environment in your local machine. It is similar to the link:#all-in-one-for-minikube[All-in-one for Minikube], however:
 
-Note that this setup type exposes services at different ports than the All-in-one for Minikube, so that you can have a development environment as well as a test environment running in parallel in your local machine.
+* It does not include _esthesis_ platform server and the _esthesis_ platform UI, so that you can run them in your preferred development environment.
+* It does not include any proxy services (for registration, provisioning and digital-twin).
+* The MQTT server runs on non-TLS mode, so you do not need to setup certificates to access it.
+
+Note that this setup type exposes services at different ports than the All-components for Minikube, so that you can have a development environment as well as a local demo environment running in parallel in your local machine.
 
 .What is included
 The following resources are created:
-
 |===
-|Component |Host |Port |Type
+|Component |Host:Port |Type |Description
 
 |MySQL
-|minikube IP
-|32101
+|minikube:32101
 |Platform service
-
-|MySQL admin UI
-|minikube IP
-|32102
-|Platform service
+|The main database to be used by _esthesis_ platform server.
 
 |MySQL backup
 |N/A
-|N/A
 |Platform service
+|A backup service for the main MySQL database.
 
 |InfluxDB
-|minikube IP
-|32108
+|minikube:32108
 |Data sink
-
-|InfluxDB admin UI
-|minikube IP
-|32103
-|Data sink
+|An InfluxDB instance to be used as a telemetry data sink.
 
 |InfluxDB backup
 |N/A
-|N/A
 |Data sink
+|A backup service for telemetry InfluxDB.
 
 |MySQL
-|N/A
-|N/A
+|minikube:32109
 |Data sink
-
-|MySQL admin UI
-|minikube IP
-|32107
-|Data sink
+|A MySQL instance to be used as a metadata data sink.
 
 |MySQL backup
 |N/A
-|N/A
 |Data sink
+|A backup service for the metadata MySQL.
 
-|Mosquitto
-|minikube IP
-|32104
+|Mosquitto (non-TLS)
+|minikube:32104
 |Ingestion service
-
+|A secure Mosquitto MQTT server.
 |===
 
 TIP: You can create an entry in your `hosts` file with the IP address of your Minikube to conveniently access the above URLs, for example, \http://minikube:32103.
 
 .How to install
-
-* Drop to your CLI and switch to `esthesis-setup/k8s/_setups/all-minikube-dev`.
-* Setup access to the docker registry from which _esthesis_ images are to be pulled: `kubectl create secret docker-registry esthesis-dockerhub --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>`
+* Drop to your CLI and switch to `esthesis-setup/k8s/_setups/all-minikube`.
+* Create a namespace, so that you can easily delete all resources when no longer needed and switch to it: +
+`kubectl create namespace local-dev && kubens local-dev`
+* Set the `standard` storage class as your default one: +
+`kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'`
 * Execute `kustomize build . | kubectl apply -f -`
-
-TIP: Create a namespace, so that you can easily delete all resources when no longer needed.
-
-.Post-installation
-* Setup the link:#esthesis-is-mqtt-cert-deployment[secure MQTT server].
 
 TIP: _esthesis_ platform server is already configured with a JDBC URL pointing to the database running in Minikube (minikube:32101), so no reconfiguration is necessary.
 
@@ -237,10 +214,30 @@ TIP: _esthesis_ platform server is already configured with a JDBC URL pointing t
 Username: `admin@esthes.is` +
 Password: `admin`
 
-=== esthesis-is-mqtt-cert-deployment
-Some of the setup types include an MQTT server (based on Eclipse Mosquitto) that is configured to authenticate clients by using certificates. This is to only allow devices for which you have handed a certificate to be able to send  messages to the _esthesis_ platform. However, when you first perform an installation of _esthesis_ the details of such certificates are not yet known (i.e. you need to create a  as well as a link:TBC[Platform certificate], so the deployment fails reporting that `esthesis-is-mqtt-cert-secret` is missing. Until this secret is created the deployment cannot proceed. Here is how you prepare this secret:
+=== Configuring esthesis-is-mqtt-cert-deployment
+Some of the setup types include an MQTT server (based on Eclipse Mosquitto) that is configured to
+authenticate clients by using certificates. This is to only allow devices for which you have handed
+a certificate to be able to send  messages to the _esthesis_ platform. However, when you first perform
+an installation of _esthesis_ the details of such certificates are not yet known. Here is how to configure it.
 
+.Common configuration
 * Create a link:TBC[Certificate Authority] in _esthesis_ platform. Let us call it "root-ca".
+* Download the certificate for the Certificate Authority.
 * Create a link:TBC[Certificate] in _esthesis_ platform using the above Certificate Authority to sign it.
-* Export the Certificate Authority (TBC)
+Be careful here, as the name of the certificate should match exactly the URL under which the MQTT server will be accessible later on.
+* Download the certificate and private key for the certificate.
+* Go to _esthesis_ platform Settings > Networking and enable the MQTT ACL endpoint.
+* Although this is not part of the MQTT server configuration, make sure you have also created a certificate
+for the _esthesis_ platform itself and set it under Settings > Security > Platform certificate.
 
+==== Kubernetes configuration
+You need to create three entries under `esthesis-is-mqtt-cert-secret` secret using the certificates and
+private key you downloaded above. Modify the command below to match the files you have downloaded and
+execute:
+```
+kubectl create secret generic esthesis-is-mqtt-cert-secret \
+    --from-file=CA_CERT=root-ca.crt \
+    --from-file=MOSQUITTO_CERT=localhost.crt \
+    --from-file=MOSQUITTO_KEY=localhost.key
+```
+In a few seconds, you should see the previously failing `esthesis-is-mqtt-cert-deployment` becoming deployed.

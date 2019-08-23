@@ -21,7 +21,7 @@ _esthesis_ Kubernetes configuration also support https://skaffold.dev/[Skaffold]
 
 === Simulating multiple clients
 You can perform a simple stress test by simulating multiple clients connecting to your _esthesis_ platform
-using the following one-liner in your Linux shell:
+using the following "one-liner" in your Linux shell:
 ```
 for i in {1..1}; do\
     hardwareId=device$i \
@@ -33,7 +33,7 @@ for i in {1..1}; do\
     provisioningEncrypted=false \
     outgoingSigned=false \
     outgoingEncrypted=false \
-    tags=default \
+    tags=demo \
     proxyMqtt=true \
     proxyMqttPort=$((4000 + $i)) \
     proxyWeb=true \
@@ -43,4 +43,51 @@ done
 ```
 
 TIP: Do not forget to replace \http://localhost:46000 with the actual URL of your _esthesis_ platform
-and use tags your support.
+registration URL as well as choosing tags you have already defined.
+
+== Utilities
+=== Capturing database schema changes
+You can edit the schema of the _esthesis_ platform database and automatically capture your changes
+into Liquibase scripts by executing:
+```
+#!/usr/bin/env bash
+# The location of esthesis source code.
+ESTHESIS_SRC_ROOT=/esthesis-iot
+# The location of QLACK source code.
+QLACK_SRC_ROOT=/qlack
+# How the address of your Docker host is resolved.
+DOCKER_HOST=docker.for.mac.host.internal
+
+KUBECTL_DB_POD=$(kubectl get pods | grep ps-db | awk -F ' ' '{print $1}')
+echo "DB POD: $KUBECTL_DB_POD"
+kubectl port-forward $KUBECTL_DB_POD 45000:3306 &
+
+echo "Waiting for port forward..."
+while ! nc -z localhost 45000; do
+  sleep 1
+done
+echo "Port forward active."
+
+docker run --rm \
+-e DRIVER=com.mysql.cj.jdbc.Driver \
+-e DB_HOST=$DOCKER_HOST \
+-e DB_PORT=45000 \
+-e DB_SCHEMA=esthesis \
+-e DB=mysql \
+-e DB_USER=root \
+-e DB_PASS=root \
+-e CHANGELOG=/db/changelog/db.changelog-master.yaml \
+-e DIFFLOG=/db/changelog/changes \
+-e AUTHOR=European\ Dynamics \
+-v $ESTHESIS_SRC_ROOT/esthesis-platform/esthesis-platform-server/src/main/resources/db:/db \
+-v $QLACK_SRC_ROOT/QLACK-Fuse/qlack-fuse-settings/src/main/resources/db/changelog/qlack-fuse-settings:/db/changelog/qlack-fuse-settings:ro \
+-v $QLACK_SRC_ROOT/QLACK-Fuse/qlack-fuse-aaa/src/main/resources/db/changelog/qlack-fuse-aaa:/db/changelog/qlack-fuse-aaa:ro \
+-v $QLACK_SRC_ROOT/QLACK-Fuse/qlack-fuse-audit/src/main/resources/db/changelog/qlack-fuse-audit:/db/changelog/qlack-fuse-audit:ro \
+eurodyn/qlack-tools-liquibase \
+diffChangeLog.sh
+
+rm -rf $ESTHESIS_SRC_ROOT/esthesis-platform/esthesis-platform-server/src/main/resources/db/changelog/qlack-fuse-*
+
+KUBECTL_PROCESS=$(ps -fa |grep -i kubectl |grep 45000:3306 | awk -F ' ' '{print $2}')
+kill -9 $KUBECTL_PROCESS
+```
