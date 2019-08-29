@@ -25,7 +25,7 @@ using the following "one-liner" in your Linux shell:
 ```
 for i in {1..1}; do\
     hardwareId=device$i \
-    storageRoot="~/.esthesis/devices/device$i" \
+    storageRoot="$(echo ~$USER)/.esthesis/devices/device$i" \
     registrationUrl="http://localhost:46000" \
     incomingSigned=false \
     incomingEncrypted=false \
@@ -91,3 +91,20 @@ rm -rf $ESTHESIS_SRC_ROOT/esthesis-platform/esthesis-platform-server/src/main/re
 KUBECTL_PROCESS=$(ps -fa |grep -i kubectl |grep 45000:3306 | awk -F ' ' '{print $2}')
 kill -9 $KUBECTL_PROCESS
 ```
+
+=== Accessing InfluxDB via Chronograf
+Your InfluxDB is running in a container inside your Minikube environment. To access it, you will
+boot a Chronograf container in your PC, so you need to ensure that it can see your InfluxDB.
+
+First, setup a port forward from an arbitrary port of your PC to InfluxDB's port
+(make sure you change the name of the deployment as it exists in your local setup):
+
+    kubectl port-forward $(kubectl get pods | grep esthesis-ds-influxdb-deployment | awk -F ' ' '{print $1}') 5000:8086
+
+Next, startup the Chronograf Docker container:
+
+    docker run --rm --name telegraf -p 8888:8888 chronograf --influxdb-url=http://docker.for.mac.host.internal:5000
+
+You should pay attention to the `influxdb-url` parameter. The above, works for Mac; similarly, you can use it in
+Windows via `docker.for.win.host.internal`, however in Linux you need to startup your container with `--net=host` and use
+`localhost` instead.
