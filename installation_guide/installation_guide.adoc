@@ -12,9 +12,6 @@ _esthesis_ comprises of many different modules, some of them optional and some o
 
 TIP: We suggest you are a tid bit familiar with _esthesis_ link:architecture.adoc[Architecture] before you choose which installation option is suitable for your use case.
 
-== Binaries installation
-(TBC)
-
 == Docker installation
 (TBC)
 
@@ -199,14 +196,14 @@ The following resources are created:
 TIP: You can create an entry in your `hosts` file with the IP address of your Minikube to conveniently access the above URLs, for example, \http://minikube:32103.
 
 .How to install
-* Drop to your CLI and switch to `esthesis-setup/k8s/_setups/all-minikube`.
+* Drop to your CLI and switch to `esthesis-setup/k8s/_setups/all-minikube-dev`.
 * Create a namespace, so that you can easily delete all resources when no longer needed and switch to it: +
 `kubectl create namespace local-dev && kubens local-dev`
 * Set the `standard` storage class as your default one: +
 `kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'`
 * Execute `kustomize build . | kubectl apply -f -`
 
-TIP: _esthesis_ platform server is already configured with a JDBC URL pointing to the database running in Minikube (minikube:32101), so no reconfiguration is necessary.
+TIP: _esthesis_ platform server is out-of-the-box configured with a JDBC URL pointing to the database running in Minikube (minikube:32101), so no reconfiguration is necessary.
 
 
 == General configuration

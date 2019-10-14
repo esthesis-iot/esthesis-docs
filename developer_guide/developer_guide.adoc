@@ -13,6 +13,10 @@ Doc Writer <esthesis@eurodyn.com>
 [TBC] Talk about Skaffold:
 _esthesis_ Kubernetes configuration also support https://skaffold.dev/[Skaffold] to merge...
 
+== Setting up a development environment
+To setup your local environment for develepoment, refer to the Installation Guide document, section
+4.3, Minikube for developers.
+
 == Platform UI
 
 == Platform server
