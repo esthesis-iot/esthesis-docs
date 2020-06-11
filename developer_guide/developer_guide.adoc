@@ -52,6 +52,11 @@ registration URL as well as choosing tags you have already defined.
 TIP: To quickly kill all simulated processes you can execute: +
 `kill -9 $(ps -fA |grep -i "java -jar target/esthesis-device" | awk '{print $2}')`
 
+To work with code under development, you can replace the last line with:
+```
+mvn spring-boot:run -Dspring-boot.run & \
+```
+
 == Utilities
 === Capturing database schema changes
 You can edit the schema of the _esthesis_ platform database and automatically capture your changes
