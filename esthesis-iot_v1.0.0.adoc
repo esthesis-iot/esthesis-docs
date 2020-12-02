@@ -92,6 +92,15 @@ docker-compose -p esthesis up -d
 ```
 
 === Post-installation steps
+==== Check containers status
+As soon as all Docker containers have been initialised you can start using _esthesis_. You can monitor the status of your deployment using:
+
+```
+docker ps --format 'table {{.Names}}\t{{.Status}}' | grep esthesis
+```
+
+Once all containers are reportes as `healthy` you can login to _exthesis_.
+
 ==== Web location and admin account
 Using the default configuration options of _esthesis_, the frontend application is available on
 port 8080 of your Docker Engine host. For example, http://my-esthesis-host:8080.
