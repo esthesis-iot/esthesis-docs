@@ -36,7 +36,7 @@ you can find examples of both approaches.
 
 TIP: Depending on your bandwidth and Docker Engine's host performance, it might take a few minutes
 for the platform to be up and running. In a typical environment, the platform should be accessible
-within 2-3 minutes.
+within 5-10 minutes.
 
 === Installation options
 
@@ -99,11 +99,19 @@ As soon as all Docker containers have been initialised you can start using _esth
 docker ps --format 'table {{.Names}}\t{{.Status}}' | grep esthesis
 ```
 
-Once all containers are reportes as `healthy` you can login to _exthesis_.
+Before all containers ready:
+
+image::images/image-2020-12-02-15-41-53-256.png[]
+
+After all containers ready:
+
+image::images/image-2020-12-02-16-36-07-141.png[]
+
+Once all containers are reported as `healthy` you can login to _exthesis_.
 
 ==== Web location and admin account
 Using the default configuration options of _esthesis_, the frontend application is available on
-port 8080 of your Docker Engine host. For example, http://my-esthesis-host:8080.
+port 80 of your Docker Engine host. For example, http://my-esthesis-host.
 
 The default administration credentials are:
 ```
@@ -160,17 +168,35 @@ will take a few seconds; you can monitor the progress bar on top of your screen.
 is completed, you will be automatically redirected back to the list of NiFi servers.
 
 === Register the MQTT server
-image::images/image-2020-11-26-10-41-32-754.png[]
+image::images/image-2020-12-02-17-13-23-374.png[]
 * Navigate to `Infrastructure` > `MQTT`.
 * Register the MQTT server to be used by _esthesis_, associating it with the tag you created before.
 
 === Setup Data sinks
+image::images/image-2020-12-02-17-16-42-542.png[]
 For the purpose of a quick setup, the Data Wizards functionality will be used.
+
 * Navigate to `Data Wizards`.
+* Select `Standard infrastructure` and click on `Next`.
+* Fill-in the standard infrastructure data wizard form. If you have installes _esthesis_ using the
+provided Docker Compose file, you only need to change the address of your Docker engine and leave
+the remaining values to their default values.
+* Click on `Execute Wizard'. Once the progress bar is completed, your installation is fully configured.
 
 === Register a demo device
-You can now, optionally, register a demo device before you start using your real devices. _esthesis_
-<<_device_agent>> is provided as a Docker container (on top of a standalone agent format), so you can use it to quickly fire up a virtual demo device.
+image::images/image-2020-12-02-17-18-23-158.png[]
+You can, optionally, register a demo device before you start using your real devices. _esthesis_
+<<_device_agent>> is provided as a Docker container (on top of a standalone agent format), so you can use it to quickly fire up a virtual demo device. To start your demo device, issue a command similar
+to:
+```
+docker run --name esthesis-demo-device --network=esthesis_esthesis-prod -d  \
+-e hardwareId=device1 \
+-e storageRoot="/app" \
+-e tags=test1 \
+-e registrationUrl="http://my-esthesis-host" \
+esthesis/esthesis-platform-device:latest
+```
+
 
 == User guide
 TBC
@@ -236,7 +262,7 @@ The script is handed the following parameters:
 |registrationUrl
 |
 |The URL of the esthesis platform with which the device will attempt to register with. For example,
-'http://my-esthesis-installation.com'.
+'http://my-esthesis-host.com'.
 
 |secureStorageRoot
 |If empty, $storageRoot
@@ -509,7 +535,7 @@ The device agent can be executed in your device using a command similar to:
 ```
 hardwareId=device1 \
 storageRoot="$(echo ~$USER)/.esthesis" \
-registrationUrl=http://my-esthesis-installation \
+registrationUrl=http://my-esthesis-host \
 java -jar target/esthesis-platform-device.jar
 ```
 
@@ -530,6 +556,9 @@ _esthesis_ to extend its functionality.
 * Maven 3.6.x
 * Spring Boot 2.x
 * Angular 9
+
+=== Development environment
+TBC
 
 === Data Sinks [[dev-data-sinks]]
 TBC
