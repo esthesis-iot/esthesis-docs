@@ -176,40 +176,53 @@ This section presents the functionality as well as the configuration options of 
 
 === Configuration
 The device agent comes with a plethora of configuration options to accommodate different hardware and
-deployments as presented next. Mandatory parameters for the device agent to bootup properly are denoted with [red]#*#.
+deployments as presented next. Mandatory parameters for the device agent to bootup properly are denoted with [red]#*#. Values in **bold** indicate default values.
 
 .Commonly used parameters
 [cols="1,^,1"]
 |===
-|Parameter |Default value |Description
+|Parameter |Value |Description
 
 |hardwareId [red]#*#
-|
-|An alphanumeric ID that uniquely identifies this device. See also <<_hardware_ids>>.
+|Alphanumeric
+|An ID that uniquely identifies this device. See also <<_hardware_ids>>.
 
 |pauseStartup
-|Column 2, row 2
-|Column 3, row 2
+|true, **false**
+|A flag indicating whether the device should start paused. A paused device requires a keyboard input
+to resume booting, useful when debugging devices.
 
 |provisioningForkType
-|Column 2, row 2
-|Column 3, row 2
+|**soft**, hard
+|A provisioning package contains a script that will be executed by the agent in order to
+ initiate the actual provisioning process. This flag defines how such execution will take place:
+
+ soft: The script is called as a child process, controlled by the runtime agent. As soon as the
+       agent terminates, the provisioning script terminates too.
+
+ hard: The script is called as an independent process, not controlled by the runtime agent.
 
 |provisioningPostHook
-|Column 2, row 2
-|Column 3, row 2
+|
+|The script to be called after a provisioning package is downloaded.
+The script is handed the following parameters:
+
+1. The full pathname to the provisioning package.
+
+2. Whether this is an initial provisioning or not (as a true/false value).
 
 |provisioningRoot
-|Column 2, row 2
-|Column 3, row 2
+|If empty, $storageRoot/provisioning
+|The root folder to store remotely retrieved provisioning packages.
 
 |provisioningTempRoot
-|Column 2, row 2
-|Column 3, row 2
+|If empty, $storageRoot/provisioning/.tmp
+|The root folder to temporarily download a remotely retrieved provisioning packages. Once the
+ package is downloaded, it is moved to provisioningRoot.
 
 |rebootCommand
-|Column 2, row 2
-|Column 3, row 2
+|
+|The command to be executed to reboot the device.
 
 |registrationUrl
 |
@@ -217,256 +230,263 @@ deployments as presented next. Mandatory parameters for the device agent to boot
 'http://my-esthesis-installation.com'.
 
 |secureStorageRoot
-|Column 2, row 2
-|Column 3, row 2
+|If empty, $storageRoot
+|The root folder under which secure persistent storage is provided.
 
 |storageRoot [red]#*#
 |
 |The folder to store the agent's configuration and runtime files. For example, '/storage/esthesis'.
 
 |tags
-|Column 2, row 2
-|Column 3, row 2
+|
+|A comma-separated list of tags for the device to present during registration.
 
 |topicPing
-|Column 2, row 2
-|Column 3, row 2
+|**esthesis/ping**
+|The MQTT topic to send PING messages.
 
 |topicTelemetry
-|Column 2, row 2
-|Column 3, row 2
+|**esthesis/telemetry**
+|The MQTT topic to send TELEMETRY messages.
 
 |topicMetadata
-|Column 2, row 2
-|Column 3, row 2
+|**esthesis/metadata**
+|The MQTT topic to send METADATA messages.
 
 |topicControlRequest
-|Column 2, row 2
-|Column 3, row 2
+|**esthesis/control/request**
+|The MQTT topic to listen for CONTROL REQUEST messages.
 
 |topicControlReply
-|Column 2, row 2
-|Column 3, row 2
+|**esthesis/control/reply**
+|The MQTT topic to send CONTROL REPLY messages.
 
 |skipInitialProvisioning
-|true
+|**true**
 | A flag for the device to skip initial provisioning, useful in case the device comes with a firmware image already installed during factory setup.
 
 |skipRegistration
-|false
+|**false**
 |A flag indicating to skip the initial device registration with _esthesis_ platform, useful if you ship
 devices already registered.
 
 |supportedCommands
-|Column 2, row 2
-|Column 3, row 2
+|**PROVISIONING_CHECK_NEW,
+PING,
+HEALTH,
+REBOOT,
+EXECUTE**
+|A comma-separated list of commands this device supports.
 |===
 
 .Communication parameters
 [cols="1,^,1"]
 |===
-|Parameter |Default value |Description
+|Parameter |Value |Description
 
 |requestAttempts
-|Column 2, row 2
-|Column 3, row 2
+|**100**
+|The maximum number a request (to esthesis platform) is retried.
 
 |requestMaxBackoff
-|Column 2, row 2
-|Column 3, row 2
+|**60**
+|The maximum number of minutes to wait between attempts of previously failed requests.
 
 |requestRetryBackoff
-|Column 2, row 2
-|Column 3, row 2
+|**1000**
+|Number of milliseconds to wait before trying again a previously failed request.
 
 |===
 
 .Local services
 [cols="1,^,1"]
 |===
-|Parameter |Default value |Description
+|Parameter |Value |Description
 
 |proxyMqtt
-|Column 2, row 2
-|Column 3, row 2
+|true, **false**
+|A flag to indicate that the embedded MQTT-to-MQTT proxy server should be started.
 
 |proxyMqttPort
-|Column 2, row 2
-|Column 3, row 2
+|**4566**
+|The port of the embedded proxy MQTT server.
 
 |proxyWeb
-|Column 2, row 2
-|Column 3, row 2
+|true, **false**
+|A flag to indicate that the embedded web-to-MQTT proxy server should be started.
 
 |proxyWebPort
-|Column 2, row 2
-|Column 3, row 2
+|**4567**
+|The port of the embedded proxy Web server.
 
 |===
 
 .Security parameters
 [cols="1,^,1"]
 |===
-|Parameter |Default value |Description
+|Parameter |Value |Description
 
 |asymmetricCipher
-|Column 2, row 2
-|Column 3, row 2
+|**RSA/ECB/PKCS1Padding**
+|The cipher used for asymmetric encryption/decryption
 
 |asymmetricKeyAlgorithm
-|Column 2, row 2
-|Column 3, row 2
+|**RSA**
+|The algorithm the asymmetric keys (i.e. public and private keys) are created with.
 
-|incomingEncrypted
-|Column 2, row 2
-|Column 3, row 2
+|Whether incoming messages should be encrypted.
+|true, **false**
+|A flag indicating whether incoming messages should be encrypted.
 
 |incomingSigned
-|Column 2, row 2
-|Column 3, row 2
+|true, **false**
+|A flag indicating whether incoming messages should be signed.
 
 |outgoingEncrypted
-|Column 2, row 2
-|Column 3, row 2
+|true, **false**
+|A falg indicating whether outgoing messages are encrypted.
 
 |outgoingSigned
-|Column 2, row 2
-|Column 3, row 2
+|true, **false**
+|A flag indicating whether outgoing messages are signed.
 
 |provisioningEncrypted
-|Column 2, row 2
-|Column 3, row 2
+|true, **false**
+|A flag indicating whether incoming provisioning packages should be encrypted.
 
 |provisioningSigned
-|Column 2, row 2
-|Column 3, row 2
+|true, **false**
+|A flag indicating whether incoming provisioning packages should be signed.
 
 |signatureAlgorithm
-|Column 2, row 2
-|Column 3, row 2
+|**SHA256withRSA**
+|The algorithm to be used when signing messages.
 
 |symmetricCipher
-|Column 2, row 2
-|Column 3, row 2
+|**AES/CBC/PKCS5Padding**
+|The cipher used for symmetric encryption/decryption.
 
 |symmetricKeyAlgorithm
-|Column 2, row 2
-|Column 3, row 2
+|AES
+|The algorithm the symmetric key (i.e. the session key) is created with.
 
 |===
 
 .Health checks parameters
 [cols="1,^,1"]
 |===
-|Parameter |Default value |Description
+|Parameter |Value |Description
 
 |healthDataFreqMsec
-|Column 2, row 2
-|Column 3, row 2
+|**3600000**
+|How often health data from the node are transmitted back to the platform (in msec).
 
 |healthDataInitialDelayMsec
-|Column 2, row 2
-|Column 3, row 2
+|**3600000**
+|How long to wait before starting transmitting health data (in msec).
 
 |pingFreqMsec
-|Column 2, row 2
-|Column 3, row 2
+|60000
+|How often PING data is sent (in msec).
 
 |pingInitialDelayMsec
-|Column 2, row 2
-|Column 3, row 2
+|60000
+|How long to wait before start sending ping data (in msec).
 
 |hcOsManufacturer
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return manufacturer information in health messages.
 
 |hcOsVersion
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return OS version information in health messages.
 
 |hcHwSerial
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return hardware serial number information in health messages.
 
 |hcCpuPhysicalPackage
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the number of CPUs information in health messages.
 
 |hcCpuPhysicalCores
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the number of physical CPU cores information in health messages.
 
 |hcCpuLogicalCores
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the number of logical CPU cores information in health messages.
 
 |hcCpuIdentifier
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the CPU identifier information in health messages.
 
 |hcCpuProcessorId
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the CPU processor ID information in health messages
 
 |hcCpuTemperature
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the CPU temperature information in health messages.
 
 |hcMemoryAvailable
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the available memory information in health messages.
 
 |hcMemoryTotal
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the total memory information in health messages.
 
 |hcLoad1
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the load in the last 1' information in health messages.
 
 |hcLoad5
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the load in the last 5' information in health messages.
 
 |hcLoad15
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the load in the last 15' information in health messages.
 
 |hcFs
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return information about filesystems usage in health messages.
 
 |hcFilterFs
-|Column 2, row 2
-|Column 3, row 2
+|
+|A comma-separated list of filestystems to include in health messages. If left empty, all
+discovered filesystems will be included.
 
 |hcCurrentTime
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Return the device's local clock date/time.
 
 |hcUpTime
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Returns the device's uptime in health messages.
 
 |hcIpAddress
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Returns the device's IP address in health messages.
 
 |hcIpIfFilter
-|Column 2, row 2
-|Column 3, row 2
+|
+|A comma-separated list of interface names to include when reporting their IP address. If left
+empty, all interfaces will be included.
 
 |runtimeVersion
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Returns the device's agent version in health messages.
 
 |runtimeCommitId
-|Column 2, row 2
-|Column 3, row 2
+|**true**, false
+|Returns the commit ID of the runtime agent running on the device in health messages.
 
 |firmwareVersionFile
-|Column 2, row 2
-|Column 3, row 2
+|
+|A file containing the firmware version to be reported. The contents of this file are read by the
+agent and reported in health checks.
 |===
 
 === Installation
@@ -478,13 +498,18 @@ is available within the JAR file (see Developer guide, <<dev-device-agent>>).
 
 The device agent can be executed in your device using a command similar to:
 ```
-
+hardwareId=device1 \
+storageRoot="$(echo ~$USER)/.esthesis" \
+registrationUrl=http://my-esthesis-installation \
+java -jar target/esthesis-platform-device.jar
 ```
 
-=== Device simulator
-A device simulator running the device agent is provided by _esthesis_ as a Docker container. You can
-use the device simulator to test your installation or to simulate workloads to stress test your
-environment.
+_esthesis_ comes with a Device Simulator to let you test your installation. To use the Device simulator, see <<dev-device-simulator>>.
+
+=== Embedded Web server
+TBC
+
+=== Embedded MQTT server
 TBC
 
 == Developer guide
@@ -502,5 +527,10 @@ TBC
 
 === Device agent [[dev-device-agent]]
 TBC
+
+==== Device simulator [[dev-device-simulator]]
+A device simulator running the device agent is provided by _esthesis_ as a Docker container. You can
+use the device simulator to test your installation or to simulate workloads to stress test your
+environment.
 
 ==== Hardware IDs
