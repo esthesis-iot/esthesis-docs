@@ -1,0 +1,506 @@
+= esthesis IoT platform
+Doc Writer <esthesis@eurodyn.com>
+:toc:
+:toclevels: 2
+:homepage: https://esthesis.com
+:icons: font
+:sectanchors:
+:sectlinks:
+
+_esthesis_ is a modern Internet of Things platform, providing end-to-end management services
+for your devices. It consists of device management functionality, over-the-air firmware upgrade
+services, and a modular data-management approach. Built-in support for certificates and certificate
+authorities allows you to effortlessly set up a secure communication environment with your devices where
+provisioning packages can be signed and/or encrypted on the fly.
+
+== Installation
+Installation is based on public Docker containers, so you can setup your own _esthesis_ environment
+quickly and with minimal effort. A Docker Compose file is provided so that you can setup all the
+necessary infrastructure from scratch:
+
+.Support services
+* **A MySQL database**, acting as the main database of the platform. It stores information about the
+devices, users, provisioning packages, etc., but not any device telemetry data.
+* **An Apache NiFi instance**, acting as the data management and data distribution layer.
+* **An Eclipse Mosquitto MQTT server**, providing the necessary infrastructure for device communication.
+* **An InfluxDB database**, to store device telemetry data.
+* **An NGINX reverse proxy**, to expose _esthesis_ services.
+
+.Main services
+* **esthesis platform backend server**, the server component of the platform.
+* **esthesis platform frontend**, a web-based frontend for users to manage the platform.
+
+While 'main services' are necessary for _esthesis_ to function, everything provided by the 'support services'
+is optional, so you can replace it with your own locally managed installations. In the following sections
+you can find examples of both approaches.
+
+TIP: Depending on your bandwidth and Docker Engine's host performance, it might take a few minutes
+for the platform to be up and running. In a typical environment, the platform should be accessible
+within 2-3 minutes.
+
+=== Installation options
+
+==== All-in-one installation
+This installation is the quickest way to go from an empty system to a fully-functional _esthesis_
+platform in just a few minutes. It will create, link and configure all necessary Docker
+containers to provide all the support and main services for you.
+
+You can perform an all-in-one installation issuing the following command:
+
+```
+curl -Ls https://cutt.ly/esthesis | \
+DB_PORT=45000 \
+MYSQL_ROOT_PASSWORD=root \
+MYSQL_USER=esthesis \
+MYSQL_PASSWORD=esthesis \
+MYSQL_DATABASE=esthesis \
+PORT_MQTT=1883 \
+PORT_MQTT_SECURE=8883 \
+INFLUXDB_DB=esthesis \
+INFLUXDB_ADMIN_USER=admin \
+INFLUXDB_ADMIN_PASSWORD=admin \
+NIFI_WEB_PROVIDERS_PORT_LOW=20000 \
+NIFI_WEB_PROVIDERS_PORT_HIGH=20100 \
+NIFI_WEB_UI=8080 \
+PORT_ESTHESIS_BACKEND=46000 \
+PORT_ESTHESIS_UI=8080 \
+PORT_ESTHESIS_PROXY=80 \
+docker-compose -p esthesis -f /dev/stdin up -d
+```
+
+The above command will fetch _esthesis_' https://raw.githubusercontent.com/esthesis-iot/esthesis-setup/master/docker/prod/docker-compose.yml[docker-compose file]
+and setup all necessary containers with the configuration options you have specified above.
+
+==== Selective services only installation
+You can specify which specific services of _esthesis_ you need in your installation by takign advantage
+of Docker Compose's built-in functionality to only start specific services. For example, if you want
+to use your own resources instead of _esthesis_ 'supporting services' and only install _esthesis_
+'main services', you can substitute `docker-compose -p esthesis -f /dev/stdin up -d` above with:
+
+```
+docker-compose -p esthesis -f /dev/stdin up -d esthesis-platform-backend-server esthesis-platform-ui
+```
+
+==== Manual installation
+You can download the configuration options and the docker-compose file to change them in order to
+perform a custom, manual installation:
+https://raw.githubusercontent.com/esthesis-iot/esthesis-setup/master/docker/prod/docker-compose.yml[docker-compose file],
+https://raw.githubusercontent.com/esthesis-iot/esthesis-setup/master/docker/prod/.env[.env file].
+Once you have the files locally downloaded, you can proceed to the installation issuing the following command:
+```
+docker-compose -p esthesis up -d
+```
+
+=== Post-installation steps
+==== Web location and admin account
+Using the default configuration options of _esthesis_, the frontend application is available on
+port 8080 of your Docker Engine host. For example, http://my-esthesis-host:8080.
+
+The default administration credentials are:
+```
+Username: admin@esthes.is
+Password: admin
+```
+
+WARNING: You should change the default credentials as soon as possible to prevent unauthorised access to your platform.
+
+== Quick start
+image::images/image-2020-11-25-16-59-02-520.png[Login screen]
+This section will guide you through some basic configuration options once you have a new installation
+of _esthesis_ up and running. Please take into account that the configuration options presented here are
+probably not what you should be using in production, so you may need to tweak them to your
+organisation's requirements before you expose _esthesis_ services to untrusted networks.
+
+=== Create a certificate authority
+image::images/image-2020-11-25-17-35-14-814.png[alt="Creating a certificate authority"]
+* Navigate to `Certificate Authorities`.
+* Create a new certificate authority, leaving the `Parent CA` option empty.
+
+=== Create a platform certificate
+image::images/image-2020-11-25-17-39-22-358.png[alt="Creating a certificate"]
+* Navigate to `Certificates`.
+* Create a new certificate choosing the certificate authority created above as `Signed by`.
+
+=== Platform settings - security
+image::images/image-2020-11-26-08-47-31-181.png[]
+* Navigate to `Settings` > `Security`.
+* Set the Platform certificate to the certificate you created above.
+
+=== Platform settings - Device registration
+image::images/image-2020-11-26-10-18-41-874.png[]
+* Navigate to `Settings` > `Device registration`.
+* Set Registration mode to `Open registration`.
+* Set Root Certificate Authority to the one you created above.
+
+=== Platform settings - Provisioning
+image::images/image-2020-11-26-10-20-58-614.png[]
+* Navigate to `Settings` > `Provisioning`.
+* Set Provisioning URL to the address where _esthesis_ platform proxy container is accessible from.
+
+=== Create a tag
+image::images/image-2020-11-26-10-22-40-732.png[]
+* Navigate to `Tags`.
+* Create a tag you can associate resources with.
+
+=== Register and synchronise NiFi
+image::images/image-2020-11-26-10-26-24-751.png[]
+* Navigate to `Infrastructure` > `NiFi`.
+* Register the NiFi server to be used by _esthesis_.
+* Once NiFi is registered, open on the newly created instance and click on `Synchronise`. Synchronisation
+will take a few seconds; you can monitor the progress bar on top of your screen. Once synchronisation
+is completed, you will be automatically redirected back to the list of NiFi servers.
+
+=== Register the MQTT server
+image::images/image-2020-11-26-10-41-32-754.png[]
+* Navigate to `Infrastructure` > `MQTT`.
+* Register the MQTT server to be used by _esthesis_, associating it with the tag you created before.
+
+=== Setup Data sinks
+For the purpose of a quick setup, the Data Wizards functionality will be used.
+* Navigate to `Data Wizards`.
+
+=== Register a demo device
+You can now, optionally, register a demo device before you start using your real devices. _esthesis_
+<<_device_agent>> is provided as a Docker container (on top of a standalone agent format), so you can use it to quickly fire up a virtual demo device.
+
+== User guide
+TBC
+
+== Device agent
+The device agent is the piece of software that runs in your devices allowing you to seamlessly connect
+and control them from _esthesis_ platform. _esthesis_ provides a device agent that you can use
+right of the box to interconnect any device capable of running Java (future versions of the device
+agent will support additional options).
+
+This section presents the functionality as well as the configuration options of the device agent.
+
+=== Configuration
+The device agent comes with a plethora of configuration options to accommodate different hardware and
+deployments as presented next. Mandatory parameters for the device agent to bootup properly are denoted with [red]#*#.
+
+.Commonly used parameters
+[cols="1,^,1"]
+|===
+|Parameter |Default value |Description
+
+|hardwareId [red]#*#
+|
+|An alphanumeric ID that uniquely identifies this device. See also <<_hardware_ids>>.
+
+|pauseStartup
+|Column 2, row 2
+|Column 3, row 2
+
+|provisioningForkType
+|Column 2, row 2
+|Column 3, row 2
+
+|provisioningPostHook
+|Column 2, row 2
+|Column 3, row 2
+
+|provisioningRoot
+|Column 2, row 2
+|Column 3, row 2
+
+|provisioningTempRoot
+|Column 2, row 2
+|Column 3, row 2
+
+|rebootCommand
+|Column 2, row 2
+|Column 3, row 2
+
+|registrationUrl
+|
+|The URL of the esthesis platform with which the device will attempt to register with. For example,
+'http://my-esthesis-installation.com'.
+
+|secureStorageRoot
+|Column 2, row 2
+|Column 3, row 2
+
+|storageRoot [red]#*#
+|
+|The folder to store the agent's configuration and runtime files. For example, '/storage/esthesis'.
+
+|tags
+|Column 2, row 2
+|Column 3, row 2
+
+|topicPing
+|Column 2, row 2
+|Column 3, row 2
+
+|topicTelemetry
+|Column 2, row 2
+|Column 3, row 2
+
+|topicMetadata
+|Column 2, row 2
+|Column 3, row 2
+
+|topicControlRequest
+|Column 2, row 2
+|Column 3, row 2
+
+|topicControlReply
+|Column 2, row 2
+|Column 3, row 2
+
+|skipInitialProvisioning
+|true
+| A flag for the device to skip initial provisioning, useful in case the device comes with a firmware image already installed during factory setup.
+
+|skipRegistration
+|false
+|A flag indicating to skip the initial device registration with _esthesis_ platform, useful if you ship
+devices already registered.
+
+|supportedCommands
+|Column 2, row 2
+|Column 3, row 2
+|===
+
+.Communication parameters
+[cols="1,^,1"]
+|===
+|Parameter |Default value |Description
+
+|requestAttempts
+|Column 2, row 2
+|Column 3, row 2
+
+|requestMaxBackoff
+|Column 2, row 2
+|Column 3, row 2
+
+|requestRetryBackoff
+|Column 2, row 2
+|Column 3, row 2
+
+|===
+
+.Local services
+[cols="1,^,1"]
+|===
+|Parameter |Default value |Description
+
+|proxyMqtt
+|Column 2, row 2
+|Column 3, row 2
+
+|proxyMqttPort
+|Column 2, row 2
+|Column 3, row 2
+
+|proxyWeb
+|Column 2, row 2
+|Column 3, row 2
+
+|proxyWebPort
+|Column 2, row 2
+|Column 3, row 2
+
+|===
+
+.Security parameters
+[cols="1,^,1"]
+|===
+|Parameter |Default value |Description
+
+|asymmetricCipher
+|Column 2, row 2
+|Column 3, row 2
+
+|asymmetricKeyAlgorithm
+|Column 2, row 2
+|Column 3, row 2
+
+|incomingEncrypted
+|Column 2, row 2
+|Column 3, row 2
+
+|incomingSigned
+|Column 2, row 2
+|Column 3, row 2
+
+|outgoingEncrypted
+|Column 2, row 2
+|Column 3, row 2
+
+|outgoingSigned
+|Column 2, row 2
+|Column 3, row 2
+
+|provisioningEncrypted
+|Column 2, row 2
+|Column 3, row 2
+
+|provisioningSigned
+|Column 2, row 2
+|Column 3, row 2
+
+|signatureAlgorithm
+|Column 2, row 2
+|Column 3, row 2
+
+|symmetricCipher
+|Column 2, row 2
+|Column 3, row 2
+
+|symmetricKeyAlgorithm
+|Column 2, row 2
+|Column 3, row 2
+
+|===
+
+.Health checks parameters
+[cols="1,^,1"]
+|===
+|Parameter |Default value |Description
+
+|healthDataFreqMsec
+|Column 2, row 2
+|Column 3, row 2
+
+|healthDataInitialDelayMsec
+|Column 2, row 2
+|Column 3, row 2
+
+|pingFreqMsec
+|Column 2, row 2
+|Column 3, row 2
+
+|pingInitialDelayMsec
+|Column 2, row 2
+|Column 3, row 2
+
+|hcOsManufacturer
+|Column 2, row 2
+|Column 3, row 2
+
+|hcOsVersion
+|Column 2, row 2
+|Column 3, row 2
+
+|hcHwSerial
+|Column 2, row 2
+|Column 3, row 2
+
+|hcCpuPhysicalPackage
+|Column 2, row 2
+|Column 3, row 2
+
+|hcCpuPhysicalCores
+|Column 2, row 2
+|Column 3, row 2
+
+|hcCpuLogicalCores
+|Column 2, row 2
+|Column 3, row 2
+
+|hcCpuIdentifier
+|Column 2, row 2
+|Column 3, row 2
+
+|hcCpuProcessorId
+|Column 2, row 2
+|Column 3, row 2
+
+|hcCpuTemperature
+|Column 2, row 2
+|Column 3, row 2
+
+|hcMemoryAvailable
+|Column 2, row 2
+|Column 3, row 2
+
+|hcMemoryTotal
+|Column 2, row 2
+|Column 3, row 2
+
+|hcLoad1
+|Column 2, row 2
+|Column 3, row 2
+
+|hcLoad5
+|Column 2, row 2
+|Column 3, row 2
+
+|hcLoad15
+|Column 2, row 2
+|Column 3, row 2
+
+|hcFs
+|Column 2, row 2
+|Column 3, row 2
+
+|hcFilterFs
+|Column 2, row 2
+|Column 3, row 2
+
+|hcCurrentTime
+|Column 2, row 2
+|Column 3, row 2
+
+|hcUpTime
+|Column 2, row 2
+|Column 3, row 2
+
+|hcIpAddress
+|Column 2, row 2
+|Column 3, row 2
+
+|hcIpIfFilter
+|Column 2, row 2
+|Column 3, row 2
+
+|runtimeVersion
+|Column 2, row 2
+|Column 3, row 2
+
+|runtimeCommitId
+|Column 2, row 2
+|Column 3, row 2
+
+|firmwareVersionFile
+|Column 2, row 2
+|Column 3, row 2
+|===
+
+=== Installation
+The device agent comes in the form of a self-contained Java JAR file. The JAR file encapsulates all
+the runtime dependencies needed, so you can execute the agent just by obtaining the
+`esthesis-platform-device.jar` file. To ease integration and, in particular, updates of the device
+agent, the JAR filename does not contain a version information. However, detailed version information
+is available within the JAR file (see Developer guide, <<dev-device-agent>>).
+
+The device agent can be executed in your device using a command similar to:
+```
+
+```
+
+=== Device simulator
+A device simulator running the device agent is provided by _esthesis_ as a Docker container. You can
+use the device simulator to test your installation or to simulate workloads to stress test your
+environment.
+TBC
+
+== Developer guide
+The following sections provide information for software developers that might want to work with
+_esthesis_ to extend its functionality.
+
+.Main technical stack
+* JDK 13.x
+* Maven 3.6.x
+* Spring Boot 2.x
+* Angular 9
+
+=== Data Sinks [[dev-data-sinks]]
+TBC
+
+=== Device agent [[dev-device-agent]]
+TBC
+
+==== Hardware IDs
