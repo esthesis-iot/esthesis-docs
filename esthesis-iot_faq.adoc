@@ -1,0 +1,46 @@
+= esthesis IoT platform - FAQ
+Doc Writer <esthesis@eurodyn.com>
+:toc:
+:toclevels: 2
+:homepage: https://esthesis.com
+:icons: font
+:sectanchors:
+:sectlinks:
+
+== General
+=== Another IoT platform?
+_esthesis_ was conceived while the original team behind it was working on an R&D project. We had
+simple needs and we needed a simple platform to manage them. We did look at what was available in the
+market, both in open source and commercial software, and we were amazed by the quality and features
+in some of the offerings. We tried a few but at the end we realised that all of them were bringing
+into our R&D project a lot of complexity that we did not want to have to manage. So, we went with
+a homemade, cut-down IoT platform. The initial version was small and not exceptionally feature-rich, however it was simple to understand, operate, and extend when necessary. Future projects came in, and
+little by little the platform was expanded to what you see today.
+
+== Front-end and Back-end platform components
+
+== Device Agent
+=== On which platforms the device agent runs?
+The device agent shipped with _esthesis_ is a command-line Java application. If your device supports
+running a JRE, it can use the _esthesis_ device agent as well. There may be future versions of the
+device agent to accommodate thinner devices not capable of executing Java, however this may come as demand grows.
+
+=== Which sensors does the device agent supports?
+None. The _esthesis_ device agent is a piece of software installed and running on your device, so
+that your device can be connected, controlled, and communicate with _esthesis_ platform. The device
+agent can accept data from any other software or scripts running in your device and forward it to
+the _esthesis_ platform.
+
+=== What is the difference between telemetry and metadata messages?
+Telemetry and metadata messages share the exact same message format. However, telemetry data are
+always inserted as new data into your underlying data storage product, whereas metadata data follow an upsert logic (provided your chosen data storage product supports it). This separation of message types
+allows you to keep the last value of a measurement close to your main data storage, whereas data for
+which you need a complete history can be kept to your secondary, or big data, data storage.
+
+An example scenario we have seen been implemented in the past, is to transmit the IP address of a device as metadata, whereas the latest temperature value to be transmitted as telemetry.
+
+== Installation and Configuration
+=== I have my own MQTT/InfluxDB/Nifi instances, can I use them instead?
+Absolutely. _esthesis_ platform comes out of the box with a Docker Compose file that boots up a
+complete IoT infrastructure for you, so you can be up and running within minutes. However, it is up
+to you which of these components to use.

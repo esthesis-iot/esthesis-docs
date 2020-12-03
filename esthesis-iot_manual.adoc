@@ -583,12 +583,6 @@ You can find additional information on the device agent in the following section
 The following sections provide information for software developers that might want to work with
 _esthesis_ to extend its functionality.
 
-.Main technical stack
-* JDK 13.x
-* Maven 3.6.x
-* Spring Boot 2.x
-* Angular 9
-
 === Architecture
 _esthesis_ is an IoT platform. Admittedly, this is a broad definition and may include, or not include,
 different things according to the context in which it is being used. In high-level terms, in an IoT
@@ -656,13 +650,95 @@ in _esthesis_ open architecture preventing you from doing so. You can find addit
 protocols and supported data flows of the device agent in the Developr Guide, <<dev-device-agent>> section.
 
 ==== MQTT server
-The MQTT server is the building block providing bidirection communication between devices and the
-_esthesis_ platform.
+The MQTT server is the building block providing bidirectional communication between devices and
+_esthesis_ platform. _esthesis_ comes with an Eclipse Mosquitto MQTT, however you can use any other
+compatible MQTT server. The MQTT design in _esthesis_ utilises five different topics to communicate
+with devices as presented next:
+
+.MQTT topics used with devices
+image::diagrams/architecture3.png[]
+
+The default topic names are depicted above, however topic names are configurable. If you wish to
+change the topic names you need to do so in the configuration parameters of the device agent as
+well as in the Data Reader data sinks of _esthesis_. The supported channels are:
+
+* `esthesis/ping/{hardwareId}`: Heartbeat messages from devices. The frequency of each ping message,
+when using the provided _esthesis_ device agent, is configurable. Direction: Device to _esthesis_ platform.
+* `esthesis/telemetry/{hardwareId}`: Telemetry data submitted by the device. Direction: Device to _esthesis_ platform.
+* `esthesis/metadata/{hardwareId}`: Metadata data submitted by the device. Direction: Device to _esthesis_ platform.
+* `esthesis/control/reply/{hardwareId}`: Device response to a command previously received. Direction: Device to _esthesis_ platform.
+* `esthesis/control/request/{hardwareId}`: Requests originating from _esthesis_ platform for the
+device to execute a specific command. Direction: _esthesis_ platform to device.
+
+For the exact format of each message payload, see <<dev-messaging-specs>>.
 
 ==== NiFi server
+Apache Nifi is at the core of our design for the _esthesis_ platform. It is the layer where data
+delivery and distribution takes place and it is fully managed by the _esthesis_ platform server.
+
+_ethesis_ can work with the NiFi Docker Container it ships with, or plug into a NiFi instance you
+might already have running. Once _esthesis_ plugs into a NiFi instance, it first deploys an
+empty data workflow into that NiFi, as depicted below:
+
+._esthesis_ top-level NiFi Process Group
+image::images/image-2020-12-03-16-40-59-958.png[]
+
+_esthesis_ creates a Process Group in the root of the NiFi instance and everything else in encapsulated
+within that group, so it can co-exist with other already deployed processes without polluting any
+infrastructure already in place.
+
+As NiFi is fully managed by the _esthesis_ platform, an _esthesis_ administrator is not expected to
+interact directly with NiFi. In fact, _esthesis_ was installed following the default installation
+process, the web interface of NiFi is not becoming exposed.
+
+Integration with NiFi is based on four different concepts as presented next:
+
+image::images/image-2020-12-03-16-52-40-935.png[]
+
+===== Readers
+Readers are responsible for inbound data traffic. Data Readers, as named in _esthesis_ platform
+administration user interface, allow the administrator to retrieve data from a variety of data sources.
+You can start with a single instance, for example, an MQTT Data Reader to ingest data from your devices
+and expand to any number of additional Data Readers as your devices fleet starts to grow and you
+want to segregate the traffic. Data Readers can be of heterogenous nature and you can intermix
+different types of technologies together, as long as messages adhere to _esthesis_ messaging protocol
+(for protocol specifications, see <<dev-messaging-specs>>).
+
+===== Writers
+Writers are responsible for outbound data traffic. Data Writers, as named in _esthesis_ platform
+aadministration user interface, allow the administration to specify where data persists when
+routed through NiFi. You can persist the same piece of data to multiple different data sources at
+once, for example, storing your telemetry values in a time-series database for long-term storage
+while in parallel you send them to a Kafka cluster for real-time processing.
+
+===== Producers
+Producers are responsible to generate data replies by querying their underlying data sources. Data
+Producers, as named in _esthesis_ platform administration user interface, allow the administrator
+to define REST-enabled endpoints that can be queried from the _esthesis_ platform (and, effectiely,
+by the end-users of the platform too). Data Producers, together with the Applications functionality
+of the _esthesis_ platform, deliver the equivalent of a Digital Twin for your devices. You can have
+multiple Data Producers which are transparently load-balanced by _esthesis_.
+
+===== Loggers
+Loggers are responsible to concentrate logging output from all processors deployed in NiFi. Data
+Loggers, as named in _esthesis_ platform administration user interface, allow the administrator to
+define the targets on which logging information is persisted to.
 
 === Development environment
-TBC
+.Main technical stack
+* JDK 13.x
+* Maven 3.6.x
+* Spring Boot 2.x
+* Angular 9
+
+.Version control
+https://github.com/esthesis-iot
+
+Integration of new features takes place via GitHub's Pull Requests.
+
+.Supporting Docker containers
+There is a Docker Compose file, targeted to developers, allowing you to quickly setup the necessary supporting infrastructure to work with _esthesis_ source code under `esthesis-setup/docker/dev`.
+
 
 === Data Sinks [[dev-data-sinks]]
 TBC
@@ -680,7 +756,7 @@ post via MQTT or REST will be automatically transferred to your registered _esth
 the device simulator is capable of producing random data for you. To enable this option, you can
 utilise the following parameters: `demo`, `demoFreqMsec`, `demoInitialDelayMsec`, `demoPayload` (see <<demo-parameters>>).
 
-The payload of the random data that is transmitted consists of the following JSON structure:
+The default payload of the random data that is transmitted consists of the following JSON structure:
 ```
 {
   "m": "demo",
@@ -697,3 +773,14 @@ The `%` placeholders denote variables that will be subtituted during message con
 * `%f%` will be substituted with a random float value from 0 to 100.
 
 ==== Hardware IDs
+_How to work with, how to find them [TBC]_
+
+==== _esthesis_ messaging specifications [[dev-messaging-specs]]
+_esthesis_ supports a simple, lightweight, JSON-based message payload. If you want to check the
+validity of your JSON payloads, a JSON Schema is available at https://github.com/esthesis-iot/esthesis-platform/blob/master/esthesis-platform-backend/esthesis-platform-backend-server/src/main/resources/nifi/esthesis-data-schema.json.
+
+===== PING message
+
+===== TELEMETRY message
+
+===== METADATA message
