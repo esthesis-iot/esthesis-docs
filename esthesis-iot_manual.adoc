@@ -738,12 +738,20 @@ Integration of new features takes place via GitHub's Pull Requests.
 
 .Supporting Docker containers
 There is a Docker Compose file, targeted to developers, allowing you to quickly setup the necessary supporting infrastructure to work with _esthesis_ source code under `esthesis-setup/docker/dev`.
-
+The developers version is similar to the production one, however it locally exposes all contaier's
+ports by default, it incorporates additiinal tools (like Chronograf, and a syslog server), and does
+not boot up the _esthesis_ platform back-end and front-end components.
 
 === Data Sinks [[dev-data-sinks]]
 TBC
 
 === Device agent [[dev-device-agent]]
+TBC
+
+==== Registration sequence
+TBC
+
+==== Provisioning sequenece
 TBC
 
 ==== Device simulator [[dev-device-simulator]]
@@ -784,3 +792,15 @@ validity of your JSON payloads, a JSON Schema is available at https://github.com
 ===== TELEMETRY message
 
 ===== METADATA message
+
+=== Security hardening
+TBC
+
+==== Securing NiFi
+TBC
+
+==== Securing MQTT
+TBC
+
+==== Signed and Encrypted payloads
+TBC
