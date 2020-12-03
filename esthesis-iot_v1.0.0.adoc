@@ -197,6 +197,8 @@ docker run --name esthesis-demo-device --network=esthesis_esthesis-prod -d  \
 esthesis/esthesis-platform-device:latest
 ```
 
+The demo device can also send random data, if configured accordingly. For demo data configuration see
+<<dev-device-simulator>>.
 
 == User guide
 TBC
@@ -524,6 +526,29 @@ empty, all interfaces will be included.
 agent and reported in health checks.
 |===
 
+[[demo-parameters]]
+.Demo parameters
+[cols="1,^,1"]
+|===
+|Parameter |Value |Description
+
+|demo
+|true, **false**
+|A flag instructing the agent to submit random telemetry data.
+
+|demoFreqMsec
+|**5000**
+|The period in which random data is generated and sent (in msec).
+
+|demoInitialDelayMsec
+|**5000**
+|The amount of time to wait before the agent starts submitting random data (in msec).
+
+|demoPayload
+|{`"m": "demo", "v": { "temperature": %i%, "humidity": %f%}`
+|The payload of the random data (see also <<dev-device-simulator>>).
+|===
+
 === Installation
 The device agent comes in the form of a self-contained Java JAR file. The JAR file encapsulates all
 the runtime dependencies needed, so you can execute the agent just by obtaining the
@@ -547,6 +572,13 @@ TBC
 === Embedded MQTT server
 TBC
 
+
+=== Additional information
+You can find additional information on the device agent in the following sections:
+
+* For an architectural point of view, see <<architecture-device-agent, Architecture - Device agent>>.
+* For a developer's point of view, see <<dev-device-agent, Developer Guide - Device agent>>.
+
 == Developer guide
 The following sections provide information for software developers that might want to work with
 _esthesis_ to extend its functionality.
@@ -556,6 +588,78 @@ _esthesis_ to extend its functionality.
 * Maven 3.6.x
 * Spring Boot 2.x
 * Angular 9
+
+=== Architecture
+_esthesis_ is an IoT platform. Admittedly, this is a broad definition and may include, or not include,
+different things according to the context in which it is being used. In high-level terms, in an IoT
+environment you would expect to have devices that collect data. The data needs to be transmitted
+to a data collection endpoint and then, eventually, persist into a data storage:
+
+.Basic concepts of an IoT platform
+image::diagrams/architecture1.png[]
+
+_esthesis_ takes a holistic approach towards devices and data management by utilising state of the
+art, mature tools and building the necessary IoT management on top.
+
+The main architectural components of _esthesis_ consist of the following building blocks:
+
+* A front-end, web-based application to manage _esthesis_.
+* A back-end application, to provide services necessary to the front-end as well as to devices.
+* A device agent, to provide connectivity to remote devices.
+* An MQTT server to communicate with devices.
+* An Apache NiFi server to provide dataflow management services.
+
+The following figure presents the main building blocks of _esthesis_ as well as the interconnection
+between them:
+
+.Architectural building blocks of _esthesis_
+image::diagrams/architecture2.png[]
+
+The following sections provide an overview of the role of each building block into _esthesis_ IoT platform.
+
+==== _esthesis_ proxy, front-end, and back-end
+The _esthesis_ front-end and back-end are the core building blocks delivering the functionality of
+_esthesis_ IoT platform. Access to both componets is provided via a reverse proxy, delivering in the
+form of a Docker container as part of the _esthesis_ deployment.
+
+The front-end block, provides the user interface of _esthesis_ platform. It is a modern, Single Page Application, compatible with all major Internet browsers.
+
+The back-end block, provides the services necessary to fetch information to the front-end block as
+well as services geared towards devices.
+
+==== Device agent [[architecture-device-agent]]
+The device agent is the piece of software running within your device, allowing it to be remotely
+managed. _esthesis_ comes with its own device agent that can be incorproated into your devices,
+making them remotely managed with minimal effort.
+
+The device agent is an autonomous piece of software, not aware of what kind of device is running on. Effectively, the device agent does not know what
+kind of sensors your device has, what kind of data needs to be collected, or how access to sensors
+providing the data is to be realised. Communication with device-specific sensors and data collection
+is handled by other custom, device-specific software running on the device. Such software
+can be a complex, elaborated solution you have created as part of your project, or just a simple cron-based script that polls your sensors and collects data.
+
+Data from sensors that has been collected locally on the device has little value if they only stay
+in the device itself. Eventually, you need all sensor data to be concentrated on a data storage, so that you can utilise it to deliver your added-value services. The _esthesis_ device agent provides two local communication channels within your device: An embedded MQTT server, and an embedded Web server. The configuration options of the device agent allows you to specify which of those two
+channels become available and you can choose to have none, either, or both active.
+
+The local endpoints provided by the device agent allow any local process to submit data simply by
+using a `localhost` address. Your data collection scripts, or software, does not need to be aware
+of _esthesis_. As soon as data is received on any device agent's endpoints, it is automatically
+transmitted to _esthesis_. The device agent wraps your data into its own format and can optionally
+encrypt and/or sign the final payload to be transmitted to _esthesis_.
+
+The device agent comes as an integral part of the _esthesis_ IoT platform and can help you interconnect
+your devices with minimal effort and time. It incorporates the complete set of services provided by _esthesis_, includign remote management, software updates, automatic and transparent data encryption
+and signing, etc. However, if your needs dictacte a different implementation, or if the architecture
+of your device is not supported by _esthesis_ runtime agent, you can create your own device agent. Admittedly, creating a device agent from scratch requires times and effort, however there is nothing
+in _esthesis_ open architecture preventing you from doing so. You can find additional details on the
+protocols and supported data flows of the device agent in the Developr Guide, <<dev-device-agent>> section.
+
+==== MQTT server
+The MQTT server is the building block providing bidirection communication between devices and the
+_esthesis_ platform.
+
+==== NiFi server
 
 === Development environment
 TBC
@@ -570,5 +674,26 @@ TBC
 A device simulator running the device agent is provided by _esthesis_ as a Docker container. You can
 use the device simulator to test your installation or to simulate workloads to stress test your
 environment.
+
+You can see the embedded MQTT and WEB server of the device agent to post your own data. All data you
+post via MQTT or REST will be automatically transferred to your registered _esthesis_ platform. However,
+the device simulator is capable of producing random data for you. To enable this option, you can
+utilise the following parameters: `demo`, `demoFreqMsec`, `demoInitialDelayMsec`, `demoPayload` (see <<demo-parameters>>).
+
+The payload of the random data that is transmitted consists of the following JSON structure:
+```
+{
+  "m": "demo",
+  "v": {
+     "temperature": %i%,
+     "humidity": %f%
+  }
+}
+```
+
+The `%` placeholders denote variables that will be subtituted during message construction. In particular:
+
+* `%i%` will be substituted with a random integer value from 0 to 100.
+* `%f%` will be substituted with a random float value from 0 to 100.
 
 ==== Hardware IDs
