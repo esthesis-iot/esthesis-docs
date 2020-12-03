@@ -129,38 +129,39 @@ probably not what you should be using in production, so you may need to tweak th
 organisation's requirements before you expose _esthesis_ services to untrusted networks.
 
 === Create a certificate authority
-image::images/image-2020-11-25-17-35-14-814.png[alt="Creating a certificate authority"]
+image::images/image-2020-12-03-18-46-36-611.png[alt="Creating a certificate authority"]
 * Navigate to `Certificate Authorities`.
 * Create a new certificate authority, leaving the `Parent CA` option empty.
 
 === Create a platform certificate
-image::images/image-2020-11-25-17-39-22-358.png[alt="Creating a certificate"]
+image::images/image-2020-12-03-18-47-35-834.png[alt="Creating a certificate"]
 * Navigate to `Certificates`.
 * Create a new certificate choosing the certificate authority created above as `Signed by`.
 
 === Platform settings - security
-image::images/image-2020-11-26-08-47-31-181.png[]
+image::images/image-2020-12-03-18-48-16-642.png[]
 * Navigate to `Settings` > `Security`.
 * Set the Platform certificate to the certificate you created above.
 
 === Platform settings - Device registration
-image::images/image-2020-11-26-10-18-41-874.png[]
+image::images/image-2020-12-03-18-48-47-242.png[]
 * Navigate to `Settings` > `Device registration`.
 * Set Registration mode to `Open registration`.
 * Set Root Certificate Authority to the one you created above.
 
 === Platform settings - Provisioning
-image::images/image-2020-11-26-10-20-58-614.png[]
+image::images/image-2020-12-03-18-50-56-177.png[]
+
 * Navigate to `Settings` > `Provisioning`.
 * Set Provisioning URL to the address where _esthesis_ platform proxy container is accessible from.
 
 === Create a tag
-image::images/image-2020-11-26-10-22-40-732.png[]
+image::images/image-2020-12-03-18-54-31-746.png[]
 * Navigate to `Tags`.
 * Create a tag you can associate resources with.
 
 === Register and synchronise NiFi
-image::images/image-2020-11-26-10-26-24-751.png[]
+image::images/image-2020-12-03-18-55-03-693.png[]
 * Navigate to `Infrastructure` > `NiFi`.
 * Register the NiFi server to be used by _esthesis_.
 * Once NiFi is registered, open on the newly created instance and click on `Synchronise`. Synchronisation
@@ -168,12 +169,12 @@ will take a few seconds; you can monitor the progress bar on top of your screen.
 is completed, you will be automatically redirected back to the list of NiFi servers.
 
 === Register the MQTT server
-image::images/image-2020-12-02-17-13-23-374.png[]
+image::images/image-2020-12-03-18-57-55-497.png[]
 * Navigate to `Infrastructure` > `MQTT`.
 * Register the MQTT server to be used by _esthesis_, associating it with the tag you created before.
 
 === Setup Data sinks
-image::images/image-2020-12-02-17-16-42-542.png[]
+image::images/image-2020-12-03-18-59-41-472.png[]
 For the purpose of a quick setup, the Data Wizards functionality will be used.
 
 * Navigate to `Data Wizards`.
@@ -184,7 +185,6 @@ the remaining values to their default values.
 * Click on `Execute Wizard'. Once the progress bar is completed, your installation is fully configured.
 
 === Register a demo device
-image::images/image-2020-12-02-17-18-23-158.png[]
 You can, optionally, register a demo device before you start using your real devices. _esthesis_
 <<_device_agent>> is provided as a Docker container (on top of a standalone agent format), so you can use it to quickly fire up a virtual demo device. To start your demo device, issue a command similar
 to:
