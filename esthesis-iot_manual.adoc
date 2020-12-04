@@ -751,10 +751,10 @@ TBC
 ==== Registration sequence
 TBC
 
-==== Provisioning sequenece
+==== Provisioning sequence
 TBC
 
-==== Device simulator [[dev-device-simulator]]
+=== Device simulator [[dev-device-simulator]]
 A device simulator running the device agent is provided by _esthesis_ as a Docker container. You can
 use the device simulator to test your installation or to simulate workloads to stress test your
 environment.
@@ -787,11 +787,80 @@ _How to work with, how to find them [TBC]_
 _esthesis_ supports a simple, lightweight, JSON-based message payload. If you want to check the
 validity of your JSON payloads, a JSON Schema is available at https://github.com/esthesis-iot/esthesis-platform/blob/master/esthesis-platform-backend/esthesis-platform-backend-server/src/main/resources/nifi/esthesis-data-schema.json.
 
-===== PING message
+The JSON payload consists of a key describing what kind of information the message contains,
+followed by a key with one or more specific measurements. The nature of the message, whether it is
+telemetry or metadata, is not part of the message content itself as this is denoted by the channel/topic on which the message was posted into.
 
-===== TELEMETRY message
+.Single anonymous value
+```
+{
+  "m": "temperature",
+  "v": 12.3
+}
+```
+This payload will create a measurement `temperature` with a variable name `value` having a value of `12.3`.
 
-===== METADATA message
+.Single named value
+```
+{
+  "m": "climate",
+  "v": {
+    "temperature": 4,
+  }
+}
+```
+This payload will create a measurement `climate` with a variable named `temperature` having a value of `4`.
+
+.Multiple named values
+```
+{
+  "m": "climate",
+  "v": {
+    "temperature": 9.5,
+    "humidity": 47
+  }
+}
+```
+This payload will create a measurement `climate` with two variables, a variable named `temperature` having a value of `9.5`, and a variable named `humidity` having a value of `47`.
+
+
+===== PING message example
+```
+{
+  "m": "ping",
+  "v": 1607015126194
+}
+```
+This is the standard format of the PING message type payload. The value is expressed as EPOCH in
+miliseconds.
+
+===== TELEMETRY message example
+```
+{
+  "m":"health",
+  "v":{
+    "cpuTemperature": 61.875,
+    "memoryAvailable": 6148300800,
+    "load1": 3.8447265625,
+    "load5": 3.625,
+    "load15": 3.38671875,
+    "mount_free_/": 161166557184
+  }
+}
+```
+
+===== METADATA message example
+```
+{
+  "m": "health",
+  "v": {
+     "currentTime":1607015126909,
+     "upTime":10284,
+     "ipAddress":"bridge0: 192.168.100.100",
+     "runtimeVersion":"2.0.0",
+  }
+}
+```
 
 === Security hardening
 TBC
