@@ -8,14 +8,6 @@ Doc Writer <esthesis@eurodyn.com>
 :sectlinks:
 
 == General
-=== Another IoT platform?
-_esthesis_ was conceived while the original team behind it was working on an R&D project. We had
-simple needs and we needed a simple platform to manage them. We did look at what was available in the
-market, both in open source and commercial software, and we were amazed by the quality and features
-in some of the offerings. We tried a few but at the end we realised that all of them were bringing
-into our R&D project a lot of complexity that we did not want to have to manage. So, we went with
-a homemade, cut-down IoT platform. The initial version was small and not exceptionally feature-rich, however it was simple to understand, operate, and extend when necessary. Future projects came in, and
-little by little the platform was expanded to what you see today.
 
 == Front-end and Back-end platform components
 
