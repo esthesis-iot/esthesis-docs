@@ -571,10 +571,37 @@ java -jar target/esthesis-platform-device.jar
 
 _esthesis_ comes with a Device Simulator to let you test your installation. To use the Device simulator, see <<dev-device-simulator>>.
 
-=== Embedded Web server
-TBC
+The device agent is also available as a Docker container, for environment with a containers runtime:
+https://hub.docker.com/repository/docker/esthesis/esthesis-platform-device
 
-=== Embedded MQTT server
+=== Embedded Web & MQTT servers
+The device agent embeds a locally-exposed Web server and an MQTT server. These local servers act like a proxy between your device's custom software and the esthesis back-end platform, providing a communication channel to securely transmit your device/sensor data:
+
+.Device agent embedded servers
+image::diagrams/device-agent-embedded-servers-1.png[]
+
+Once you have collected data by your custom device softwate, you can utilise the embedded device
+agent servers to let esthesis securely transfer them to your back-end infrastructure. Your custom
+software does not need to be aware of URLs, IP address, or any other infrastructure-related
+information that might change. It only needs to communnicate with the locally available servers
+using `localhost` or `127.0.0.1`. It is the responsibility of the device agent to get your payload
+and forward it:
+
+.Wrapping custom payloads to esthesis messages
+image::diagrams/device-agent-emedded-servers-2.png[]
+
+==== Embedded Web server
+The embedded web server listens, by default, on port 4567 (the port can be changed in device agents'
+configuration parameters). You can push your own payload to the embedded web server in the following
+two channels:
+
+
+
+
+
+
+
+==== Embedded MQTT server
 TBC
 
 
