@@ -796,7 +796,7 @@ post via MQTT or REST will be automatically transferred to your registered _esth
 the device simulator is capable of producing random data for you. To enable this option, you can
 utilise the following parameters: `demo`, `demoFreqMsec`, `demoInitialDelayMsec`, `demoPayload` (see <<demo-parameters>>).
 
-The default payload of the random data that is transmitted consists of the following JSON structure:
+The default payload of the random data that is transmitted as teleemetry values consists of the following JSON structure:
 ```
 {
   "m": "demo",
