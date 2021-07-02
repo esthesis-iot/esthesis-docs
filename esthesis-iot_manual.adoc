@@ -91,6 +91,10 @@ Once you have the files locally downloaded, you can proceed to the installation 
 docker-compose -p esthesis up -d
 ```
 
+=== Create Docker Network ===
+
+TBC
+
 === Post-installation steps
 ==== Check containers status
 As soon as all Docker containers have been initialised you can start using _esthesis_. You can monitor the status of your deployment using:
@@ -194,7 +198,7 @@ docker run --name esthesis-demo-device --network=esthesis_esthesis-prod -d  \
 -e storageRoot="/app" \
 -e tags=test1 \
 -e registrationUrl="http://my-esthesis-host:port" \
-esthesis/esthesis-platform-device:latest
+esthesis/device:2.0.1-SNAPSHOT
 ```
 
 The demo device can also send random data, if configured accordingly. For demo data configuration see
@@ -261,6 +265,11 @@ The script is handed the following parameters:
 |If empty, $storageRoot/provisioning/.tmp
 |The root folder to temporarily download a remotely retrieved provisioning packages. Once the
  package is downloaded, it is moved to provisioningRoot.
+
+|validateProvisioningChecksum
+|**true**, false
+|A flag indicating whether the agent should validate the checksum of the incoming provisiong
+package.
 
 |rebootCommand
 |
