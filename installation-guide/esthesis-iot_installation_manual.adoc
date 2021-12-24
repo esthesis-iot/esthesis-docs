@@ -1,4 +1,4 @@
-= esthesis IoT - Installation Manual
+= esthesis IoT - Installation Guide
 Doc Writer <esthesis@eurodyn.com>
 :toc:
 :toclevels: 2
@@ -9,9 +9,7 @@ Doc Writer <esthesis@eurodyn.com>
 
 _esthesis_ is a modern Internet of Things platform, providing end-to-end management services
 for your devices. It consists of device management functionality, over-the-air firmware upgrade
-services, and a modular data-management approach. Built-in support for certificates and certificate
-authorities allows you to effortlessly set up a secure communication environment with your devices where
-provisioning packages can be signed and/or encrypted on the fly.
+services, and a modular data-management approach.
 
 == Installation
 Installation is based on public Docker containers, so you can setup your own _esthesis_ environment
@@ -53,23 +51,7 @@ containers to provide all the support and main services for you.
 You can perform an all-in-one installation issuing the following command:
 
 ```
-curl -Ls https://raw.githubusercontent.com/esthesis-iot/esthesis-setup/master/docker/docker-compose.yml | \
-DB_PORT=45000 \
-MYSQL_ROOT_PASSWORD=root \
-MYSQL_USER=esthesis \
-MYSQL_PASSWORD=esthesis \
-MYSQL_DATABASE=esthesis \
-PORT_MQTT=1883 \
-PORT_MQTT_SECURE=8883 \
-INFLUXDB_DB=esthesis \
-INFLUXDB_ADMIN_USER=admin \
-INFLUXDB_ADMIN_PASSWORD=admin \
-NIFI_WEB_PROVIDERS_PORT_LOW=20000 \
-NIFI_WEB_PROVIDERS_PORT_HIGH=20100 \
-NIFI_WEB_UI=8080 \
-PORT_ESTHESIS_BACKEND=46000 \
-PORT_ESTHESIS_UI=8080 \
-PORT_ESTHESIS_PROXY=80 \
+curl -Ls https://raw.githubusercontent.com/esthesisiot/esthesis-setup/master/docker/docker-compose.yml |
 docker compose -f /dev/stdin up -d
 ```
 
