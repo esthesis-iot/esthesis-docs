@@ -18,10 +18,16 @@ or in an OCP cluster.
 
 _esthesis_ requires a variety of third-party support services to be available to operate properly. These
 services can be deployed as part of _esthesis_' own deployment or you can opt to skip them to provide
-your own instances. For example, _esthesis_ requires an InfluxDB to store time-series data and will
+your own instances instead. For example, _esthesis_ requires an InfluxDB to store time-series data and will
 setup one as part of the default installation process. However, in case you already have a running
 InfluxDB, you can skip the default installation of InfluxDB and point _esthesis_ to use the one you
 already have in place.
+
+.Main services
+The main services of _esthesis_ platform consist of:
+
+* **esthesis platform backend server**, the server component of the platform.
+* **esthesis platform frontend**, a web-based frontend for users to manage the platform.
 
 .Supporting services
 The list of supporting services required by _esthesis_ include:
@@ -33,12 +39,6 @@ devices, users, provisioning packages, etc. This database does not store any dev
 * **An InfluxDB database**, to store device telemetry data.
 * **An NGINX reverse proxy**, to expose _esthesis_ services without providing direct access to the
 _esthesis_ backend server.
-
-.Main services
-The main services of _esthesis_ platform consist of:
-
-* **esthesis platform backend server**, the server component of the platform.
-* **esthesis platform frontend**, a web-based frontend for users to manage the platform.
 
 === Installation options
 
@@ -52,19 +52,18 @@ You can perform an all-in-one installation issuing the following command:
 
 ```
 curl -Ls https://raw.githubusercontent.com/esthesisiot/esthesis-setup/master/docker/docker-compose.yml |
-docker compose -f /dev/stdin up -d
+docker compose -f /dev/stdin up -d --no-build
 ```
 
 ===== Selective services only installation
-You can specify which specific services of _esthesis_ you need in your installation by taking advantage
+You can specify which services of _esthesis_ you need in your installation by taking advantage
 of Docker Compose's built-in functionality to only start specific services. For example, if you want
 to use your own resources instead of _esthesis_ 'supporting services' and only install _esthesis_
 main services, you can substitute `docker compose -f /dev/stdin up -d` above with:
 
 ```
-docker compose -f /dev/stdin up -d esthesis-platform-backend-server esthesis-platform-ui
+docker compose -f /dev/stdin up -d esthesis-server esthesis-ui
 ```
-
 
 ==== Kubernetes
 TBC
@@ -74,25 +73,20 @@ TBC
 
 === Post-installation steps
 ==== Check containers status
-As soon as all Docker containers have been initialised you can start using _esthesis_. You can monitor the status of your deployment using:
+As soon as all Docker containers have been initialised you can start using _esthesis_.
+You can monitor the status of your deployment using:
 
 ```
 docker ps --format 'table {{.Names}}\t{{.Status}}' | grep esthesis
 ```
 
-Before all containers ready:
-
-image::images/image-2020-12-02-15-41-53-256.png[]
-
-After all containers ready:
-
-image::images/image-2020-12-02-16-36-07-141.png[]
+image::media/ig-img1.png[]
 
 Once all containers are reported as `healthy` you can login to _exthesis_.
 
 ==== Web location and admin account
 Using the default configuration options of _esthesis_, the frontend application is available on
-port 80 of your Docker Engine host. For example, http://my-esthesis-host.
+port 80 of your Docker Engine host.
 
 The default administration credentials are:
 ```
@@ -103,46 +97,45 @@ Password: admin
 WARNING: You should change the default credentials as soon as possible to prevent unauthorised access to your platform.
 
 == Quick start
-image::images/image-2020-11-25-16-59-02-520.png[Login screen]
+image::media/ig-img2.png[Login screen]
 This section will guide you through some basic configuration options once you have a new installation
-of _esthesis_ up and running. Please take into account that the configuration options presented here are
-probably not what you should be using in production, so you may need to tweak them to your
-organisation's requirements before you expose _esthesis_ services to untrusted networks.
+of _esthesis_ up and running. Please take into account that the configuration options presented here
+are default options to get you up and running as soon as possible; you may need to tweak them to
+your organisation's requirements before you expose _esthesis_ services to untrusted networks.
 
 === Create a certificate authority
-image::images/image-2020-12-03-18-46-36-611.png[alt="Creating a certificate authority"]
+image::media/ig-img3.png[alt="Creating a certificate authority"]
 * Navigate to `Certificate Authorities`.
 * Create a new certificate authority, leaving the `Parent CA` option empty.
 
 === Create a platform certificate
-image::images/image-2020-12-03-18-47-35-834.png[alt="Creating a certificate"]
+image::media/ig-img4.png[alt="Creating a certificate"]
 * Navigate to `Certificates`.
 * Create a new certificate choosing the certificate authority created above as `Signed by`.
 
-=== Platform settings - security
-image::images/image-2020-12-03-18-48-16-642.png[]
+=== Platform settings - Security
+image::media/ig-img5.png[]
 * Navigate to `Settings` > `Security`.
 * Set the Platform certificate to the certificate you created above.
 
 === Platform settings - Device registration
-image::images/image-2020-12-03-18-48-47-242.png[]
+image::media/ig-img6.png[]
 * Navigate to `Settings` > `Device registration`.
 * Set Registration mode to `Open registration`.
 * Set Root Certificate Authority to the one you created above.
 
 === Platform settings - Provisioning
-image::images/image-2020-12-03-18-50-56-177.png[]
-
+image::media/ig-img8.png[]
 * Navigate to `Settings` > `Provisioning`.
 * Set Provisioning URL to the address where _esthesis_ platform proxy container is accessible from.
 
 === Create a tag
-image::images/image-2020-12-03-18-54-31-746.png[]
+image::media/ig-img9.png[]
 * Navigate to `Tags`.
 * Create a tag you can associate resources with.
 
 === Register and synchronise NiFi
-image::images/image-2020-12-03-18-55-03-693.png[]
+image::media/ig-img10.png[]
 * Navigate to `Infrastructure` > `NiFi`.
 * Register the NiFi server to be used by _esthesis_.
 * Once NiFi is registered, open on the newly created instance and click on `Synchronise`. Synchronisation
