@@ -71,22 +71,12 @@ TBC
 ==== OCP
 TBC
 
-=== Post-installation steps
-==== Check containers status
-As soon as all Docker containers have been initialised you can start using _esthesis_.
-You can monitor the status of your deployment using:
-
-```
-docker ps --format 'table {{.Names}}\t{{.Status}}' | grep esthesis
-```
-
-image::media/ig-img1.png[]
-
-Once all containers are reported as `healthy` you can login to _exthesis_.
-
-==== Web location and admin account
-Using the default configuration options of _esthesis_, the frontend application is available on
-port 80 of your Docker Engine host.
+== Quick start
+image::media/ig-img2.png[Login screen]
+This section will guide you through some basic configuration options once you have a new installation
+of _esthesis_ up and running. Please take into account that the configuration options presented here
+are default options to get you up and running as soon as possible; you may need to tweak them to
+your organisation's requirements before you expose _esthesis_ services to untrusted networks.
 
 The default administration credentials are:
 ```
@@ -95,13 +85,6 @@ Password: admin
 ```
 
 WARNING: You should change the default credentials as soon as possible to prevent unauthorised access to your platform.
-
-== Quick start
-image::media/ig-img2.png[Login screen]
-This section will guide you through some basic configuration options once you have a new installation
-of _esthesis_ up and running. Please take into account that the configuration options presented here
-are default options to get you up and running as soon as possible; you may need to tweak them to
-your organisation's requirements before you expose _esthesis_ services to untrusted networks.
 
 === Create a certificate authority
 image::media/ig-img3.png[alt="Creating a certificate authority"]
