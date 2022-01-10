@@ -126,19 +126,17 @@ will take a few seconds; you can monitor the progress bar on top of your screen.
 is completed, you will be automatically redirected back to the list of NiFi servers.
 
 === Register the MQTT server
-image::images/image-2020-12-03-18-57-55-497.png[]
+image::media/ig-img11.png[]
 * Navigate to `Infrastructure` > `MQTT`.
 * Register the MQTT server to be used by _esthesis_, associating it with the tag you created before.
 
-=== Setup Data sinks
-image::images/image-2020-12-03-18-59-41-472.png[]
+=== Setup Data handlers
+image::media/ig-img12.png[]
 For the purpose of a quick setup, the Data Wizards functionality will be used.
 
 * Navigate to `Data Wizards`.
 * Select `Standard infrastructure` and click on `Next`.
-* Fill-in the standard infrastructure data wizard form. If you have installes _esthesis_ using the
-provided Docker Compose file, you only need to change the address of your Docker engine and leave
-the remaining values to their default values.
+* Fill-in the standard infrastructure data wizard form.
 * Click on `Execute Wizard'. Once the progress bar is completed, your installation is fully configured.
 
 === Register a demo device

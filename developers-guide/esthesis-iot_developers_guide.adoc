@@ -1,0 +1,10 @@
+= esthesis IoT - Developers Guide
+Doc Writer <esthesis@eurodyn.com>
+:toc:
+:toclevels: 2
+:homepage: https://esthesis.com
+:icons: font
+:sectanchors:
+:sectlinks:
+
+docker compose -f docker-compose.yml -f docker-compose-dev.yml up -d esthesis-db esthesis-mqtt esthesis-tsdb esthesis-nifi
