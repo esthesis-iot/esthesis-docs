@@ -7,4 +7,5 @@ Doc Writer <esthesis@eurodyn.com>
 :sectanchors:
 :sectlinks:
 
-docker compose -f docker-compose.yml -f docker-compose-dev.yml up -d esthesis-db esthesis-mqtt esthesis-tsdb esthesis-nifi
+docker compose -f docker-compose.yml -f docker-compose-devenv.yml up -d esthesis-db esthesis-mqtt esthesis-tsdb esthesis-nifi
+
