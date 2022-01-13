@@ -152,10 +152,14 @@ docker run --name esthesis-demo-device --network=esthesis_esthesis-prod -d  \
 esthesis/esthesis-platform-device:latest
 ```
 
-The demo device can also send random data, if configured accordingly. For demo data configuration see
-<<dev-device-simulator>>.
+The demo device can also send random data, if configured accordingly.
+For demo data configuration see the Developers Guide.
 
-To enable debug output on your demo device, you can add the following parameter:
-```
--e logging.level.esthesis=trace
-```
+=== Security hardening
+TBC
+
+==== Securing NiFi
+TBC
+
+==== Securing MQTT
+TBC
