@@ -303,6 +303,10 @@ The above command will prepare Docker containers for the following services:
 - An `Apache NiFi`, accessible on `port 8080`.
 - A `Chronograf` client, accessible on `port 8888`.
 
+If you want to test a Kubernetes deployment, you may also find it useful to install MetalLB, so that
+you can automatically hand IP addresses to services without having to proxy their ports:
+
+
 .Starting _esthesis_ front-end in development mode
 To start the _esthesis_ Angular front-end application in your development machine, you can execute:
 ```
