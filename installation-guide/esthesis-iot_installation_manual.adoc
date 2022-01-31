@@ -13,8 +13,8 @@ services, and a modular data-management approach.
 
 == Installation
 Installation is based on public Docker containers, so you can setup your own _esthesis_ environment
-quickly and with minimal effort. You can install _esthesis_ in a Docker Engine, in a Kubernetes cluster,
-or in an OCP cluster.
+quickly and with minimal effort. You can install _esthesis_ in a Docker Engine or in a Kubernetes
+cluster.
 
 _esthesis_ requires a variety of third-party support services to be available to operate properly. These
 services can be deployed as part of _esthesis_' own deployment or you can opt to skip them to provide
@@ -66,10 +66,36 @@ docker compose -f /dev/stdin up -d esthesis-server esthesis-ui
 ```
 
 ==== Kubernetes
-TBC
+_esthesis_ provides Helm charts, allowing you to quickly setup a production-grade installation.
 
-==== OCP
-TBC
+The _esthesis_ Helm chart installs the following components in your Kubernetes cluster:
+
+- The _esthesis_ User Interface.
+- The _esthesis_ back-end server.
+- An MQTT server based on Eclipse Mosquitto.
+- A time series database based on InfluxDB.
+- A relational database based on MySQL.
+- The Apache NiFi platform.
+
+_esthesis_ UI as well as _esthesis_ MQTT deployments, specify a service of type `LoadBalancer`.
+
+===== Installation
+To install _esthesis_ using Helm, you can issue the following sequence:
+```
+helm repo add (tbc)
+help repo update
+helm install esthesisiot esthesisiot
+```
+
+===== Customising the Helm chart for your infrastructure
+
+.Storage Class
+_esthesis_ Helm chart is configured to use the `default` storage class. To modify the storage class
+to suit your own infrastructure, you can issue the following command:
+```
+helm install esthesisiot esthesisiot --set global.storageClassName=my-storage-class
+```
+
 
 == Quick start
 image::media/ig-img2.png[Login screen]
@@ -141,15 +167,16 @@ For the purpose of a quick setup, the Data Wizards functionality will be used.
 
 === Register a demo device
 You can, optionally, register a demo device before you start using your real devices. _esthesis_
-<<_device_agent>> is provided as a Docker container (on top of a standalone agent format), so you can use it to quickly fire up a virtual demo device. To start your demo device, issue a command similar
+Device Agent is provided as a Docker container, so you can use it to quickly fire up a virtual demo
+device. To start your demo device, issue a command similar
 to:
 ```
-docker run --name esthesis-demo-device --network=esthesis_esthesis-prod -d  \
+docker run --name esthesis-demo-device \
 -e hardwareId=device1 \
 -e storageRoot="/app" \
 -e tags=test1 \
 -e registrationUrl="http://my-esthesis-host:port" \
-esthesis/esthesis-platform-device:latest
+esthesisiot/esthesis-device
 ```
 
 The demo device can also send random data, if configured accordingly.
@@ -162,4 +189,5 @@ TBC
 TBC
 
 ==== Securing MQTT
-TBC
+The MQTT server is a integral part of the _esthesis_ platform as it provides seamless communication
+with your devices.
