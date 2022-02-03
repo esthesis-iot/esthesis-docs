@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  esthesis0-platform:
+  - apiVersion: v2
+    appVersion: 2.0.1-SNAPSHOT
+    created: "2022-02-03T08:11:04.986084+02:00"
+    description: A Helm chart to deploy eshtesis IoT platform.
+    digest: dcc90b35005632ddd67d8ca5ddfa3dee20b63951931a60855147d5e2b684fe55
+    name: esthesis0-platform
+    type: application
+    urls:
+    - esthesis0-platform-1.0.0.tgz
+    version: 1.0.0
+generated: "2022-02-03T08:11:04.984748+02:00"
