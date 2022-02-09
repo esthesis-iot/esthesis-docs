@@ -84,14 +84,13 @@ To install _esthesis_ using Helm, you can issue the following sequence:
 ```
 helm repo add esthesisiot https://esthes.is/helm
 help repo update
-helm install esthesisiot
+helm install esthesisiot esthesisiot/esthesis-platform
 ```
 
 ===== Customising the Helm chart for your infrastructure
 
 .Storage Class
-_esthesis_ Helm chart is configured to use the `default` storage class. To modify the storage class
-to suit your own infrastructure, you can issue the following command:
+To modify the storage class to suit your own infrastructure, you can issue the following command:
 ```
 helm install esthesisiot esthesisiot --set global.storageClassName=my-storage-class
 ```

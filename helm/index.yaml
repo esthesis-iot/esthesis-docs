@@ -3,9 +3,9 @@ entries:
   esthesis-platform:
   - apiVersion: v2
     appVersion: 2.0.1-SNAPSHOT
-    created: "2022-02-09T06:46:53.79267+02:00"
+    created: "2022-02-09T06:54:56.814516+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
-    digest: e25ba28c5a29f0f02a681db71493b539377c56655a6081dc8b00bb749a028837
+    digest: 2e755282a850463546599071675c4e5d7e8e82327d9cd0f3f20b8670e9a7853f
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
     maintainers:
@@ -19,4 +19,4 @@ entries:
     urls:
     - esthesis-platform-1.0.0.tgz
     version: 1.0.0
-generated: "2022-02-09T06:46:53.791924+02:00"
+generated: "2022-02-09T06:54:56.813606+02:00"
