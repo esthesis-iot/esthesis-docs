@@ -336,7 +336,10 @@ jenv exec mvn spring-boot:run -Dspring-boot.run
 
 === Publishing releases
 ==== Docker
-Publishing Docker images can be done using the provided Docker Compose file.
+Publishing Docker images can be done using the provided Docker Compose file. You can execute:
+```
+docker compose build && docker compose push
+```
 
 ==== Helm
 To publish _esthesis_ Helm charts you need to execute the following sequence:
@@ -350,7 +353,7 @@ helm repo index . && \
 popd
 ```
 
-Before you publish a Helm chart, ensure that the version of the Helm chart in `Chart.yaml` has been
+IMPORTANT: Before you publish a Helm chart, ensure that the version of the Helm chart in `Chart.yaml` has been
 updated.
 
 To make the updated Helm chart available, you need to push the the `esthesis-docs` repository.
