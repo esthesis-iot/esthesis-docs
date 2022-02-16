@@ -303,10 +303,6 @@ The above command will prepare Docker containers for the following services:
 - An `Apache NiFi`, accessible on `port 8080`.
 - A `Chronograf` client, accessible on `port 8888`.
 
-If you want to test a Kubernetes deployment, you may also find it useful to install MetalLB, so that
-you can automatically hand IP addresses to services without having to proxy their ports:
-
-
 .Starting _esthesis_ front-end in development mode
 To start the _esthesis_ Angular front-end application in your development machine, you can execute:
 ```
@@ -327,6 +323,16 @@ mvn spring-boot:run \
 ```
 The REST api of the application will be available on `port 46000`, and you can connect your debugger
 on `port 55000`.
+
+.Starting and registering a device
+You can start a local device executing the following command:
+```
+hardwareId=device1 \
+storageRoot="$(echo ~$USER)/.esthesis/devices/device1" \
+registrationUrl="http://localhost:46000" \
+tags=group1 \
+jenv exec mvn spring-boot:run -Dspring-boot.run
+```
 
 === Publishing releases
 ==== Docker

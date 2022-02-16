@@ -182,11 +182,94 @@ The demo device can also send random data, if configured accordingly.
 For demo data configuration see the Developers Guide.
 
 === Security hardening
-TBC
+The following sections provide instructions on how you can harden the security of your _esthesis_
+installation. If you are running _esthesis_ in a public network you need to perform the following
+steps to ensure you installaton is secure.
 
-==== Securing NiFi
-TBC
+It is highly recommended to proceed with security hardening **before** you have registered any devices.
 
-==== Securing MQTT
-The MQTT server is a integral part of the _esthesis_ platform as it provides seamless communication
-with your devices.
+==== Docker
+.MQTT
+The default installation using Docker Compose creates an MQTT container with no security configured.
+As _esthesis_ uses the topic names to connect device IDs with the actual devices manged in the
+system, it is of paramount importance to enable security in MQTT before you expose your installation
+outside of a controlled network.
+
+The following instructions show you how you can enable certificate-based security and authentication
+using Eclipse Mosquitto, which is the MQTT server being used when you setup _esthesis_ using the
+provider Docker Compose files.
+
+. Create a new certificate `esthesis-mqtt`, signed by the root CA you created above. Make sure the
+CN of the certificate matches the domain where the MQTT server is accessible from or add additional
+domains as SANs.
+. Download the private key and the certificate for `esthesis-mqtt`.
+. Download the certificate for the root CA.
+. Copy the above file into your container (you can mount a volume if you want your changes to persist).
++
+```
+docker cp esthesis-ca.crt esthesis-mqtt:/mosquitto/config/ca.crt
+docker cp esthesis-mqtt.crt esthesis-mqtt:/mosquitto/config/mosquitto.crt
+docker cp esthesis-mqtt.key esthesis-mqtt:/mosquitto/config/mosquitto.key
+```
+
+. Create the configuration files.
++
+```
+(docker exec -i esthesis-mqtt sh -c "cat > /mosquitto/config/aclfile.conf") << EOF
+pattern write $SYS/broker/connection/%c/state
+pattern write esthesis/ping/%u
+pattern write esthesis/telemetry/%u
+pattern write esthesis/metadata/%u
+pattern read esthesis/control/request/%u
+pattern write esthesis/control/reply/%u
+user esthesis-platform
+topic esthesis/#
+EOF
+
+(docker exec -i esthesis-mqtt sh -c "cat > /mosquitto/config/mosquitto.conf") << EOF
+port 8883
+cafile /mosquitto/config/ca.crt
+certfile /mosquitto/config/mosquitto.crt
+keyfile /mosquitto/config/mosquitto.key
+allow_anonymous false
+require_certificate true
+use_identity_as_username true
+acl_file /mosquitto/config/aclfile.conf
+EOF
+```
+. Reload the configuration
++
+```
+docker compose restart esthesis-mqtt
+```
+
+.NiFi
+Once MQTT is secured you should proceed in modifying the underlying NiFi instance to also connect
+to the MQTT using certificates.
+
+. Start by creating a "Store' in _esthesis_. On the new store file you should add the certificate
+of the CA, and the certificate and private key of the esthesis platform. Make sure you also check
+"Keys have the same password" option.
++
+image::media/ig-img13.png[Store]
+. Download the store and copy it to NiFi
++
+```
+docker cp esthesis-nifi.pkcs12 esthesis-nifi:/opt/nifi
+```
+. Modify all MQTT connectors in Nifi to use the newly added store. In a default
+installation of _esthesis_ where no custom Data handlers are configured, you need to configure the
+four Data readers with '_(from MQTT)_' in their name as well as the Command Producer in Data producers.
++
+Edit each of the data handlers above and add the following properties to its configuration:
++
+```
+keystoreFilename: /opt/nifi/store1.pkcs12
+keystorePassword: test
+truststoreFilename: /opt/nifi/store1.pkcs12
+truststorePassword: test
+```
+Do not forget to also change the `url` property to the appropriate URI, for example:
+`ssl://mqtt.server:8883`
+
+==== Kubernetes
