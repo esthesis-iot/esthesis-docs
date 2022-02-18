@@ -337,9 +337,22 @@ jenv exec mvn spring-boot:run -Dspring-boot.run
 === Publishing releases
 ==== Docker
 Publishing Docker images can be done using the provided Docker Compose file. You can execute:
+
+._esthesis_ platform
 ```
-docker compose build && docker compose push
+pushd . && \
+cd esthesis-setup/docker && \
+docker compose build && docker compose push && \
+popd
 ```
+
+._esthesis_ device agent
+```
+pushd . && \
+cd esthesis-device && \
+
+```
+
 
 ==== Helm
 To publish _esthesis_ Helm charts you need to execute the following sequence:
