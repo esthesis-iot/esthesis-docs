@@ -165,6 +165,8 @@ For the purpose of a quick setup, the Data Wizards functionality will be used.
 * Click on `Execute Wizard'. Once the progress bar is completed, your installation is fully configured.
 
 === Register a demo device
+
+.Docker
 You can, optionally, register a demo device before you start using your real devices. _esthesis_
 Device Agent is provided as a Docker container, so you can use it to quickly fire up a virtual demo
 device. To start your demo device, issue a command similar
@@ -181,6 +183,14 @@ esthesisiot/esthesis-device
 The demo device can also send random data, if configured accordingly.
 For demo data configuration see the Developers Guide.
 
+.Kubernetes
+```
+helm install \
+    --set global.hardwareId=dev1 \
+    --set global.tags=group1 \
+    --set global.registrationUrl="http://my-esthesis-host:port" esthesis-device esthesisiot/esthesis-device
+```
+
 === Security hardening
 The following sections provide instructions on how you can harden the security of your _esthesis_
 installation. If you are running _esthesis_ in a public network you need to perform the following
@@ -191,7 +201,7 @@ It is highly recommended to proceed with security hardening **before** you have 
 ==== Docker
 .MQTT
 The default installation using Docker Compose creates an MQTT container with no security configured.
-As _esthesis_ uses the topic names to connect device IDs with the actual devices manged in the
+As _esthesis_ uses the topic names to connect device IDs with the actual devices managed in the
 system, it is of paramount importance to enable security in MQTT before you expose your installation
 outside of a controlled network.
 
@@ -247,7 +257,7 @@ docker compose restart esthesis-mqtt
 Once MQTT is secured you should proceed in modifying the underlying NiFi instance to also connect
 to the MQTT using certificates.
 
-. Start by creating a "Store' in _esthesis_. On the new store file you should add the certificate
+. Start by creating a "Store' in _esthesis_. On the new store add the certificate
 of the CA, and the certificate and private key of the esthesis platform. Make sure you also check
 "Keys have the same password" option.
 +
@@ -261,15 +271,172 @@ docker cp esthesis-nifi.pkcs12 esthesis-nifi:/opt/nifi
 installation of _esthesis_ where no custom Data handlers are configured, you need to configure the
 four Data readers with '_(from MQTT)_' in their name as well as the Command Producer in Data producers.
 +
-Edit each of the data handlers above and add the following properties to its configuration:
+Edit each of the data handlers above and add the following properties to its configuration (change
+the password to match the one you have used when creating your store):
 +
 ```
-keystoreFilename: /opt/nifi/store1.pkcs12
+keystoreFilename: /opt/nifi/esthesis-nifi.pkcs12
 keystorePassword: test
-truststoreFilename: /opt/nifi/store1.pkcs12
+truststoreFilename: /opt/nifi/esthesis-nifi.pkcs12
 truststorePassword: test
 ```
 Do not forget to also change the `url` property to the appropriate URI, for example:
 `ssl://mqtt.server:8883`
 
 ==== Kubernetes
+.MQTT
+The default installation using Helm creates an MQTT container with no security configured.
+As _esthesis_ uses the topic names to connect device IDs with the actual devices managed in the
+system, it is of paramount importance to enable security in MQTT before you expose your installation
+outside of a controlled network.
+
+The following instructions show you how you can enable certificate-based security and authentication
+using Eclipse Mosquitto, which is the MQTT server being used when you setup _esthesis_ using the
+provider Helm charts.
+
+. Create a new certificate `esthesis-mqtt`, signed by the root CA you created above. Make sure the
+CN of the certificate matches the domain where the MQTT server is accessible from or add additional
+domains as SANs.
+. Download the private key and the certificate for `esthesis-mqtt`.
+. Download the certificate for the root CA.
+. Create MQTT configuration files:
++
+`aclfile.conf`:
++
+```
+cat > aclfile.conf << EOF
+pattern write $SYS/broker/connection/%c/state
+pattern write esthesis/ping/%u
+pattern write esthesis/telemetry/%u
+pattern write esthesis/metadata/%u
+pattern read esthesis/control/request/%u
+pattern write esthesis/control/reply/%u
+user esthesis-platform
+topic esthesis/#
+EOF
+```
++
+`mosquitto.conf`:
++
+```
+cat > mosquitto.conf << EOF
+port 8883
+cafile /mosquitto/config/ca.crt
+certfile /mosquitto/config/mosquitto.crt
+keyfile /mosquitto/config/mosquitto.key
+allow_anonymous false
+require_certificate true
+use_identity_as_username true
+acl_file /mosquitto/config/aclfile.conf
+EOF
+```
+
+. Import the above files as secrets in Kubernetes:
++
+```
+kubectl create secret generic esthesis-mqtt-secret \
+    --from-file=ca.crt=esthesis-ca.crt \
+    --from-file=mqtt.crt=esthesis-mqtt.crt \
+    --from-file=mqtt.key=esthesis-mqtt.key \
+    --from-file=aclfile=aclfile.conf \
+    --from-file=conf=mosquitto.conf
+```
+
+. Patch the deployment of MQTT to use the above secrets:
++
+`patch-mqtt.yaml`
++
+```
+spec:
+  template:
+    spec:
+      containers:
+        - name: esthesis-mqtt
+          volumeMounts:
+            - name: esthesis-mqtt-secret
+              mountPath: "/mosquitto/config"
+          readinessProbe:
+            tcpSocket:
+              port: 8883
+          livenessProbe:
+            tcpSocket:
+              port: 8883
+      volumes:
+        - name: esthesis-mqtt-secret
+          secret:
+            secretName: esthesis-mqtt-secret
+            items:
+              - key: ca.crt
+                path: ca.crt
+              - key: mqtt.crt
+                path: mosquitto.crt
+              - key: mqtt.key
+                path: mosquitto.key
+              - key: conf
+                path: mosquitto.conf
+              - key: aclfile
+                path: aclfile.conf
+```
++
+Execute:
++
+```
+kubectl patch deployment esthesis-mqtt-deployment --patch "$(cat patch-mqtt.yaml)"
+```
+
+.NiFi
+Once MQTT is secured you should proceed in modifying the underlying NiFi instance to also connect
+to the MQTT using certificates.
+
+. Start by creating a "Store' in _esthesis_. On the new store add the certificate
+of the CA, and the certificate and private key of the esthesis platform. Make sure you also check
+"Keys have the same password" option.
++
+image::media/ig-img13.png[Store]
+. Download the store and create a secret:
++
+```
+kubectl create secret generic esthesis-nifi-secret --from-file=esthesis-nifi-store=esthesis-nifi.pkcs12
+```
+. Patch the deployment of MQTT to use the above secrets:
++
+`patch-nifi.yaml`
++
+```
+spec:
+  template:
+    spec:
+      containers:
+        - name: esthesis-nifi
+          volumeMounts:
+            - name: esthesis-nifi-secret
+              mountPath: /etc/nifi
+      volumes:
+        - name: esthesis-nifi-secret
+          secret:
+            secretName: esthesis-nifi-secret
+            items:
+              - key: esthesis-nifi-store
+                path: esthesis-nifi.pkcs12
+```
++
+Execute:
++
+```
+kubectl patch deployment esthesis-nifi-deployment --patch "$(cat patch-nifi.yml)"
+```
+. Modify all MQTT connectors in Nifi to use the newly added store. In a default
+installation of _esthesis_ where no custom Data handlers are configured, you need to configure the
+four Data readers with '_(from MQTT)_' in their name as well as the Command Producer in Data producers.
++
+Edit each of the data handlers above and add the following properties to its configuration (change
+the password to match the one you have used when creating your store):
++
+```
+keystoreFilename: /etc/nifi/esthesis-nifi.pkcs12
+keystorePassword: test
+truststoreFilename: /etc/nifi/esthesis-nifi.pkcs12
+truststorePassword: test
+```
+Do not forget to also change the `url` property to the appropriate URI, for example:
+`ssl://mqtt.server:8883`
