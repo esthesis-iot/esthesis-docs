@@ -349,10 +349,10 @@ popd
 ._esthesis_ device agent
 ```
 pushd . && \
-cd esthesis-device && \
-
+cd esthesis-setup/docker && \
+docker compose -f docker-compose-device.yml build && docker compose -f docker-compose-device.yml  push && \
+popd
 ```
-
 
 ==== Helm
 To publish _esthesis_ Helm charts you need to execute the following sequence:
@@ -376,6 +376,8 @@ cd ../../../esthesis-docs/helm && \
 helm repo index . && \
 popd
 ```
+
+Alternatively, you can combine the above steps using the `update.sh` script available under `esthesis-setup/k8s/helm`.
 
 IMPORTANT: Before you publish a Helm chart, ensure that the version of the Helm chart in `Chart.yaml` has been
 updated.

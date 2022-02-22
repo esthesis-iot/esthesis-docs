@@ -82,9 +82,9 @@ _esthesis_ UI as well as _esthesis_ MQTT deployments, specify a service of type 
 ===== Installation
 To install _esthesis_ using Helm, you can issue the following sequence:
 ```
-helm repo add esthesisiot https://esthes.is/helm
+helm repo add esthesis-iot https://esthes.is/helm
 help repo update
-helm install esthesisiot esthesisiot/esthesis-platform
+helm install esthesis-iot esthesis-iot/esthesis-platform
 ```
 
 ===== Customising the Helm chart for your infrastructure

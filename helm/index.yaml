@@ -3,9 +3,9 @@ entries:
   esthesis-device:
   - apiVersion: v2
     appVersion: 2.0.1-SNAPSHOT
-    created: "2022-02-22T16:44:40.744464+02:00"
+    created: "2022-02-22T17:01:54.640685+02:00"
     description: A Helm chart to deploy an esthesis device client.
-    digest: 5c58ea270466d89866937c6a5aedce75393d4f321457155657f2507cd4e03a6d
+    digest: f8eb93c2b078fafc962a8d3c63878254be8e1d7567971ce03ce63d5cad2889fd
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
     maintainers:
@@ -14,7 +14,7 @@ entries:
       url: https://www.eurodyn.com
     name: esthesis-device
     sources:
-    - https://github.com/esthesisiot
+    - https://github.com/esthesis-iot
     type: application
     urls:
     - esthesis-device-1.0.0.tgz
@@ -22,9 +22,9 @@ entries:
   esthesis-platform:
   - apiVersion: v2
     appVersion: 2.0.1-SNAPSHOT
-    created: "2022-02-22T16:44:40.744985+02:00"
+    created: "2022-02-22T17:01:54.64131+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
-    digest: 3d16a9f05b6228999ae214461e1ba19abcfdde75c74f0620d80f82e747e2a51d
+    digest: 2da71f1ef16f198bbdd096e0cd68b8a2adf648acd18e4abcbaf70b92f91cb0a2
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
     maintainers:
@@ -33,9 +33,9 @@ entries:
       url: https://www.eurodyn.com
     name: esthesis-platform
     sources:
-    - https://github.com/esthesisiot
+    - https://github.com/esthesis-iot
     type: application
     urls:
     - esthesis-platform-1.0.0.tgz
     version: 1.0.0
-generated: "2022-02-22T16:44:40.743956+02:00"
+generated: "2022-02-22T17:01:54.640165+02:00"
