@@ -401,7 +401,7 @@ image::media/ig-img13.png[Store]
 ```
 kubectl create secret generic esthesis-nifi-secret --from-file=esthesis-nifi-store=esthesis-nifi.pkcs12
 ```
-. Patch the deployment of MQTT to use the above secrets:
+. Patch the deployment of NiFi to use the above secrets:
 +
 `patch-nifi.yaml`
 +
