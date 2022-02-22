@@ -296,7 +296,8 @@ provider Helm charts.
 
 . Create a new certificate `esthesis-mqtt`, signed by the root CA you created above. Make sure the
 CN of the certificate matches the domain where the MQTT server is accessible from or add additional
-domains as SANs.
+domains as SANs (for example, the name of the service under which MQTT server accessed from within
+the cluster `esthesis-mqtt-service`).
 . Download the private key and the certificate for `esthesis-mqtt`.
 . Download the certificate for the root CA.
 . Create MQTT configuration files:
@@ -347,6 +348,7 @@ kubectl create secret generic esthesis-mqtt-secret \
 `patch-mqtt.yaml`
 +
 ```
+cat > patch-mqtt.yaml << EOF
 spec:
   template:
     spec:
@@ -355,7 +357,7 @@ spec:
           volumeMounts:
             - name: esthesis-mqtt-secret
               mountPath: "/mosquitto/config"
-          readinessProbe:
+          startupProbe:
             tcpSocket:
               port: 8883
           livenessProbe:
@@ -376,6 +378,7 @@ spec:
                 path: mosquitto.conf
               - key: aclfile
                 path: aclfile.conf
+EOF
 ```
 +
 Execute:
@@ -403,6 +406,7 @@ kubectl create secret generic esthesis-nifi-secret --from-file=esthesis-nifi-sto
 `patch-nifi.yaml`
 +
 ```
+cat > patch-nifi.yaml << EOF
 spec:
   template:
     spec:
@@ -418,12 +422,13 @@ spec:
             items:
               - key: esthesis-nifi-store
                 path: esthesis-nifi.pkcs12
+EOF
 ```
 +
 Execute:
 +
 ```
-kubectl patch deployment esthesis-nifi-deployment --patch "$(cat patch-nifi.yml)"
+kubectl patch deployment esthesis-nifi-deployment --patch "$(cat patch-nifi.yaml)"
 ```
 . Modify all MQTT connectors in Nifi to use the newly added store. In a default
 installation of _esthesis_ where no custom Data handlers are configured, you need to configure the

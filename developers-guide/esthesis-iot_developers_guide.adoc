@@ -357,10 +357,21 @@ cd esthesis-device && \
 ==== Helm
 To publish _esthesis_ Helm charts you need to execute the following sequence:
 
+.esthesis-platform
 ```
 pushd . && \
 cd esthesis-setup/k8s/helm && \
 helm package esthesis-platform -d ../../../esthesis-docs/helm && \
+cd ../../../esthesis-docs/helm && \
+helm repo index . && \
+popd
+```
+
+.esthesis-device
+```
+pushd . && \
+cd esthesis-setup/k8s/helm && \
+helm package esthesis-device -d ../../../esthesis-docs/helm && \
 cd ../../../esthesis-docs/helm && \
 helm repo index . && \
 popd
