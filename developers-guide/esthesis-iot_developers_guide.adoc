@@ -10,7 +10,7 @@ Doc Writer <esthesis@eurodyn.com>
 The following sections provide information for software developers that might want to work with
 _esthesis_ to extend its functionality.
 
-=== Architecture
+== Architecture
 _esthesis_ is an IoT platform. Admittedly, this is a broad definition and may include, or not include,
 different things according to the context in which it is being used. In high-level terms, in an IoT
 environment you expect to have devices that collect data. You want to be able to communicate with
@@ -35,7 +35,7 @@ image::media/architecture2.png[]
 
 The following sections provide an overview of the role of each building block into _esthesis_ IoT platform.
 
-==== Front-end and Back-end
+=== Front-end and Back-end
 The _esthesis_ front-end and back-end are the core building blocks delivering the functionality of
 _esthesis_ IoT platform.
 
@@ -45,7 +45,7 @@ Angular Single Page Application, compatible with all major Internet browsers.
 The back-end block, provides the services necessary to fetch information to the front-end block as
 well as services geared towards devices. It is made as a Spring Boot application.
 
-==== Device agent
+=== Device agent
 The device agent is the piece of software running within your device, allowing it to be remotely
 managed. _esthesis_ comes with its own device agent that can be incorporated into your devices,
 making them remotely managed with minimal effort.
@@ -69,7 +69,7 @@ using a `localhost` address. Your data collection scripts, or software, does not
 of _esthesis_. As soon as data is received on any device agent's endpoints, it is automatically
 transmitted to _esthesis_.
 
-==== MQTT server
+=== MQTT server
 The MQTT server is the building block providing bidirectional communication between devices and the
 _esthesis_ platform. _esthesis_ comes with an Eclipse Mosquitto MQTT, however you can use any other
 compatible MQTT server. The MQTT design in _esthesis_ utilises five different topics to communicate
@@ -90,7 +90,7 @@ device to execute a specific command. Direction: _esthesis_ platform to device.
 
 For the exact format of each message payload, see <<dev-messaging-specs>>.
 
-==== NiFi server
+=== NiFi server
 Apache Nifi is at the core of _esthesis_ platform design. It is the layer where data
 delivery and distribution takes place, and it is fully managed by the _esthesis_ platform server.
 
@@ -110,7 +110,7 @@ Integration with NiFi is based on four different concepts as presented next:
 
 image::media/dg-img2.png[]
 
-===== Readers
+==== Readers
 Readers are responsible for inbound data traffic. Readers allow _esthesis_ to retrieve data
 from a variety of data sources.
 You can start with a single instance, for example, an MQTT Data Reader to ingest data from your devices
@@ -119,33 +119,33 @@ can be of heterogeneous nature and you can intermix different types of technolog
 as long as messages adhere to _esthesis_ messaging data protocol
 (for protocol specifications, see <<dev-messaging-specs>>).
 
-===== Writers
+==== Writers
 Writers are responsible for outbound data traffic. Writers allows _esthesis_ to persist data to
 multiple different data targets at once, for example, storing your telemetry values in a time-series
 database for long-term storage while in parallel you send them to a Kafka cluster for real-time processing.
 
-===== Producers
+==== Producers
 Producers are responsible to generate data replies by querying their underlying data sources.
 Producers allow _esthesis_ to provide REST-enabled endpoints that can be queried from external
 components. Effectively, Producers are a gateway to the data that has been collected by _esthesis_.
 You can have multiple Producers which are transparently load-balanced by _esthesis_.
 
-===== Loggers
+==== Loggers
 Loggers are responsible to concentrate logging output from all processors deployed in NiFi.
 
-=== Device agent [[dev-device-agent]]
+== Device agent [[dev-device-agent]]
 (tbc)
 
-==== Hardware IDs
+=== Hardware IDs
 _How to work with, how to find them (TBC)_
 
-==== Registration sequence
+=== Registration sequence
 (tbc)
 
-==== Provisioning sequence
+=== Provisioning sequence
 (tbc)
 
-==== Device data simulator [[dev-device-simulator]]
+=== Device data simulator [[dev-device-simulator]]
 The device agent incorporates a data simulator allowing to quickly test your installation
 or to simulate workloads to stress test your environment.
 
@@ -168,7 +168,7 @@ The `%` placeholders denote variables that will be substituted during message co
 * `%i%` will be substituted with a random integer value from 0 to 100.
 * `%f%` will be substituted with a random float value from 0 to 100.
 
-=== Telemetry vs Metadata
+== Telemetry vs Metadata
 _esthesis_ supports two different types of payload-carrying messages, Telemetry messages and Metadata.
 The format of both messages is identical and follows the specifications of <<dev-messaging-specs>>,
 however _esthesis_ treats them differently once received.
@@ -185,7 +185,7 @@ there is only a single value (i.e. the latest one submitted) available. For exam
 IP address of a device can be a metadata payload, as it changes infrequently and in the vast
 majority of cases we are only interested about the currently allocated IP address.
 
-=== _esthesis_ messaging specifications [[dev-messaging-specs]]
+== _esthesis_ messaging specifications [[dev-messaging-specs]]
 _esthesis_ supports a simple, lightweight, JSON-based message payload.
 
 The JSON payload consists of a key describing what kind of information the message contains,
@@ -193,7 +193,7 @@ followed by another key with one or more specific measurements. The nature of th
 telemetry or metadata, is not part of the message content itself as this is denoted by the
 channel/topic on which the message was posted into.
 
-==== Telemetry and Metadata messagesFor example:
+=== Telemetry and Metadata messagesFor examples:
 
 .Single anonymous value
 ```
@@ -228,7 +228,7 @@ This payload will create a measurement `climate` with a variable named `temperat
 This payload will create a measurement `climate` with two variables, a variable named `temperature`
 having a value of `9.5`, and a variable named `humidity` having a value of `47`.
 
-===== PING message example
+==== PING message example
 ```
 {
   "m": "ping",
@@ -238,7 +238,7 @@ having a value of `9.5`, and a variable named `humidity` having a value of `47`.
 This is the standard format of the PING message type payload. The value is expressed as EPOCH in
 milliseconds. This message is sent periodically from the device to _esthesis_ service as a heartbeat.
 
-===== TELEMETRY message example
+==== TELEMETRY message example
 ```
 {
   "m":"health",
@@ -253,7 +253,7 @@ milliseconds. This message is sent periodically from the device to _esthesis_ se
 }
 ```
 
-===== METADATA message example
+==== METADATA message example
 ```
 {
   "m": "health",
@@ -266,7 +266,7 @@ milliseconds. This message is sent periodically from the device to _esthesis_ se
 }
 ```
 
-=== Development environment
+== Development environment
 .Main technical stack
 * JDK 15.x
 * Maven 3.8.x
@@ -334,8 +334,8 @@ tags=group1 \
 jenv exec mvn spring-boot:run -Dspring-boot.run
 ```
 
-=== Publishing releases
-==== Docker
+== Publishing releases
+=== Docker
 Publishing Docker images can be done using the provided Docker Compose file. You can execute:
 
 ._esthesis_ platform
@@ -354,7 +354,7 @@ docker compose -f docker-compose-device.yml build && docker compose -f docker-co
 popd
 ```
 
-==== Helm
+=== Helm
 To publish _esthesis_ Helm charts you need to execute the following sequence:
 
 .esthesis-platform
