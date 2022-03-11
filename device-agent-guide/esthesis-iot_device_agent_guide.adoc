@@ -389,7 +389,8 @@ esthesis back-end platform, providing a communication channel to transmit your
 device/sensor data.
 
 Once you have collected data by any custom method/software running in your device, you can utilise
-the embedded device agent servers to let esthesis transfer them to your back-end infrastructure.
+the embedded device agent servers to let _esthesis_ transfer them to the _esthesis_ server and then
+using the configured Data Writers forward them to your back-end infrastructure.
 Your custom software does not need to be aware of URLs, IP address, or any other infrastructure-related
 information that might change. It only needs to communicate with the  servers being exposed locally
 by the device agent using `localhost` or `127.0.0.1`. It is then the responsibility of the device agent
@@ -400,7 +401,23 @@ The embedded web server listens, by default, on port 4567 (the port can be chang
 configuration parameters). You can push your own payload to the embedded web server in the following
 two channels:
 
-(tbc)
+- /telemetry
+- /metadata
+
+For example, to push real-time telemetry data from your device you can execute:
+
+```
+curl -X POST 127.0.0.1:4567/telemetry \
+-H 'Content-Type: application/json'
+-d '{"m":"temperature", "v":{"sensor1": 12}}'
+```
+
+Respectively, to push real-time metadata data from your device you can execute:
+```
+curl -X POST 127.0.0.1:4567/metadata \
+-H 'Content-Type: application/json'
+-d '{"m":"ipAddress", "v":{"ip": 192.168.1.2}}'
+```
 
 === Embedded MQTT server
 The embedded MQTT server listens, by default, on port 4566 (the port can be changed in device agents'

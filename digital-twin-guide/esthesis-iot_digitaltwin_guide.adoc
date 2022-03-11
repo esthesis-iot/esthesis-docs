@@ -1,0 +1,55 @@
+= esthesis IoT - Digital Twin Guide
+Doc Writer <esthesis@eurodyn.com>
+:toc:
+:toclevels: 2
+:homepage: https://esthesis.com
+:icons: font
+:sectanchors:
+:sectlinks:
+
+A digital twin is a virtual representation that serves as the real-time digital counterpart of a
+physical object or process. Digital twins are the result of continual improvement in the creation
+of product design and engineering activities. The digital twin of a physical object is dependent
+on the digital thread — the lowest level design and specification for a digital twin — and the
+"twin" is dependent on the digital thread to maintain accuracy. The idea first arose at NASA, where
+full-scale mockups of early space capsules used on the ground to mirror and diagnose problems in orbit,
+eventually gave way to fully digital simulations.
+
+_esthesis_ provides a rich Digital Twin API, allowing third-party applications to interact, query,
+and control the underlying physical devices. The following sections provide an overview on how you
+can use the Digital Twin API in your applications.
+
+== Applications
+Interaction of a third-party application with the Digital Twin API starts by registering a new
+application in _esthesis_:
+
+image::media/dt-img1.png[alt="Creating an application"]
+
+You can use any alphanumeric value for the security token, or ask _esthesis_ to create a UUID for
+you by cliking on the 'Generate Token' button. The token value is what uniquely identifies your
+own application to _esthesis_, allowing it to authenticate and have access to the Digital Twin API.
+
+== API
+The Digital Twin API is described using OpenAPI specification 3, and the JSON file is available on:
+`/api/v3/api-docs`. An HTML representation of the Digital Twin API is also available using Swagger at:
+`/api/swagger-ui.html`. You can also find the locations of these two resources in your own installation
+under the `About` page:
+
+image::media/dt-img2.png[alt="About page"]
+
+=== Authentication
+Authentication with the Digital Twin API takes place via a bearer HTTP header token. The name of the
+header is `Authorization` and its value is the token you have generated when you registered your third-party
+app with _esthesis_ under _Applications_ page, prefixed with `Bearer`. This is how a `cURL` call could
+look like using the bearer token:
+```
+curl -X 'GET' \
+  'http://localhost:46000/api/dt/devices' \
+  -H 'accept: */*' \
+  -H 'Authorization: Bearer 9c5770b1-6386-dd6d-c89b-9f01c72052c9'
+```
+All calls to the Digital Twin API should include the `Authorization` header in order to be successfully
+authenticated with _esthesis_.
+
+=== Endpoints
+For details on each Digital Twin REST endpoint, visit the online manual available at `/api/swagger-ui.html`.
