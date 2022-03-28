@@ -3,7 +3,25 @@ entries:
   esthesis-device:
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2022-03-21T16:49:40.576104+02:00"
+    created: "2022-03-28T14:02:49.685531712Z"
+    description: A Helm chart to deploy an esthesis device client.
+    digest: f7f02d108d8aeba8348aa39e3901a953b0ff3d4e52326646f824d4ef06f5a3f4
+    home: https://esthes.is
+    icon: https://esthes.is/media/logo.png
+    maintainers:
+    - email: esthesis@eurodyn.com
+      name: European Dynamics SA
+      url: https://www.eurodyn.com
+    name: esthesis-device
+    sources:
+    - https://github.com/esthesis-iot
+    type: application
+    urls:
+    - esthesis-device-2.0.2.tgz
+    version: 2.0.2
+  - apiVersion: v2
+    appVersion: 2.0.1
+    created: "2022-03-28T14:02:49.684572635Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: 1473126680d254e9b6fa326f849a83bbc8b140eb78e9682af838840f2624d797
     home: https://esthes.is
@@ -21,7 +39,7 @@ entries:
     version: 2.0.1
   - apiVersion: v2
     appVersion: 2.0.1-SNAPSHOT
-    created: "2022-03-21T16:49:40.575922+02:00"
+    created: "2022-03-28T14:02:49.683481486Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: f8eb93c2b078fafc962a8d3c63878254be8e1d7567971ce03ce63d5cad2889fd
     home: https://esthes.is
@@ -40,7 +58,7 @@ entries:
   esthesis-platform:
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2022-03-21T16:49:40.577089+02:00"
+    created: "2022-03-28T14:02:49.688989435Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: c9e40a5564b624996b6524957358119611d6986f66eb9c769434f06dfcbafc8c
     home: https://esthes.is
@@ -58,7 +76,7 @@ entries:
     version: 2.0.1
   - apiVersion: v2
     appVersion: 2.0.1-SNAPSHOT
-    created: "2022-03-21T16:49:40.576809+02:00"
+    created: "2022-03-28T14:02:49.687302901Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 2da71f1ef16f198bbdd096e0cd68b8a2adf648acd18e4abcbaf70b92f91cb0a2
     home: https://esthes.is
@@ -74,4 +92,4 @@ entries:
     urls:
     - esthesis-platform-1.0.0.tgz
     version: 1.0.0
-generated: "2022-03-21T16:49:40.575413+02:00"
+generated: "2022-03-28T14:02:49.681742378Z"
