@@ -445,3 +445,55 @@ truststorePassword: test
 ```
 Do not forget to also change the `url` property to the appropriate URI, for example:
 `ssl://mqtt.server:8883`
+
+
+== Configuration
+_esthesis__ comes with a plethora of configuration options to accommodate different hardware and
+deployments as presented next. Mandatory parameters are
+denoted with [red]#*#. Values in **bold** indicate default values.
+
+[cols="1,^,1"]
+|===
+|Parameter |Value |Description
+
+|nodeId
+|Alphanumeric
+|A unique identification for the node running _esthesis_. If this value is left empty, a random ID will be generated.
+
+|securityAsymmetricKeySize
+|Numeric
+
+**2048**
+|The size of the asymmetric encryption key to be generated.
+
+|securityAsymmetricKeyAlgorithm
+|Alphanumeric
+
+**RSA**
+|The algorithm the asymmetric keys (i.e. public and private keys) are created with.
+
+|securityAsymmetricSignatureAlgorithm
+|Alphanumeric
+
+**SHA256WITHRSA**
+|The signature algorithm used in asymmetric encryption.
+
+|jwtSecret
+|Alphanumeric
+|The secret to sign JSON Web Tokens. Ensure this value is uniquely set for your own installation.
+
+|jwtTtlMinutes
+|Alphanumeric
+|The number of minutes a JWT is valid for.
+
+|jwtIssuer
+|Alphanumeric
+|The issuser of the JWT, it can be anything.
+
+|jwtIssuer
+|Alphanumeric
+|The issuser of the JWT, it can be anything.
+
+|fsRoot
+|Alphanumeric
+|The root of the filesystem where the platform can store data (for example, provisioning packages). If left empty, a folder named `.esthesis` under the user's home dir will be created. Note that in cluster configurations this filesystem needs to be shared among the nodes of the cluster.
