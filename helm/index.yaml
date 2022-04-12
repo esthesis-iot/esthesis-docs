@@ -2,7 +2,23 @@ apiVersion: v1
 entries:
   esthesis-device:
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.957191337Z"
+    created: "2022-04-12T15:23:23.237509337Z"
+    description: A Helm chart to deploy an esthesis device client.
+    digest: d6044d051727cf3cd0c27d47ea985fcbb1e8dc608cfa077a15e4fb03bb161935
+    home: https://esthes.is
+    icon: https://esthes.is/media/logo.png
+    maintainers:
+    - email: esthesis@eurodyn.com
+      name: European Dynamics SA
+      url: https://www.eurodyn.com
+    name: esthesis-device
+    sources:
+    - https://github.com/esthesis-iot
+    urls:
+    - esthesis-device-2.0.14.tgz
+    version: 2.0.14
+  - apiVersion: v2
+    created: "2022-04-12T15:23:23.236109626Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: 352e35a4ccc64033a74f3c06209f4883290eb68d47c87c51d1cce711443d2267
     home: https://esthes.is
@@ -18,7 +34,7 @@ entries:
     - esthesis-device-2.0.13.tgz
     version: 2.0.13
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.955221614Z"
+    created: "2022-04-12T15:23:23.234670711Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: f6f599e97a5a9dddf999b6d834550eeb83da4562349be95df04a5f8841a9ca18
     home: https://esthes.is
@@ -34,7 +50,7 @@ entries:
     - esthesis-device-2.0.12.tgz
     version: 2.0.12
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.953636579Z"
+    created: "2022-04-12T15:23:23.233318329Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: ccffeecb888f844b83c064cc76793558ba5b8f922591c1e4cd92e4d53fe42a6e
     home: https://esthes.is
@@ -50,7 +66,7 @@ entries:
     - esthesis-device-2.0.11.tgz
     version: 2.0.11
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.951686587Z"
+    created: "2022-04-12T15:23:23.231312134Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: 082e910cbaea82ad4f8a0de62fac3cafff5720401e9cd14bafe70ce62fa2dc2c
     home: https://esthes.is
@@ -66,7 +82,7 @@ entries:
     - esthesis-device-2.0.10.tgz
     version: 2.0.10
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.970865705Z"
+    created: "2022-04-12T15:23:23.257165108Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: 8235cd9782b6b48004c0953e59bb979a5dc83baa8ac25c7377da1483506a416c
     home: https://esthes.is
@@ -82,7 +98,7 @@ entries:
     - esthesis-device-2.0.9.tgz
     version: 2.0.9
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.969134014Z"
+    created: "2022-04-12T15:23:23.256005515Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: 8f4a40566b17fe2c927eb92550cc1dcaa7586ecaaa4812a9603f64974b1bd39d
     home: https://esthes.is
@@ -98,7 +114,7 @@ entries:
     - esthesis-device-2.0.8.tgz
     version: 2.0.8
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.965611231Z"
+    created: "2022-04-12T15:23:23.254965227Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: 062853e6772466bf530ef6b4ebbb5c19a83446bf2cf531fc5fad74df61d58c41
     home: https://esthes.is
@@ -114,7 +130,7 @@ entries:
     - esthesis-device-2.0.7.tgz
     version: 2.0.7
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.964274661Z"
+    created: "2022-04-12T15:23:23.253828306Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: 535feb8d2701ad05823c0d20b61dde1a40c9980a1977d44060645dafdcbbf7e5
     home: https://esthes.is
@@ -130,7 +146,7 @@ entries:
     - esthesis-device-2.0.6.tgz
     version: 2.0.6
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.962812383Z"
+    created: "2022-04-12T15:23:23.252881046Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: 1e6223e3d2d9fd2cd37ee686f1af7a5f652e98e277a438c38d1d6bfdef2cf1e2
     home: https://esthes.is
@@ -147,7 +163,7 @@ entries:
     version: 2.0.5
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2022-04-12T15:06:31.961337906Z"
+    created: "2022-04-12T15:23:23.251839019Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: 299961a113a477a301b47dedf26176df307b946c3555ea8fb8dfc95c3aff8898
     home: https://esthes.is
@@ -165,7 +181,7 @@ entries:
     version: 2.0.4
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2022-04-12T15:06:31.959950344Z"
+    created: "2022-04-12T15:23:23.250713514Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: fac12ffdb72126e0509854e8b2e07d8f00754f189c31a52780b90ebd651a0639
     home: https://esthes.is
@@ -183,7 +199,7 @@ entries:
     version: 2.0.3
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2022-04-12T15:06:31.958536409Z"
+    created: "2022-04-12T15:23:23.249567635Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: f7f02d108d8aeba8348aa39e3901a953b0ff3d4e52326646f824d4ef06f5a3f4
     home: https://esthes.is
@@ -201,7 +217,7 @@ entries:
     version: 2.0.2
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2022-04-12T15:06:31.95005418Z"
+    created: "2022-04-12T15:23:23.229790388Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: 1473126680d254e9b6fa326f849a83bbc8b140eb78e9682af838840f2624d797
     home: https://esthes.is
@@ -219,7 +235,7 @@ entries:
     version: 2.0.1
   - apiVersion: v2
     appVersion: 2.0.1-SNAPSHOT
-    created: "2022-04-12T15:06:31.948275449Z"
+    created: "2022-04-12T15:23:23.228128896Z"
     description: A Helm chart to deploy an esthesis device client.
     digest: f8eb93c2b078fafc962a8d3c63878254be8e1d7567971ce03ce63d5cad2889fd
     home: https://esthes.is
@@ -237,7 +253,7 @@ entries:
     version: 1.0.0
   esthesis-platform:
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.992461618Z"
+    created: "2022-04-12T15:23:23.277061888Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 697bb4e3d41f6e8a75c946d38ac5c2825c26d5660d23d7c2193408324d058cbe
     home: https://esthes.is
@@ -253,7 +269,7 @@ entries:
     - esthesis-platform-2.0.16.tgz
     version: 2.0.16
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.990120723Z"
+    created: "2022-04-12T15:23:23.274904055Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 822666ad64f46220923a0cd172eaf7d7ad0675507c4763b8e0b18ea9c8191d96
     home: https://esthes.is
@@ -269,7 +285,7 @@ entries:
     - esthesis-platform-2.0.15.tgz
     version: 2.0.15
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.987464004Z"
+    created: "2022-04-12T15:23:23.272559684Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: bdfb0875bdb3dc59b6d7c39705a3c6ea310aaade826e32a602beb18b8838e100
     home: https://esthes.is
@@ -285,7 +301,7 @@ entries:
     - esthesis-platform-2.0.14.tgz
     version: 2.0.14
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.985041311Z"
+    created: "2022-04-12T15:23:23.27035365Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 3d38bfc23838b619cc04189749a3dcca2ec1a5850a1ec297d10dfed91ff11ca4
     home: https://esthes.is
@@ -301,7 +317,7 @@ entries:
     - esthesis-platform-2.0.13.tgz
     version: 2.0.13
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.98304019Z"
+    created: "2022-04-12T15:23:23.268214668Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 822d17d9523080d748d67493a12793a646a1907a44f9c341b832c3425fe231c9
     home: https://esthes.is
@@ -317,7 +333,7 @@ entries:
     - esthesis-platform-2.0.12.tgz
     version: 2.0.12
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.981102077Z"
+    created: "2022-04-12T15:23:23.265846917Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: b59be4e62cd6d211517e4ffa892d7571552616c50607cd7c626377402d12e775
     home: https://esthes.is
@@ -333,7 +349,7 @@ entries:
     - esthesis-platform-2.0.11.tgz
     version: 2.0.11
   - apiVersion: v2
-    created: "2022-04-12T15:06:31.978502172Z"
+    created: "2022-04-12T15:23:23.263561012Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 02c7007f1c70eb0399c5de3fe8abc55df38d5043917b01b6ca5fd690b8939337
     home: https://esthes.is
@@ -349,7 +365,7 @@ entries:
     - esthesis-platform-2.0.10.tgz
     version: 2.0.10
   - apiVersion: v2
-    created: "2022-04-12T15:06:32.015343399Z"
+    created: "2022-04-12T15:23:23.297546929Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: ce8261327e50c96ab65ea413b0b7c62eb15ab5ecf0b3ce09b45ca837c33c2b3e
     home: https://esthes.is
@@ -365,7 +381,7 @@ entries:
     - esthesis-platform-2.0.9.tgz
     version: 2.0.9
   - apiVersion: v2
-    created: "2022-04-12T15:06:32.013391853Z"
+    created: "2022-04-12T15:23:23.295938939Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 7ccefda8770ada8137f970f564a0a571cbbafffc7bac6000958b2395cb7913a2
     home: https://esthes.is
@@ -381,7 +397,7 @@ entries:
     - esthesis-platform-2.0.8.tgz
     version: 2.0.8
   - apiVersion: v2
-    created: "2022-04-12T15:06:32.011565206Z"
+    created: "2022-04-12T15:23:23.294281608Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: c0d2b5cc3eeab7c1e186044e9b67d8aa53ff51fd724ecd28cdf6a7bccd2f82f4
     home: https://esthes.is
@@ -397,7 +413,7 @@ entries:
     - esthesis-platform-2.0.7.tgz
     version: 2.0.7
   - apiVersion: v2
-    created: "2022-04-12T15:06:32.009695516Z"
+    created: "2022-04-12T15:23:23.288639014Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 25cb8a330ea70f5a7df0cdef2e5d06831bdf6c575d698cfee3126db6aec18739
     home: https://esthes.is
@@ -413,7 +429,7 @@ entries:
     - esthesis-platform-2.0.6.tgz
     version: 2.0.6
   - apiVersion: v2
-    created: "2022-04-12T15:06:32.007163936Z"
+    created: "2022-04-12T15:23:23.286964088Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: c23d810a0bd41d029d6dae67fe13f8abc8347a384a7869f667a54a7be6266c9b
     home: https://esthes.is
@@ -430,7 +446,7 @@ entries:
     version: 2.0.5
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2022-04-12T15:06:32.003536371Z"
+    created: "2022-04-12T15:23:23.285233821Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 59b8290e4e597dc8a40fb2a0b859516e175b757fdebf44205c2d27c32aca888d
     home: https://esthes.is
@@ -448,7 +464,7 @@ entries:
     version: 2.0.4
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2022-04-12T15:06:32.00031237Z"
+    created: "2022-04-12T15:23:23.283014547Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 09bb246f87b6fc18d57a727b4ef074b7e8db8d8c4ee1b3c968a045fd7c4aafc5
     home: https://esthes.is
@@ -466,7 +482,7 @@ entries:
     version: 2.0.3
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2022-04-12T15:06:31.995230646Z"
+    created: "2022-04-12T15:23:23.28013742Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 4c111f500ba59ef7626a8cbc9ff922a5156665fac522ca34ef1a00b108f139c4
     home: https://esthes.is
@@ -484,7 +500,7 @@ entries:
     version: 2.0.2
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2022-04-12T15:06:31.975709135Z"
+    created: "2022-04-12T15:23:23.261320117Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: c9e40a5564b624996b6524957358119611d6986f66eb9c769434f06dfcbafc8c
     home: https://esthes.is
@@ -502,7 +518,7 @@ entries:
     version: 2.0.1
   - apiVersion: v2
     appVersion: 2.0.1-SNAPSHOT
-    created: "2022-04-12T15:06:31.97310719Z"
+    created: "2022-04-12T15:23:23.259278069Z"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 2da71f1ef16f198bbdd096e0cd68b8a2adf648acd18e4abcbaf70b92f91cb0a2
     home: https://esthes.is
@@ -518,4 +534,4 @@ entries:
     urls:
     - esthesis-platform-1.0.0.tgz
     version: 1.0.0
-generated: "2022-04-12T15:06:31.945910579Z"
+generated: "2022-04-12T15:23:23.220453154Z"
