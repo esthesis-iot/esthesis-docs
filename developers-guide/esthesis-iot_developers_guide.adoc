@@ -331,7 +331,7 @@ hardwareId=device1 \
 storageRoot="$(echo ~$USER)/.esthesis/devices/device1" \
 registrationUrl="http://localhost:46000" \
 tags=group1 \
-jenv exec mvn spring-boot:run -Dspring-boot.run
+mvn spring-boot:run -Dspring-boot.run
 ```
 
 == Publishing releases
