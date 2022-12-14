@@ -279,7 +279,7 @@ https://github.com/esthesisiot
 Integration of new features takes place via GitHub's Pull Requests.
 
 .Booting up a development support infrastructure
-The Docker Compose file used for setting up _esthesis_ in a production environment, can also be
+The Docker Compose file used for settingEntity up _esthesis_ in a production environment, can also be
 used to setup a development environment. However, a few changes apply in that case:
 
 - You do not need all the services described in Docker Compose, as you will be running the _esthesis_
