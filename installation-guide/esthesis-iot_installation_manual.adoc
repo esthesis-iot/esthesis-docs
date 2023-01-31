@@ -121,7 +121,7 @@ image::media/ig-img3.png[alt="Creating a certificateEntity authority"]
 * Navigate to `Certificate Authorities`.
 * Create a new certificateEntity authority, leaving the `Parent CA` option empty.
 
-=== Create a platform certificateEntity
+=== Create a platform certificate
 
 image::media/ig-img4.png[alt="Creating a certificateEntity"]
 * Navigate to `Certificates`.
@@ -131,7 +131,7 @@ image::media/ig-img4.png[alt="Creating a certificateEntity"]
 
 image::media/ig-img5.png[]
 * Navigate to `Settings` > `Security`.
-* Set the Platform certificateEntity to the certificateEntity you created above.
+* Set the Platform certificate to the certificateEntity you created above.
 
 === Platform settings - Device registration
 
