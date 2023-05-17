@@ -1,0 +1,306 @@
+##################################################################################################
+# The repositories used by this Helmfile.
+##################################################################################################
+repositories:
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
+  - name: reloader
+    url: https://stakater.github.io/stakater-charts
+  - name: mongodb
+    url: https://charts.bitnami.com/bitnami
+  - name: apisix
+    url: https://charts.apiseven.com
+  - name: redis
+    url: https://charts.bitnami.com/bitnami
+  - name: rabbitmq
+    url: https://charts.bitnami.com/bitnami
+  - name: kafka
+    url: https://charts.bitnami.com/bitnami
+  - name: camunda
+    url: https://helm.camunda.io
+
+---
+##################################################################################################
+# Default values
+##################################################################################################
+helmDefaults:
+  timeout: 1800
+
+---
+##################################################################################################
+# Default state values
+##################################################################################################
+values:
+  ##################################################################################################
+  # Dev modes
+  ##################################################################################################
+  - devMode: {{ env "DEV_MODE" | default false }}
+  # Helmfile dev mode, switching all esthesis releases to local charts.
+  - helmfileDevMode: {{ env "HELMFILE_DEV_MODE" | default false }}
+
+  ##################################################################################################
+  # Global values
+  ##################################################################################################
+  - esthesisVersion: "3.0.0-SNAPSHOT"
+  - timezone: {{ env "TIMEZONE" | default "Europe/Athens" }}
+  - esthesisLogLevel: {{ env "ESTHESIS_LOG_LEVEL" | default "WARN" }}
+
+  ##################################################################################################
+  # Accounts to be used throughout charts.
+  ##################################################################################################
+  - esthesisAdminUsername: {{ env "ESTHESIS_ADMIN_USERNAME" | default "esthesis-admin" }}
+  - esthesisAdminPassword: {{ env "ESTHESIS_ADMIN_PASSWORD" | default "esthesis-admin" }}
+  - esthesisSystemUsername: {{ env "ESTHESIS_SYSTEM_USERNAME" | default "esthesis-system" }}
+  - esthesisSystemPassword: {{ env "ESTHESIS_SYSTEM_PASSWORD" | default "esthesis-system" }}
+
+  ##################################################################################################
+  # Chart-specific values.
+  ##################################################################################################
+  # Keycloak
+  - keycloakEnabled: {{ env "KEYCLOAK_ENABLED" | default true }}
+  - keycloakIngressHostname: {{ env "KEYCLOAK_INGRESS_HOSTNAME" | default "keycloak.esthesis.local" }}
+  # MongoDB
+  - mongoDbEnabled: {{ env "MONGODB_ENABLED" | default true }}
+  - mongoDbUrlCluster: {{ env "MONGODB_URL_CLUSTER" | default "mongodb://mongodb:27017" }}
+  - mongoDbDatabase: {{ env "MONGODB_DATABASE" | default "esthesiscore" }}
+  - mongoDbUsername: {{ env "MONGODB_USERNAME" | default .StateValues.esthesisSystemUsername }}
+  - mongoDbPassword: {{ env "MONGODB_PASSWORD" | default .StateValues.esthesisSystemPassword }}
+  # APISIX
+  - apisixEnabled: {{ env "APISIX_ENABLED" | default true }}
+  - apisixIngressNamespace: {{ env "APISIX_INGRESS_NAMESPACE" | default "" }}
+  # esthesis UI
+  - esthesisUiIngressHostname: {{ env "ESTHESIS_UI_INGRESS_HOSTNAME" | default "esthesiscore.esthesis.local" }}
+  - esthesisUiLogoutUrl: {{ env "ESTHESIS_UI_LOGOUT_URL" | default "/logout" }}
+  # OIDC
+  - oidcAuthorityUrlExternal: {{ env "OIDC_AUTHORITY_URL_EXTERNAL" | default "https://keycloak.esthesis.local/realms/esthesis" }}
+  - oidcAuthorityUrlCluster: {{ env "OIDC_AUTHORITY_URL_CLUSTER" | default "http://keycloak/realms/esthesis" }}
+  - oidcDiscoveryUrlCluster: {{ env "OIDC_DISCOVERY_URL_CLUSTER" | default "http://keycloak/realms/esthesis/.well-known/openid-configuration" }}
+  - oidcJwtVerifyLocationCluster: {{ env "OIDC_JWT_VERIFY_LOCATION_CLUSTER" | default "http://keycloak/realms/esthesis/protocol/openid-connect/certs" }}
+  # REDIS
+  - redisEnabled: {{ env "REDIS_ENABLED" | default true }}
+  - redisHosts: {{ env "REDIS_HOSTS" | default "redis-master:6379/0" }}
+  # RabbitMQ
+  - rabbitmqEnabled: {{ env "RABBITMQ_ENABLED" | default true }}
+  - rabbitmqErlangCookie: {{ env "RABBITMQ_ERLANG_COOKIE" | default "esthesis" }}
+  # Kafka
+  - kafkaEnabled: {{ env "KAFKA_ENABLED" | default true }}
+  - kafkaBootstrapServers: {{ env "KAFKA_BOOTSTRAP_SERVERS" | default "kafka:9092" }}
+  # Camunda
+  - camundaEnabled: {{ env "CAMUNDA_ENABLED" | default true }}
+  - camundaGatewayUrlCluster: {{ env "CAMUNDA_GATEWAY_URL_CLUSTER" | default "camunda-zeebe-gateway:26500" }}
+  # MicroK8s
+  - mk8sExposeIngress: {{ env "MK8S_EXPOSE_INGRESS" | default false }}
+  - mk8sIngressNamespace: {{ env "MK8S_INGRESS_NAMESPACE" | default "ingress" }}
+
+---
+##################################################################################################
+# Release definitions
+##################################################################################################
+releases:
+  - name: esthesis-core
+    chart: {{ .StateValues.helmfileDevMode | ternary "./" "esthesis/esthesis-core" | quote }}
+    version: {{ .StateValues.esthesisVersion | quote }}
+    values:
+      - quarkus:
+          log:
+            min-level: "TRACE"
+            level: {{ .StateValues.esthesisLogLevel | quote }}
+            category:
+              esthesis:
+                level: {{ .StateValues.esthesisLogLevel | quote }}
+              "org.jboss.resteasy.reactive":
+                level: {{ .StateValues.esthesisLogLevel | quote }}
+              "io.quarkus.mongodb.panache.common.runtime":
+                level: {{ .StateValues.esthesisLogLevel | quote }}
+              "org.mongodb":
+                level: {{ .StateValues.esthesisLogLevel | quote }}
+              "io.quarkus.oidc.token.propagation.reactive":
+                level: {{ .StateValues.esthesisLogLevel | quote }}
+      - esthesisAdminUsername: {{ .StateValues.esthesisAdminUsername | quote }}
+      - esthesisAdminPassword: {{ .StateValues.esthesisAdminPassword | quote }}
+      - esthesisSystemUsername: {{ .StateValues.esthesisSystemUsername | quote }}
+      - esthesisSystemPassword: {{ .StateValues.esthesisSystemPassword | quote }}
+      - esthesisUiIngressHostname: {{ .StateValues.esthesisUiIngressHostname | quote }}
+      - esthesisUiLogoutUrl: {{ .StateValues.esthesisUiLogoutUrl | quote }}
+      - kafkaBootstrapServers: {{ .StateValues.kafkaBootstrapServers | quote }}
+      - mk8sExposeIngress: {{ .StateValues.mk8sExposeIngress }}
+      - mk8sIngressNamespace: {{ .StateValues.mk8sIngressNamespace | quote }}
+      # Keycloak
+      - keycloakEnabled: {{ .StateValues.keycloakEnabled }}
+      # OIDC
+      - oidcAuthorityUrlExternal: {{ .StateValues.oidcAuthorityUrlExternal | quote }}
+      - oidcAuthorityUrlCluster: {{ .StateValues.oidcAuthorityUrlCluster | quote }}
+      - oidcDiscoveryUrlCluster: {{ .StateValues.oidcDiscoveryUrlCluster | quote }}
+      - oidcJwtVerifyLocationCluster: {{ .StateValues.oidcJwtVerifyLocationCluster | quote }}
+      # MongoDB
+      - mongoDbUrlCluster: {{ .StateValues.mongoDbUrlCluster | quote }}
+      - mongoDbDatabase: {{ .StateValues.mongoDbDatabase | quote }}
+      - mongoDbUsername: {{ .StateValues.esthesisSystemUsername | quote }}
+      - mongoDbPassword: {{ .StateValues.esthesisSystemPassword | quote }}
+      # REDIS
+      - redisHosts: {{ .StateValues.redisHosts | quote }}
+      # RabbitMQ
+      - rabbitmqErlangCookie: {{ .StateValues.rabbitmqErlangCookie |quote }}
+      # Camunda
+      - camundaGatewayUrlCluster: {{ .StateValues.camundaGatewayUrlCluster | quote }}
+
+  - name: reloader
+    chart: "reloader/reloader"
+    version: "v1.0.22"
+    #  TBC - Only for dev
+
+  - name: keycloak
+    chart: "bitnami/keycloak"
+    version: "14.1.0"
+    installed: {{ .StateValues.keycloakEnabled }}
+    values:
+      - proxy: "edge"
+      - production: true
+      - service:
+          type: "ClusterIP"
+      - auth:
+          adminUser: {{ .StateValues.esthesisSystemUsername }}
+          adminPassword: {{ .StateValues.esthesisSystemPassword }}
+      - ingress:
+          enabled: true
+          hostname: {{ .StateValues.keycloakIngressHostname }}
+          annotations:
+            nginx.ingress.kubernetes.io/proxy-buffering: "on"
+            nginx.ingress.kubernetes.io/proxy-buffer-size: 16k
+            nginx.ingress.kubernetes.io/proxy-body-size: 8m
+      - postgresql:
+          auth:
+            postgresPassword: {{ .StateValues.esthesisSystemPassword }}
+            password: {{ .StateValues.esthesisSystemPassword }}
+      - readinessProbe:
+          timeoutSeconds: 60
+      - keycloakConfigCli:
+          enabled: true
+          existingConfigmap: esthesis-core-keycloak-config
+          command: "[\"java\", \"-jar\", \"/opt/bitnami/keycloak-config-cli/keycloak-config-cli.jar\"]"
+
+  - name: mongodb
+    chart: "bitnami/mongodb"
+    version: "13.9.4"
+    installed: {{ .StateValues.mongoDbEnabled }}
+    values:
+      - initdbScripts:
+          init.js: |
+            use {{ .StateValues.mongoDbDatabase }}
+            db.grantRolesToUser('{{ .StateValues.esthesisSystemUsername }}', ["dbAdmin"])
+            db.User.insertOne({"_id": ObjectId("64180cded7edc1e1200904a0"), "username": "{{ .StateValues.esthesisAdminUsername }}", "description": "Default administrator of the system", "groups": ["64180cded7edc1e1200904a0"]})
+      - auth:
+          rootUser: {{ .StateValues.esthesisSystemUsername }}
+          rootPassword: {{ .StateValues.esthesisSystemPassword }}
+          usernames:
+            - "{{ .StateValues.esthesisSystemUsername }}"
+          passwords:
+            - "{{ .StateValues.esthesisSystemPassword }}"
+          databases:
+            - "esthesiscore"
+          replicaSetKey: "{{ .StateValues.esthesisSystemPassword }}"
+      - arbiter:
+          enabled: false
+      - serviceAccount:
+          create: true
+      - rbac:
+          create: true
+      - readinessProbe:
+          timeoutSeconds: 60
+
+  - name: apisix
+    chart: "apisix/apisix"
+    version: "1.3.1"
+    installed: {{ .StateValues.apisixEnabled }}
+    values:
+      - apisix:
+          timezone: {{ .StateValues.timezone }}
+      - plugins:
+          - proxy-rewrite
+          - openid-connect
+          - opentelemetry
+      - logs:
+          errorLogLevel: "debug"
+      - etcd:
+          replicaCount: 1
+          auth:
+            token:
+              type: "simple"
+      - admin:
+          credentials:
+            admin: {{ .StateValues.esthesisSystemPassword }}
+          cors: false
+          allow:
+            ipList:
+              - "0.0.0.0/0"
+      - ingress-controller:
+          enabled: true
+          config:
+            logLevel: "warn"
+            apisix:
+              adminKey: {{ .StateValues.esthesisSystemPassword }}
+              serviceFullname: "apisix-admin"
+            kubernetes:
+              namespaceSelector:
+                - ""
+      - dashboard:
+          enabled: true # TBC - only for dev
+          config:
+            authentication:
+              secret: {{ .StateValues.esthesisSystemPassword }}
+              users:
+                - username: {{ .StateValues.esthesisSystemUsername }}
+                  password: {{ .StateValues.esthesisSystemPassword }}
+
+  - name: redis
+    chart: "bitnami/redis"
+    version: 17.3.7
+    installed: {{ .StateValues.redisEnabled }}
+    values:
+      - architecture: standalone
+      - auth:
+          password: {{ .StateValues.esthesisSystemPassword }}
+
+  - name: rabbitmq
+    chart: "bitnami/rabbitmq"
+    version: 10.2.0
+    installed: {{ .StateValues.rabbitmqEnabled }}
+    values:
+      - auth:
+          username: {{ .StateValues.esthesisSystemUsername }}
+          password: {{ .StateValues.esthesisSystemPassword }}
+          erlangCookie: {{ .StateValues.rabbitmqErlangCookie }}
+      - extraPlugins: "rabbitmq_mqtt"
+      - service:
+          extraPorts:
+            - name: mqtt
+              port: 1883
+              protocol: TCP
+              targetPort: 1883
+      - extraConfiguration: |-
+          mqtt.default_user = {{ .StateValues.esthesisSystemUsername }}
+          mqtt.default_pass = {{ .StateValues.esthesisSystemPassword }}
+
+  - name: kafka
+    chart: "bitnami/kafka"
+    version: 18.0.3
+    installed: {{ .StateValues.kafkaEnabled }}
+
+  - name: camunda
+    chart: "camunda/camunda-platform"
+    version: 8.1.5
+    installed: {{ .StateValues.camundaEnabled }}
+    values:
+      - operate:
+          enabled: false
+      - optimize:
+          enabled: false
+      - tasklist:
+          enabled: false
+      - identity:
+          enabled: false
+          firstUser:
+            username: {{ .StateValues.esthesisSystemUsername }}
+            password: {{ .StateValues.esthesisSystemPassword }}
+      - web-modeler:
+          enabled: false
