@@ -1,0 +1,287 @@
+---
+##################################################################################################
+# Environments definitions
+##################################################################################################
+environments:
+  default:
+    values:
+      - devMode: false
+      - helmfileDevMode: {{ env "HELMFILE_DEV_MODE" | default false }}
+  dev:
+    values:
+      - devMode: true
+      - helmfileDevMode: {{ env "HELMFILE_DEV_MODE" | default true }}
+
+---
+##################################################################################################
+# The repositories used by this Helmfile.
+##################################################################################################
+repositories:
+  - name: bitnami
+    url: registry-1.docker.io/bitnamicharts
+    oci: true
+  - name: reloader
+    url: https://stakater.github.io/stakater-charts
+  - name: mongodb
+    url: https://mongodb.github.io/helm-charts
+  - name: apisix
+    url: https://charts.apiseven.com
+  - name: camunda
+    url: https://helm.camunda.io
+
+---
+##################################################################################################
+# Default values
+##################################################################################################
+helmDefaults:
+  timeout: 1800
+
+---
+##################################################################################################
+# Default state values
+##################################################################################################
+values:
+  ##################################################################################################
+  # Global values
+  ##################################################################################################
+  - esthesisVersion: "3.0.0-SNAPSHOT"
+  - timezone: {{ env "TIMEZONE" | default "Europe/Athens" }}
+
+  ##################################################################################################
+  # Accounts to be used throughout charts.
+  ##################################################################################################
+  - esthesisAdminUsername: {{ env "ESTHESIS_ADMIN_USERNAME" | default "esthesis-admin" }}
+  - esthesisAdminPassword: {{ env "ESTHESIS_ADMIN_PASSWORD" | default "esthesis-admin" }}
+  - esthesisSystemUsername: {{ env "ESTHESIS_SYSTEM_USERNAME" | default "esthesis-system" }}
+  - esthesisSystemPassword: {{ env "ESTHESIS_SYSTEM_PASSWORD" | default "esthesis-system" }}
+
+  ##################################################################################################
+  # Chart-specific values.
+  ##################################################################################################
+  # Keycloak
+  - keycloakEnabled: {{ env "KEYCLOAK_ENABLED" | default true }}
+  - keycloakIngressHostname: {{ env "KEYCLOAK_INGRESS_HOSTNAME" | default "keycloak.esthesis.localdev" }}
+  # MongoDB
+  - mongoDbEnabled: {{ env "MONGODB_ENABLED" | default true }}
+  # APISIX
+  - apisixEnabled: {{ env "APISIX_ENABLED" | default true }}
+  # REDIS
+  - redisEnabled: {{ env "REDIS_ENABLED" | default true }}
+  # Kafka
+  - kafkaEnabled: {{ env "KAFKA_ENABLED" | default true }}
+  # Camunda
+  - camundaEnabled: {{ env "CAMUNDA_ENABLED" | default true }}
+  # MicroK8s
+  - mk8sExposeIngress: {{ env "MK8S_EXPOSE_INGRESS" | default false }}
+  - mk8sIngressNamespace: {{ env "MK8S_INGRESS_NAMESPACE" | default "ingress" }}
+  # Mosquitto
+  - mosquittoEnabled: {{ env "MOSQUITTO_ENABLED" | default true }}
+
+---
+##################################################################################################
+# Release definitions
+##################################################################################################
+releases:
+  - name: esthesis-core-deps
+    version: {{ .StateValues.esthesisVersion | quote }}
+    chart: {{ .StateValues.helmfileDevMode | ternary "./" "esthesis/esthesis-core-deps" | quote }}
+    values:
+      - devMode: {{ .StateValues.devMode }}
+      - esthesisAdminUsername: {{ .StateValues.esthesisAdminUsername | quote }}
+      - esthesisAdminPassword: {{ .StateValues.esthesisAdminPassword | quote }}
+      - esthesisSystemUsername: {{ .StateValues.esthesisSystemUsername | quote }}
+      - esthesisSystemPassword: {{ .StateValues.esthesisSystemPassword | quote }}
+
+      # Keycloak
+      - keycloakEnabled: {{ .StateValues.keycloakEnabled }}
+
+      # MicroK8s
+      - mk8sExposeIngress: {{ .StateValues.mk8sExposeIngress }}
+      - mk8sIngressNamespace: {{ .StateValues.mk8sIngressNamespace | quote }}
+
+      # Mosquitto
+      - mosquittoEnabled: {{ .StateValues.mosquittoEnabled }}
+
+  - name: reloader
+    chart: "reloader/reloader"
+    version: "v1.0.22"
+    installed: {{ .StateValues.devMode }}
+
+  - name: mongodb
+    chart: mongodb/community-operator
+    version: "0.7.9"
+    installed: {{ .StateValues.mongoDbEnabled }}
+
+  - name: apisix
+    chart: apisix/apisix
+    version: "1.3.1"
+    installed: {{ .StateValues.apisixEnabled }}
+    values:
+      - apisix:
+          timezone: {{ .StateValues.timezone }}
+      - plugins:
+          - proxy-rewrite
+          - openid-connect
+          - opentelemetry
+      - logs:
+          errorLogLevel: "debug"
+      - etcd:
+          replicaCount: 1
+          auth:
+            token:
+              type: "simple"
+      - gateway:
+          type: LoadBalancer
+#          type: ClusterIP
+#          externalTrafficPolicy: ""
+      - admin:
+          credentials:
+            admin: {{ .StateValues.esthesisSystemPassword }}
+          cors: false
+          allow:
+            ipList:
+              - "0.0.0.0/0"
+      - ingress-controller:
+          enabled: true
+          config:
+            logLevel: "warn"
+            apisix:
+              adminKey: {{ .StateValues.esthesisSystemPassword }}
+              serviceFullname: "apisix-admin"
+            kubernetes:
+              namespaceSelector:
+                - ""
+      - dashboard:
+          enabled: {{ .StateValues.devMode }}
+          service:
+            type: LoadBalancer
+          config:
+            authentication:
+              secret: {{ .StateValues.esthesisSystemPassword }}
+              users:
+                - username: {{ .StateValues.esthesisSystemUsername }}
+                  password: {{ .StateValues.esthesisSystemPassword }}
+
+  - name: redis
+    chart: "bitnami/redis"
+    version: "17.3.7"
+    installed: {{ .StateValues.redisEnabled }}
+    values:
+      - architecture: standalone
+      - auth:
+          password: {{ .StateValues.esthesisSystemPassword }}
+      {{- if .StateValues.devMode }}
+      - master:
+          service:
+            type: LoadBalancer
+      {{- end }}
+
+  - name: kafka
+    chart: "bitnami/kafka"
+    version: "22.1.1"
+    installed: {{ .StateValues.kafkaEnabled }}
+    {{- if .StateValues.devMode }}
+    values:
+      - externalAccess:
+          enabled: true
+          autoDiscovery:
+            enabled: true
+          service:
+            type: LoadBalancer
+      - serviceAccount:
+          create: true
+      - rbac:
+          create: true
+      - deleteTopicEnable: true
+    {{- end }}
+
+  - name: camunda
+    chart: "camunda/camunda-platform"
+    version: "8.1.5"
+    installed: {{ .StateValues.camundaEnabled }}
+    values:
+      - operate:
+          enabled: false
+      - optimize:
+          enabled: false
+      - tasklist:
+          enabled: false
+      - identity:
+          enabled: false
+#          firstUser:
+#            username: {{ .StateValues.esthesisSystemUsername }}
+#            password: {{ .StateValues.esthesisSystemPassword }}
+      - web-modeler:
+          enabled: false
+      {{- if .StateValues.devMode }}
+      - elasticsearch:
+          replicas: 1
+          minimumMasterNodes: 1
+      - zeebe:
+          clusterSize: 1
+          replicationFactor: 1
+      - zeebe-gateway:
+          replicas: 1
+          service:
+            type: LoadBalancer
+      {{- end }}
+
+  - name: keycloak
+    chart: "bitnami/keycloak"
+    version: "14.1.0"
+    installed: {{ .StateValues.keycloakEnabled }}
+    values:
+      - proxy: "edge"
+      - production: true
+      - auth:
+          adminUser: {{ .StateValues.esthesisSystemUsername }}
+          adminPassword: {{ .StateValues.esthesisSystemPassword }}
+      - postgresql:
+          auth:
+            postgresPassword: {{ .StateValues.esthesisSystemPassword }}
+            password: {{ .StateValues.esthesisSystemPassword }}
+      - readinessProbe:
+          timeoutSeconds: 60
+      - keycloakConfigCli:
+          enabled: true
+          existingConfigmap: esthesis-core-keycloak-config
+          command: "[\"java\", \"-jar\", \"/opt/bitnami/keycloak-config-cli/keycloak-config-cli.jar\"]"
+
+  - name: grafana-loki
+    chart: "bitnami/grafana-loki"
+    version: "2.8.1"
+    installed: {{ .StateValues.devMode }}
+    values:
+      - promtail:
+          enabled: true
+          existingSecret: "grafana-loki-config"
+
+  - name: grafana
+    chart: "bitnami/grafana"
+    version: "8.4.2"
+    installed: {{ .StateValues.devMode }}
+    values:
+      - admin:
+          user: {{ .StateValues.esthesisSystemUsername }}
+          password: {{ .StateValues.esthesisSystemPassword }}
+      - datasources:
+          secretName: grafana-config
+      - service:
+          type: LoadBalancer
+
+  - name: grafana-tempo
+    chart: "bitnami/grafana-tempo"
+    version: "2.2.2"
+    installed: {{ .StateValues.devMode }}
+    values:
+      - distributor:
+          service:
+            type: LoadBalancer
+      - tempo:
+          traces:
+            jaeger:
+              grpc: false
+              thriftHttp: false
+            otlp:
+              http: true  # Needed by APISIX
+              grpc: true  # Needed by Quarkus
