@@ -7,20 +7,21 @@ Doc Writer <esthesis@eurodyn.com>
 :sectanchors:
 :sectlinks:
 
-The device agent is the piece of software that runs in your devices allowing you to seamlessly connect
-and control them from _esthesis_ platform. _esthesis_ provides a device agent that you can use
-right of the box to interconnect any device capable of running Java. In addition, the device agent
-is provided as a multiarch Docker Container (https://hub.docker.com/repository/docker/esthesisiot/esthesis-device).
+The device agent is the piece of software that runs in your devices allowing you to seamlessly connect and control them from _esthesis_ platform. _esthesis_ provides a device agent that you can use right of the box to interconnect any device capable of running Java.
+In addition, the device agent is provided as a multiarch Docker Container (https://hub.docker.com/repository/docker/esthesisiot/esthesis-device).
 
 This section presents the functionality as well as the configuration options of the device agent.
 
 == Installation
-The device agent comes in the form of a self-contained Java JAR file. The JAR file encapsulates all
-the runtime dependencies needed, so you can execute the agent just by obtaining the
+
+The device agent comes in the form of a self-contained Java JAR file.
+The JAR file encapsulates all the runtime dependencies needed, so you can execute the agent just by obtaining the
 `esthesis-device.jar` file.
 
 === In a JRE environment
+
 The device agent can be executed in your device using a command similar to:
+
 ```
 hardwareId=device1 \
 storageRoot="$(echo ~$USER)/.esthesis" \
@@ -29,19 +30,21 @@ java -jar target/esthesis-device.jar
 ```
 
 === Via Docker
+
 The device agent is also available as a Docker container at
 https://hub.docker.com/repository/docker/esthesisiot/esthesis-device.
 
 You can startup a device agent Docker container as:
-```
 
 ```
 
+```
 
 == Configuration
-The device agent comes with a plethora of configuration options to accommodate different hardware and
-deployments as presented next. Mandatory parameters for the device agent to bootup properly are
-denoted with [red]#*#. Values in **bold** indicate default values.
+
+The device agent comes with a plethora of configuration options to accommodate different hardware and deployments as presented next.
+Mandatory parameters for the device agent to bootup properly are denoted with [red]#*#.
+Values in **bold** indicate default values.
 
 .Commonly used parameters
 [cols="1,^,1"]
@@ -78,7 +81,7 @@ The script is handed the following parameters:
 
 |provisioningRoot
 |If empty, $storageRoot/provisioning
-|The root folder to store remotely retrieved provisioning packages.
+|The root folder to storeEntity remotely retrieved provisioning packages.
 
 |provisioningTempRoot
 |If empty, $storageRoot/provisioning/.tmp
@@ -105,7 +108,7 @@ package.
 
 |storageRoot [red]#*#
 |
-|The folder to store the agent's configuration and runtime files. For example, '/storage/esthesis'.
+|The folder to storeEntity the agent's configuration and runtime files. For example, '/storage/esthesis'.
 
 |tags
 |
@@ -383,23 +386,19 @@ agent and reported in health checks.
 |===
 
 == Embedded servers
-The device agent embeds a locally-exposed Web server and an MQTT server.
-These local servers act like a proxy between your device's custom software and the
-esthesis back-end platform, providing a communication channel to transmit your
-device/sensor data.
 
-Once you have collected data by any custom method/software running in your device, you can utilise
-the embedded device agent servers to let _esthesis_ transfer them to the _esthesis_ server and then
-using the configured Data Writers forward them to your back-end infrastructure.
-Your custom software does not need to be aware of URLs, IP address, or any other infrastructure-related
-information that might change. It only needs to communicate with the  servers being exposed locally
-by the device agent using `localhost` or `127.0.0.1`. It is then the responsibility of the device agent
-to get your payload and forward it.
+The device agent embeds a locally-exposed Web server and an MQTT server.
+These local servers act like a proxy between your device's custom software and the esthesis back-end platform, providing a communication channel to transmit your device/sensor data.
+
+Once you have collected data by any custom method/software running in your device, you can utilise the embedded device agent servers to let _esthesis_ transfer them to the _esthesis_ server and then using the configured Data Writers forward them to your back-end infrastructure.
+Your custom software does not need to be aware of URLs, IP address, or any other infrastructure-related information that might change.
+It only needs to communicate with the servers being exposed locally by the device agent using `localhost` or `127.0.0.1`.
+It is then the responsibility of the device agent to get your payload and forward it.
 
 === Embedded Web server
-The embedded web server listens, by default, on port 4567 (the port can be changed in device agents'
-configuration parameters). You can push your own payload to the embedded web server in the following
-two channels:
+
+The embedded web server listens, by default, on port 4567 (the port can be changed in device agents' configuration parameters).
+You can push your own payload to the embedded web server in the following two channels:
 
 - /telemetry
 - /metadata
@@ -413,6 +412,7 @@ curl -X POST 127.0.0.1:4567/telemetry \
 ```
 
 Respectively, to push real-time metadata data from your device you can execute:
+
 ```
 curl -X POST 127.0.0.1:4567/metadata \
 -H 'Content-Type: application/json'
@@ -420,8 +420,8 @@ curl -X POST 127.0.0.1:4567/metadata \
 ```
 
 === Embedded MQTT server
-The embedded MQTT server listens, by default, on port 4566 (the port can be changed in device agents'
-configuration parameters). You can push your own payload to the embedded MQTT server in the following
-channels:
+
+The embedded MQTT server listens, by default, on port 4566 (the port can be changed in device agents' configuration parameters).
+You can push your own payload to the embedded MQTT server in the following channels:
 
 (tbc)
