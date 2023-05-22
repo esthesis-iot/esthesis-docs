@@ -11,12 +11,15 @@ environments:
     values:
       - devMode: true
       - helmfileDevMode: {{ env "HELMFILE_DEV_MODE" | default true }}
+      - mk8sExposeIngress: true
 
 ---
 ##################################################################################################
 # The repositories used by this Helmfile.
 ##################################################################################################
 repositories:
+  - name: esthesis
+    url: https://esthes.is/helm
   - name: bitnami
     url: registry-1.docker.io/bitnamicharts
     oci: true
@@ -46,6 +49,7 @@ values:
   ##################################################################################################
   - esthesisVersion: "3.0.0-SNAPSHOT"
   - timezone: {{ env "TIMEZONE" | default "Europe/Athens" }}
+  - esthesisApiIngressHostname: {{ env "ESTHESIS_API_INGRESS_HOSTNAME" | default "apisix-gateway.esthesis.localdev" }}
 
   ##################################################################################################
   # Accounts to be used throughout charts.
@@ -76,6 +80,8 @@ values:
   - mk8sIngressNamespace: {{ env "MK8S_INGRESS_NAMESPACE" | default "ingress" }}
   # Mosquitto
   - mosquittoEnabled: {{ env "MOSQUITTO_ENABLED" | default true }}
+  # Grafana
+  - grafanaIngressHostname: {{ env "GRAFANA_INGRESS_HOSTNAME" | default "grafana.esthesis.localdev" }}
 
 ---
 ##################################################################################################
@@ -126,14 +132,19 @@ releases:
       - logs:
           errorLogLevel: "debug"
       - etcd:
+          {{- if .StateValues.devMode }}
           replicaCount: 1
+          {{- end }}
           auth:
             token:
               type: "simple"
       - gateway:
-          type: LoadBalancer
-#          type: ClusterIP
-#          externalTrafficPolicy: ""
+          ingress:
+            enabled: true
+            hosts:
+              - host: {{ .StateValues.esthesisApiIngressHostname }}
+                paths:
+                  - /api
       - admin:
           credentials:
             admin: {{ .StateValues.esthesisSystemPassword }}
@@ -153,14 +164,18 @@ releases:
                 - ""
       - dashboard:
           enabled: {{ .StateValues.devMode }}
-          service:
-            type: LoadBalancer
+          ingress:
+            enabled: true
+            hosts:
+              - host: apisix-dashboard.esthesis.localdev
+                paths:
+                  - /
           config:
             authentication:
               secret: {{ .StateValues.esthesisSystemPassword }}
               users:
-                - username: {{ .StateValues.esthesisSystemUsername }}
-                  password: {{ .StateValues.esthesisSystemPassword }}
+                - username: {{ .StateValues.esthesisSystemUsername | quote }}
+                  password: {{ .StateValues.esthesisSystemPassword | quote }}
 
   - name: redis
     chart: "bitnami/redis"
@@ -209,8 +224,8 @@ releases:
       - identity:
           enabled: false
 #          firstUser:
-#            username: {{ .StateValues.esthesisSystemUsername }}
-#            password: {{ .StateValues.esthesisSystemPassword }}
+#            username: {{ .StateValues.esthesisSystemUsername | quote }}
+#            password: {{ .StateValues.esthesisSystemPassword | quote }}
       - web-modeler:
           enabled: false
       {{- if .StateValues.devMode }}
@@ -228,14 +243,14 @@ releases:
 
   - name: keycloak
     chart: "bitnami/keycloak"
-    version: "14.1.0"
+    version: "15.1.1"
     installed: {{ .StateValues.keycloakEnabled }}
     values:
       - proxy: "edge"
       - production: true
       - auth:
-          adminUser: {{ .StateValues.esthesisSystemUsername }}
-          adminPassword: {{ .StateValues.esthesisSystemPassword }}
+          adminUser: {{ .StateValues.esthesisSystemUsername | quote }}
+          adminPassword: {{ .StateValues.esthesisSystemPassword | quote }}
       - postgresql:
           auth:
             postgresPassword: {{ .StateValues.esthesisSystemPassword }}
@@ -246,6 +261,10 @@ releases:
           enabled: true
           existingConfigmap: esthesis-core-keycloak-config
           command: "[\"java\", \"-jar\", \"/opt/bitnami/keycloak-config-cli/keycloak-config-cli.jar\"]"
+      - ingress:
+          enabled: true
+          hostname: {{ .StateValues.keycloakIngressHostname | quote }}
+          path: /
 
   - name: grafana-loki
     chart: "bitnami/grafana-loki"
@@ -262,12 +281,14 @@ releases:
     installed: {{ .StateValues.devMode }}
     values:
       - admin:
-          user: {{ .StateValues.esthesisSystemUsername }}
-          password: {{ .StateValues.esthesisSystemPassword }}
+          user: {{ .StateValues.esthesisSystemUsername | quote }}
+          password: {{ .StateValues.esthesisSystemPassword | quote }}
       - datasources:
           secretName: grafana-config
-      - service:
-          type: LoadBalancer
+      - ingress:
+          enabled: true
+          hostname: {{ .StateValues.grafanaIngressHostname | quote }}
+          path: /
 
   - name: grafana-tempo
     chart: "bitnami/grafana-tempo"

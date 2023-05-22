@@ -37,7 +37,7 @@ values:
   - esthesisSystemPassword: {{ env "ESTHESIS_SYSTEM_PASSWORD" | default "esthesis-system" }}
   # MongoDB
   - mongoDbEnabled: {{ env "MONGODB_ENABLED" | default true }}
-  - mongoDbUrlCluster: {{ env "MONGODB_URL_CLUSTER" | default "mongodb://mongodb:27017" }}
+  - mongoDbUrlCluster: {{ env "MONGODB_URL_CLUSTER" | default "mongodb://esthesis-mongodb-esthesiscore-svc:27017" }}
   - mongoDbDatabase: {{ env "MONGODB_DATABASE" | default "esthesiscore" }}
   - mongoDbUsername: {{ env "MONGODB_USERNAME" | default .StateValues.esthesisSystemUsername }}
   - mongoDbPassword: {{ env "MONGODB_PASSWORD" | default .StateValues.esthesisSystemPassword }}
@@ -87,7 +87,7 @@ releases:
                 level: {{ .StateValues.esthesisLogLevel | quote }}
       - esthesisAdminUsername: {{ .StateValues.esthesisAdminUsername | quote }}
       - esthesisAdminPassword: {{ .StateValues.esthesisAdminPassword | quote }}
-      - esthesisSystemUsername: {{ .StateValues.esthesisSystemUsername | quote }}
+      - esthesisSystemUsername: {{ .Values.esthesisSystemUsername | quote }}
       - esthesisSystemPassword: {{ .StateValues.esthesisSystemPassword | quote }}
       - esthesisUiIngressHostname: {{ .StateValues.esthesisUiIngressHostname | quote }}
       - esthesisUiLogoutUrl: {{ .StateValues.esthesisUiLogoutUrl | quote }}
