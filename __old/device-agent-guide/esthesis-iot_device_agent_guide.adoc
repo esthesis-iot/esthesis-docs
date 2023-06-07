@@ -51,10 +51,6 @@ Values in **bold** indicate default values.
 |===
 |Parameter |Value |Description
 
-|hardwareId [red]#*#
-|Alphanumeric
-|An ID that uniquely identifies this device. See also <<_hardware_ids>>.
-
 |pauseStartup
 |true, **false**
 |A flag indicating whether the device should start paused. A paused device requires a keyboard input
