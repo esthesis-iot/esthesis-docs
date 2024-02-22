@@ -2,8 +2,24 @@ apiVersion: v1
 entries:
   esthesis-core:
   - apiVersion: v2
+    appVersion: 3.0.24
+    created: "2024-02-22T19:43:14.004815+02:00"
+    digest: aaaef99114cfb76a2230f2db61473bf0fa1573c8d86f1b662dc4503da7a24710
+    home: https://esthes.is
+    icon: https://esthes.is/media/logo.png
+    maintainers:
+    - email: esthesis@eurodyn.com
+      name: European Dynamics SA
+      url: https://www.eurodyn.com
+    name: esthesis-core
+    sources:
+    - https://github.com/esthesis-iot
+    urls:
+    - esthesis-core-3.0.24.tgz
+    version: 3.0.24
+  - apiVersion: v2
     appVersion: 3.0.23
-    created: "2024-02-22T18:30:57.319918+02:00"
+    created: "2024-02-22T19:43:14.004551+02:00"
     digest: 82ce32f536f678e564622f9cd2e548fceb2ba7577bff3ddab1dfb9c2b460a98a
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -19,7 +35,7 @@ entries:
     version: 3.0.23
   - apiVersion: v2
     appVersion: 3.0.22
-    created: "2024-02-22T18:30:57.319512+02:00"
+    created: "2024-02-22T19:43:14.004276+02:00"
     digest: bfdd1572337302047841a4aa015ea519d748d5a9c7cc0f6da64ea1168a61a44e
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -35,7 +51,7 @@ entries:
     version: 3.0.22
   - apiVersion: v2
     appVersion: 3.0.21
-    created: "2024-02-22T18:30:57.31882+02:00"
+    created: "2024-02-22T19:43:14.003781+02:00"
     digest: 9c7503cd36543dcbebd8fa097b5424f6989af7c16beb1e5570a5600376099afc
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -51,7 +67,7 @@ entries:
     version: 3.0.21
   - apiVersion: v2
     appVersion: 3.0.20
-    created: "2024-02-22T18:30:57.318568+02:00"
+    created: "2024-02-22T19:43:14.003446+02:00"
     digest: 365de63944c87f6ddc8fc87c906132a5c0a788a8e2ae58b5827d16b0210a47a4
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -67,7 +83,7 @@ entries:
     version: 3.0.20
   - apiVersion: v2
     appVersion: 3.0.19
-    created: "2024-02-22T18:30:57.318031+02:00"
+    created: "2024-02-22T19:43:14.002876+02:00"
     digest: 6630d5fde259f5f0ba8e684561e1479cb70040bbb16d6b51abe8bdd7ab31f3aa
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -83,7 +99,7 @@ entries:
     version: 3.0.19
   - apiVersion: v2
     appVersion: 3.0.18
-    created: "2024-02-22T18:30:57.317794+02:00"
+    created: "2024-02-22T19:43:14.002628+02:00"
     digest: 7094f91b0329a3269b922acb160e7d001448fbd2a49dc526603a0274e875725c
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -99,7 +115,7 @@ entries:
     version: 3.0.18
   - apiVersion: v2
     appVersion: 3.0.17
-    created: "2024-02-22T18:30:57.317558+02:00"
+    created: "2024-02-22T19:43:14.002382+02:00"
     digest: ad39188626c758736a009d72f07c797a16a708c2faf71173f2ec8fc3efe8ca59
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -115,7 +131,7 @@ entries:
     version: 3.0.17
   - apiVersion: v2
     appVersion: 3.0.15
-    created: "2024-02-22T18:30:57.317323+02:00"
+    created: "2024-02-22T19:43:14.002139+02:00"
     digest: f76c93675101cc42070aa9ea668fbd23a7fb3cbfba538a9ead9fa401ebe744bb
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -131,7 +147,7 @@ entries:
     version: 3.0.15
   - apiVersion: v2
     appVersion: 3.0.9
-    created: "2024-02-22T18:30:57.321918+02:00"
+    created: "2024-02-22T19:43:14.006703+02:00"
     digest: fd5da01f5aac03736dcdd6f661c01483e2d8a5e17093d6ff71d6b4dedd8acc93
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -147,7 +163,7 @@ entries:
     version: 3.0.9
   - apiVersion: v2
     appVersion: 3.0.8
-    created: "2024-02-22T18:30:57.321673+02:00"
+    created: "2024-02-22T19:43:14.006456+02:00"
     digest: fd86ad56ff0e08b1143361d072d6b49d4ba31ae2cc98c7bfa377a8b9f215d5b8
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -163,7 +179,7 @@ entries:
     version: 3.0.8
   - apiVersion: v2
     appVersion: 3.0.7
-    created: "2024-02-22T18:30:57.321403+02:00"
+    created: "2024-02-22T19:43:14.006201+02:00"
     digest: 502dc479e3b05d98cce2f13eb6a4db058fbed07c131506a883c389cc14d384e8
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -178,7 +194,7 @@ entries:
     - esthesis-core-3.0.7.tgz
     version: 3.0.7
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.321082+02:00"
+    created: "2024-02-22T19:43:14.005942+02:00"
     digest: 8a3c5e449fc27aa21715a4093f5464e7cba3ae9603bd70fc60c786f4ff1c3859
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -193,7 +209,7 @@ entries:
     - esthesis-core-3.0.6.tgz
     version: 3.0.6
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.320821+02:00"
+    created: "2024-02-22T19:43:14.005668+02:00"
     digest: 501645f5f98dbef978017565308450e2f133594e277d62d8c535bb5e35bbef2f
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -208,7 +224,7 @@ entries:
     - esthesis-core-3.0.5.tgz
     version: 3.0.5
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.320558+02:00"
+    created: "2024-02-22T19:43:14.005401+02:00"
     digest: e1949880974ef40b64d44faf07ce7232611e1887209f45971280f629ed5aa888
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -223,7 +239,7 @@ entries:
     - esthesis-core-3.0.4.tgz
     version: 3.0.4
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.320284+02:00"
+    created: "2024-02-22T19:43:14.005135+02:00"
     digest: f1166c4c57dcecca746332bfb35fe5e7416352c6ba784fdfdd02b65bfd74333d
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -238,7 +254,7 @@ entries:
     - esthesis-core-3.0.3.tgz
     version: 3.0.3
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.318326+02:00"
+    created: "2024-02-22T19:43:14.003202+02:00"
     digest: 26176b22af24245d930bd0af3b7318e3cf8f43b529e7cf61f8926bf2becb986a
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -253,7 +269,7 @@ entries:
     - esthesis-core-3.0.2.tgz
     version: 3.0.2
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.317077+02:00"
+    created: "2024-02-22T19:43:14.001896+02:00"
     digest: f0f1325806ecd68f93946782d04ac4acc637582b294fa98540e44b8a40bef011
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -268,7 +284,7 @@ entries:
     - esthesis-core-3.0.1.tgz
     version: 3.0.1
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.316792+02:00"
+    created: "2024-02-22T19:43:14.001589+02:00"
     digest: f4ff9c82a34d00b9995ef698678359a265c9f78a714098d50a9ae4f3353d38a0
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -283,7 +299,7 @@ entries:
     - esthesis-core-3.0.0.tgz
     version: 3.0.0
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.316488+02:00"
+    created: "2024-02-22T19:43:14.001271+02:00"
     digest: e22bb8387d9abbe383617ef55383b4ddfd4e4f4b258dad344b4826f62f54df86
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -299,8 +315,24 @@ entries:
     version: 3.0.0-SNAPSHOT
   esthesis-core-deps:
   - apiVersion: v2
+    appVersion: 3.0.24
+    created: "2024-02-22T19:43:14.01012+02:00"
+    digest: 3bb7ca205917a081263034f54ae060e466ecef4418fa56a9631a2f7893681919
+    home: https://esthes.is
+    icon: https://esthes.is/media/logo.png
+    maintainers:
+    - email: esthesis@eurodyn.com
+      name: European Dynamics SA
+      url: https://www.eurodyn.com
+    name: esthesis-core-deps
+    sources:
+    - https://github.com/esthesis-iot
+    urls:
+    - esthesis-core-deps-3.0.24.tgz
+    version: 3.0.24
+  - apiVersion: v2
     appVersion: 3.0.23
-    created: "2024-02-22T18:30:57.325115+02:00"
+    created: "2024-02-22T19:43:14.009893+02:00"
     digest: 9e9ee38d3d324cff2fe55704237d8fffb5795647f8f484afebb6f55918fd1831
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -316,7 +348,7 @@ entries:
     version: 3.0.23
   - apiVersion: v2
     appVersion: 3.0.22
-    created: "2024-02-22T18:30:57.324874+02:00"
+    created: "2024-02-22T19:43:14.009666+02:00"
     digest: f074c5faaa7a4910f75b60a67bd89c95b58db0f4c081e9a5e4130ff3e2932534
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -332,7 +364,7 @@ entries:
     version: 3.0.22
   - apiVersion: v2
     appVersion: 3.0.21
-    created: "2024-02-22T18:30:57.32445+02:00"
+    created: "2024-02-22T19:43:14.009437+02:00"
     digest: affd114f7d2b56f1b580599421872a0fb8a3da68bc42c21ba60738f29e2facae
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -348,7 +380,7 @@ entries:
     version: 3.0.21
   - apiVersion: v2
     appVersion: 3.0.20
-    created: "2024-02-22T18:30:57.324003+02:00"
+    created: "2024-02-22T19:43:14.0092+02:00"
     digest: 03fd7254c4c615183765ee9fe37ed6b4a637e8876c892299460ff8208f635631
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -364,7 +396,7 @@ entries:
     version: 3.0.20
   - apiVersion: v2
     appVersion: 3.0.19
-    created: "2024-02-22T18:30:57.323575+02:00"
+    created: "2024-02-22T19:43:14.008727+02:00"
     digest: 440d743ad222785095a64d3f449a7610b82a5abf800622f1ab1d62bc56cd0573
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -380,7 +412,7 @@ entries:
     version: 3.0.19
   - apiVersion: v2
     appVersion: 3.0.18
-    created: "2024-02-22T18:30:57.323355+02:00"
+    created: "2024-02-22T19:43:14.008485+02:00"
     digest: fe63338b0ee913f6b326b89f550fd75b0b7895507a1457bc8c392195d4d8f01c
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -396,7 +428,7 @@ entries:
     version: 3.0.18
   - apiVersion: v2
     appVersion: 3.0.17
-    created: "2024-02-22T18:30:57.323131+02:00"
+    created: "2024-02-22T19:43:14.008221+02:00"
     digest: d7dec2948f5726f549511acdbfdaf8fb592f72888a93c07b9c67c06c2a08f268
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -412,7 +444,7 @@ entries:
     version: 3.0.17
   - apiVersion: v2
     appVersion: 3.0.15
-    created: "2024-02-22T18:30:57.3229+02:00"
+    created: "2024-02-22T19:43:14.007644+02:00"
     digest: 17242e714e86a6ad927a69a2892e7012bcd6f1026ebc3de39a76003d89f4cf9f
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -428,7 +460,7 @@ entries:
     version: 3.0.15
   - apiVersion: v2
     appVersion: 3.0.9
-    created: "2024-02-22T18:30:57.32666+02:00"
+    created: "2024-02-22T19:43:14.011948+02:00"
     digest: 96c00f8cdc7a8f8c10506e49b162f0515acfc276e5f0f6458a5a8b8228844dd5
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -444,7 +476,7 @@ entries:
     version: 3.0.9
   - apiVersion: v2
     appVersion: 3.0.8
-    created: "2024-02-22T18:30:57.326437+02:00"
+    created: "2024-02-22T19:43:14.01149+02:00"
     digest: d2b834294a84354bb0dc14a3570939c9cee0a491fca3507cc7b707c8e0d60c38
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -460,7 +492,7 @@ entries:
     version: 3.0.8
   - apiVersion: v2
     appVersion: 3.0.7
-    created: "2024-02-22T18:30:57.326215+02:00"
+    created: "2024-02-22T19:43:14.01126+02:00"
     digest: b767397c66b26406070e99907fe3321bd1db90c0af10a12451850970228ee368
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -475,7 +507,7 @@ entries:
     - esthesis-core-deps-3.0.7.tgz
     version: 3.0.7
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.326+02:00"
+    created: "2024-02-22T19:43:14.011027+02:00"
     digest: 5c6167eeaa98dd02c20e85938a797943964c5b0e3c30f8ba216ca7cfb3a99087
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -490,7 +522,7 @@ entries:
     - esthesis-core-deps-3.0.6.tgz
     version: 3.0.6
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.32579+02:00"
+    created: "2024-02-22T19:43:14.010805+02:00"
     digest: 292417b5c7666a37fa254dae2ca73f69cc98317bcffee693ad22a80af97e9ae5
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -505,7 +537,7 @@ entries:
     - esthesis-core-deps-3.0.5.tgz
     version: 3.0.5
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.325548+02:00"
+    created: "2024-02-22T19:43:14.010573+02:00"
     digest: 13ef449db6cb528ed6988f8a74ad14a8d0c78b00ba7c6dc4f0872d276175eefc
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -520,7 +552,7 @@ entries:
     - esthesis-core-deps-3.0.4.tgz
     version: 3.0.4
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.325336+02:00"
+    created: "2024-02-22T19:43:14.010359+02:00"
     digest: 34c8b47d13b6c324e7659cfc39c507c8f36c54b419599cb07551fd7e2c48be0e
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -535,7 +567,7 @@ entries:
     - esthesis-core-deps-3.0.3.tgz
     version: 3.0.3
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.323792+02:00"
+    created: "2024-02-22T19:43:14.008964+02:00"
     digest: 5244ce22dbcb9aff1c10ae6250a189494de15c75d7e1528a046c823f8b1f9600
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -550,7 +582,7 @@ entries:
     - esthesis-core-deps-3.0.2.tgz
     version: 3.0.2
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.322662+02:00"
+    created: "2024-02-22T19:43:14.007406+02:00"
     digest: f6fc21c3bda2052a7f0eb5788b085be00c5953b67e814124f0b80d32a7b5e44c
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -565,7 +597,7 @@ entries:
     - esthesis-core-deps-3.0.1.tgz
     version: 3.0.1
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.322425+02:00"
+    created: "2024-02-22T19:43:14.007174+02:00"
     digest: 8f907fc6440af0f845b01427988280c0d425b330959d8bd17d39efab40b08b0c
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -580,7 +612,7 @@ entries:
     - esthesis-core-deps-3.0.0.tgz
     version: 3.0.0
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.322139+02:00"
+    created: "2024-02-22T19:43:14.006935+02:00"
     digest: 9c36c4c85b010629dc2f2412051546e96ef7710e5f79526cc4791976edace016
     home: https://esthes.is
     icon: https://esthes.is/media/logo.png
@@ -596,7 +628,7 @@ entries:
     version: 3.0.0-SNAPSHOT
   esthesis-device:
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.328853+02:00"
+    created: "2024-02-22T19:43:14.013445+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 2d63fe5c227f6a384487da6bb13f3d28bfca3617c32e4ba66c9e5b27adf72155
     home: https://esthes.is
@@ -612,7 +644,7 @@ entries:
     - esthesis-device-2.0.18.tgz
     version: 2.0.18
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.328045+02:00"
+    created: "2024-02-22T19:43:14.013319+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 8ef63bdf96385bb05ab11ee965675cc476695b8696b04d923fce45e5b41576d1
     home: https://esthes.is
@@ -628,7 +660,7 @@ entries:
     - esthesis-device-2.0.17.tgz
     version: 2.0.17
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.327762+02:00"
+    created: "2024-02-22T19:43:14.013202+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 02cb117a28c5a76c5b2d2feaa1ba3f6602a315765cc6804270114eb1c54578ec
     home: https://esthes.is
@@ -644,7 +676,7 @@ entries:
     - esthesis-device-2.0.16.tgz
     version: 2.0.16
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.327641+02:00"
+    created: "2024-02-22T19:43:14.013072+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: f653e27f641e54324a05d8e42f819bac784135ebf3fb18096933fc5abdd87670
     home: https://esthes.is
@@ -660,7 +692,7 @@ entries:
     - esthesis-device-2.0.15.tgz
     version: 2.0.15
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.327525+02:00"
+    created: "2024-02-22T19:43:14.012948+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: d6044d051727cf3cd0c27d47ea985fcbb1e8dc608cfa077a15e4fb03bb161935
     home: https://esthes.is
@@ -676,7 +708,7 @@ entries:
     - esthesis-device-2.0.14.tgz
     version: 2.0.14
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.327404+02:00"
+    created: "2024-02-22T19:43:14.012819+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 352e35a4ccc64033a74f3c06209f4883290eb68d47c87c51d1cce711443d2267
     home: https://esthes.is
@@ -692,7 +724,7 @@ entries:
     - esthesis-device-2.0.13.tgz
     version: 2.0.13
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.32728+02:00"
+    created: "2024-02-22T19:43:14.012678+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: f6f599e97a5a9dddf999b6d834550eeb83da4562349be95df04a5f8841a9ca18
     home: https://esthes.is
@@ -708,7 +740,7 @@ entries:
     - esthesis-device-2.0.12.tgz
     version: 2.0.12
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.32716+02:00"
+    created: "2024-02-22T19:43:14.012547+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: ccffeecb888f844b83c064cc76793558ba5b8f922591c1e4cd92e4d53fe42a6e
     home: https://esthes.is
@@ -724,7 +756,7 @@ entries:
     - esthesis-device-2.0.11.tgz
     version: 2.0.11
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.327041+02:00"
+    created: "2024-02-22T19:43:14.012415+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 082e910cbaea82ad4f8a0de62fac3cafff5720401e9cd14bafe70ce62fa2dc2c
     home: https://esthes.is
@@ -740,7 +772,7 @@ entries:
     - esthesis-device-2.0.10.tgz
     version: 2.0.10
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.33013+02:00"
+    created: "2024-02-22T19:43:14.014519+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 8235cd9782b6b48004c0953e59bb979a5dc83baa8ac25c7377da1483506a416c
     home: https://esthes.is
@@ -756,7 +788,7 @@ entries:
     - esthesis-device-2.0.9.tgz
     version: 2.0.9
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.330011+02:00"
+    created: "2024-02-22T19:43:14.014387+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 8f4a40566b17fe2c927eb92550cc1dcaa7586ecaaa4812a9603f64974b1bd39d
     home: https://esthes.is
@@ -772,7 +804,7 @@ entries:
     - esthesis-device-2.0.8.tgz
     version: 2.0.8
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.329842+02:00"
+    created: "2024-02-22T19:43:14.014255+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 062853e6772466bf530ef6b4ebbb5c19a83446bf2cf531fc5fad74df61d58c41
     home: https://esthes.is
@@ -788,7 +820,7 @@ entries:
     - esthesis-device-2.0.7.tgz
     version: 2.0.7
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.329656+02:00"
+    created: "2024-02-22T19:43:14.014116+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 535feb8d2701ad05823c0d20b61dde1a40c9980a1977d44060645dafdcbbf7e5
     home: https://esthes.is
@@ -804,7 +836,7 @@ entries:
     - esthesis-device-2.0.6.tgz
     version: 2.0.6
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.329501+02:00"
+    created: "2024-02-22T19:43:14.013976+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 1e6223e3d2d9fd2cd37ee686f1af7a5f652e98e277a438c38d1d6bfdef2cf1e2
     home: https://esthes.is
@@ -821,7 +853,7 @@ entries:
     version: 2.0.5
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2024-02-22T18:30:57.329358+02:00"
+    created: "2024-02-22T19:43:14.013849+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 299961a113a477a301b47dedf26176df307b946c3555ea8fb8dfc95c3aff8898
     home: https://esthes.is
@@ -839,7 +871,7 @@ entries:
     version: 2.0.4
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2024-02-22T18:30:57.329198+02:00"
+    created: "2024-02-22T19:43:14.013721+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: fac12ffdb72126e0509854e8b2e07d8f00754f189c31a52780b90ebd651a0639
     home: https://esthes.is
@@ -857,7 +889,7 @@ entries:
     version: 2.0.3
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2024-02-22T18:30:57.329045+02:00"
+    created: "2024-02-22T19:43:14.013586+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: f7f02d108d8aeba8348aa39e3901a953b0ff3d4e52326646f824d4ef06f5a3f4
     home: https://esthes.is
@@ -875,7 +907,7 @@ entries:
     version: 2.0.2
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2024-02-22T18:30:57.326922+02:00"
+    created: "2024-02-22T19:43:14.012275+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: 1473126680d254e9b6fa326f849a83bbc8b140eb78e9682af838840f2624d797
     home: https://esthes.is
@@ -893,7 +925,7 @@ entries:
     version: 2.0.1
   - apiVersion: v2
     appVersion: 2.0.1-SNAPSHOT
-    created: "2024-02-22T18:30:57.326792+02:00"
+    created: "2024-02-22T19:43:14.01213+02:00"
     description: A Helm chart to deploy an esthesis device client.
     digest: f8eb93c2b078fafc962a8d3c63878254be8e1d7567971ce03ce63d5cad2889fd
     home: https://esthes.is
@@ -911,7 +943,7 @@ entries:
     version: 1.0.0
   esthesis-platform:
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.335211+02:00"
+    created: "2024-02-22T19:43:14.018297+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: e9c14c39aae94a8f2d3c053f804e07c061b32db3734c83295bc6d881719ca5aa
     home: https://esthes.is
@@ -927,7 +959,7 @@ entries:
     - esthesis-platform-2.0.21.tgz
     version: 2.0.21
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.334999+02:00"
+    created: "2024-02-22T19:43:14.01806+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: e01af6a3ecd7b32cc91b28df52461db38f83f4db524182cffe43ae947eb31473
     home: https://esthes.is
@@ -943,7 +975,7 @@ entries:
     - esthesis-platform-2.0.20.tgz
     version: 2.0.20
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.33457+02:00"
+    created: "2024-02-22T19:43:14.017623+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: e4bfa9b3281d140c94bd46729a596d30ef7810f3d15fcc0f3f60e0294bfdec2b
     home: https://esthes.is
@@ -959,7 +991,7 @@ entries:
     - esthesis-platform-2.0.19.tgz
     version: 2.0.19
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.334355+02:00"
+    created: "2024-02-22T19:43:14.017399+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 2593f723786321e8f33aff11978a92683ed888d8b26f38284a8dd70a75fa4527
     home: https://esthes.is
@@ -975,7 +1007,7 @@ entries:
     - esthesis-platform-2.0.18.tgz
     version: 2.0.18
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.334125+02:00"
+    created: "2024-02-22T19:43:14.017171+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 399d1ec330bc52ec9258d8d7feaa0996281b30a15ee19687f777ba7da0a84b67
     home: https://esthes.is
@@ -991,7 +1023,7 @@ entries:
     - esthesis-platform-2.0.17.tgz
     version: 2.0.17
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.333888+02:00"
+    created: "2024-02-22T19:43:14.016939+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 697bb4e3d41f6e8a75c946d38ac5c2825c26d5660d23d7c2193408324d058cbe
     home: https://esthes.is
@@ -1007,7 +1039,7 @@ entries:
     - esthesis-platform-2.0.16.tgz
     version: 2.0.16
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.333636+02:00"
+    created: "2024-02-22T19:43:14.016705+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 822666ad64f46220923a0cd172eaf7d7ad0675507c4763b8e0b18ea9c8191d96
     home: https://esthes.is
@@ -1023,7 +1055,7 @@ entries:
     - esthesis-platform-2.0.15.tgz
     version: 2.0.15
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.33172+02:00"
+    created: "2024-02-22T19:43:14.016469+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: bdfb0875bdb3dc59b6d7c39705a3c6ea310aaade826e32a602beb18b8838e100
     home: https://esthes.is
@@ -1039,7 +1071,7 @@ entries:
     - esthesis-platform-2.0.14.tgz
     version: 2.0.14
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.331496+02:00"
+    created: "2024-02-22T19:43:14.016241+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 3d38bfc23838b619cc04189749a3dcca2ec1a5850a1ec297d10dfed91ff11ca4
     home: https://esthes.is
@@ -1055,7 +1087,7 @@ entries:
     - esthesis-platform-2.0.13.tgz
     version: 2.0.13
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.331268+02:00"
+    created: "2024-02-22T19:43:14.016007+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 822d17d9523080d748d67493a12793a646a1907a44f9c341b832c3425fe231c9
     home: https://esthes.is
@@ -1071,7 +1103,7 @@ entries:
     - esthesis-platform-2.0.12.tgz
     version: 2.0.12
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.331041+02:00"
+    created: "2024-02-22T19:43:14.015759+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: b59be4e62cd6d211517e4ffa892d7571552616c50607cd7c626377402d12e775
     home: https://esthes.is
@@ -1087,7 +1119,7 @@ entries:
     - esthesis-platform-2.0.11.tgz
     version: 2.0.11
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.330812+02:00"
+    created: "2024-02-22T19:43:14.015522+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 02c7007f1c70eb0399c5de3fe8abc55df38d5043917b01b6ca5fd690b8939337
     home: https://esthes.is
@@ -1103,7 +1135,7 @@ entries:
     - esthesis-platform-2.0.10.tgz
     version: 2.0.10
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.337142+02:00"
+    created: "2024-02-22T19:43:14.02027+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: ce8261327e50c96ab65ea413b0b7c62eb15ab5ecf0b3ce09b45ca837c33c2b3e
     home: https://esthes.is
@@ -1119,7 +1151,7 @@ entries:
     - esthesis-platform-2.0.9.tgz
     version: 2.0.9
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.336718+02:00"
+    created: "2024-02-22T19:43:14.020029+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 7ccefda8770ada8137f970f564a0a571cbbafffc7bac6000958b2395cb7913a2
     home: https://esthes.is
@@ -1135,7 +1167,7 @@ entries:
     - esthesis-platform-2.0.8.tgz
     version: 2.0.8
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.336267+02:00"
+    created: "2024-02-22T19:43:14.019779+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: c0d2b5cc3eeab7c1e186044e9b67d8aa53ff51fd724ecd28cdf6a7bccd2f82f4
     home: https://esthes.is
@@ -1151,7 +1183,7 @@ entries:
     - esthesis-platform-2.0.7.tgz
     version: 2.0.7
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.336039+02:00"
+    created: "2024-02-22T19:43:14.019538+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 25cb8a330ea70f5a7df0cdef2e5d06831bdf6c575d698cfee3126db6aec18739
     home: https://esthes.is
@@ -1167,7 +1199,7 @@ entries:
     - esthesis-platform-2.0.6.tgz
     version: 2.0.6
   - apiVersion: v2
-    created: "2024-02-22T18:30:57.335839+02:00"
+    created: "2024-02-22T19:43:14.019315+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: c23d810a0bd41d029d6dae67fe13f8abc8347a384a7869f667a54a7be6266c9b
     home: https://esthes.is
@@ -1184,7 +1216,7 @@ entries:
     version: 2.0.5
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2024-02-22T18:30:57.335627+02:00"
+    created: "2024-02-22T19:43:14.01908+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 59b8290e4e597dc8a40fb2a0b859516e175b757fdebf44205c2d27c32aca888d
     home: https://esthes.is
@@ -1202,7 +1234,7 @@ entries:
     version: 2.0.4
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2024-02-22T18:30:57.33542+02:00"
+    created: "2024-02-22T19:43:14.018846+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 09bb246f87b6fc18d57a727b4ef074b7e8db8d8c4ee1b3c968a045fd7c4aafc5
     home: https://esthes.is
@@ -1220,7 +1252,7 @@ entries:
     version: 2.0.3
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2024-02-22T18:30:57.334784+02:00"
+    created: "2024-02-22T19:43:14.017847+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 4c111f500ba59ef7626a8cbc9ff922a5156665fac522ca34ef1a00b108f139c4
     home: https://esthes.is
@@ -1238,7 +1270,7 @@ entries:
     version: 2.0.2
   - apiVersion: v2
     appVersion: 2.0.1
-    created: "2024-02-22T18:30:57.330577+02:00"
+    created: "2024-02-22T19:43:14.015121+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: c9e40a5564b624996b6524957358119611d6986f66eb9c769434f06dfcbafc8c
     home: https://esthes.is
@@ -1256,7 +1288,7 @@ entries:
     version: 2.0.1
   - apiVersion: v2
     appVersion: 2.0.1-SNAPSHOT
-    created: "2024-02-22T18:30:57.330358+02:00"
+    created: "2024-02-22T19:43:14.014739+02:00"
     description: A Helm chart to deploy eshtesis IoT platform.
     digest: 2da71f1ef16f198bbdd096e0cd68b8a2adf648acd18e4abcbaf70b92f91cb0a2
     home: https://esthes.is
@@ -1272,4 +1304,4 @@ entries:
     urls:
     - esthesis-platform-1.0.0.tgz
     version: 1.0.0
-generated: "2024-02-22T18:30:57.316072+02:00"
+generated: "2024-02-22T19:43:14.000862+02:00"
