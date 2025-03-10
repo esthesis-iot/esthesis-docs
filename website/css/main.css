@@ -1488,7 +1488,7 @@ ul#nav li.current a:after {
 /* Popup Modal 
 /* ------------------------------------------------------------------ */
 .popup-modal {
-	max-width: 550px;
+	max-width: 750px;
 	background: #FFFFFF;
 	position: relative;
 	margin: 0 auto;  	
@@ -1544,7 +1544,7 @@ ul#nav li.current a:after {
 	display: block;
 	text-align: center;
 	float: left;
-	width: 50%;
+	width: 100%;
 	-moz-transition: all 0.3s ease-in-out;
 	-o-transition: all 0.3s ease-in-out;
 	-webkit-transition: all 0.3s ease-in-out;
@@ -1566,7 +1566,7 @@ ul#nav li.current a:after {
 
 @media only screen and (max-width:600px) {
 	.popup-modal {
-		width: auto;
+		width: 500px;
 		margin: 0 20px;
 	}
 
@@ -1736,14 +1736,14 @@ ul#nav li.current a:after {
 /* 10. =about
 /* =================================================================== */
 
-#about {
+#architecture {
 	background: #111417;
 	padding-top: 120px;
 	padding-bottom: 120px;
 	border-bottom: 1px solid #15191d;
 }
 
-#about h3 {
+#architecture h3 {
 	font: 18px/36px "raleway-heavy", sans-serif;
 	color: #059999;
 	text-transform: none;
